@@ -1,0 +1,10 @@
+.headerContainer {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.widthContainer {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 70rem;
+}
