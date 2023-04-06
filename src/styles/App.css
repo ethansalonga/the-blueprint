@@ -14,7 +14,6 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #f3eed9;
 }
 
 .row {
@@ -40,6 +39,12 @@ body {
   HEADER 
 
 */
+
+.container--header {
+  background-color: #f3eed9;
+  min-height: 30vh;
+  justify-content: center;
+}
 
 .header__subtitle {
   font-size: 1.25em;
