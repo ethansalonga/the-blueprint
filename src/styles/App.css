@@ -16,6 +16,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.bold {
+  font-weight: 500;
+}
+
 .row {
   margin: 0 auto;
   width: 100%;
@@ -23,15 +27,24 @@ body {
 }
 
 .container {
-  padding: 3rem 0rem;
+  padding: 4rem 3rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.bold {
-  font-weight: 500;
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2em;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.section-para {
+  font-size: 1.5em;
+  margin-bottom: 2rem;
 }
 
 /* 
@@ -40,8 +53,11 @@ body {
 
 */
 
-.container--header {
+#header {
   background-color: #f3eed9;
+}
+
+.container--header {
   min-height: 30vh;
   justify-content: center;
 }
@@ -69,20 +85,11 @@ body {
 
 .container--roles {
   background-color: #fff;
-  padding: 3rem;
-}
-
-.roles__title {
-  font-family: "Playfair Display", serif;
-  font-size: 2em;
-  font-weight: 900;
-  color: #824936;
-}
-
-.roles__para {
-  font-size: 1.5em;
   color: #222c2a;
-  margin-bottom: 2rem;
+}
+
+.section-title--roles {
+  color: #824936;
 }
 
 .roles__list {
@@ -95,6 +102,23 @@ body {
   list-style-type: none;
   text-align: start;
   font-size: 1.25em;
-  color: #222c2a;
   line-height: 2.5rem;
+}
+
+/* 
+
+  GOALS
+
+*/
+
+#goals {
+  background-color: #222c2a;
+}
+
+.container--goals {
+  color: #fff;
+}
+
+.section-title--goals {
+  color: #f3eed9;
 }

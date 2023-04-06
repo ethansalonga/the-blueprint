@@ -3,7 +3,7 @@ import "./styles/App.css"
 function App() {
   return (
     <>
-      <header>
+      <header id="header">
         <div className="row">
           <div className="container container--header">
             <h2 className="header__subtitle">Your standard for living life</h2>
@@ -12,15 +12,16 @@ function App() {
         </div>
       </header>
       <main>
-        <section>
+        <section id="roles">
           <div className="row">
             <div className="container container--roles">
-              <h3 className="roles__title">Roles</h3>
-              <p className="roles__para">
+              <h3 className="section-title section-title--roles">Roles</h3>
+              <p className="section-para">
                 List out the various roles you play in your life in order of
                 importance. Write a short description for each role as if you
                 had just passed away. We all die sometime. Remember to focus on
-                the things that truly matter to you.
+                the things that truly matter to you. Be the best version of
+                yourself.
               </p>
               <ol className="roles__list">
                 <li>
@@ -85,6 +86,19 @@ function App() {
                   and many collectibles and figurines.
                 </li>
               </ol>
+            </div>
+          </div>
+        </section>
+        <section id="goals">
+          <div className="row">
+            <div className="container container--goals">
+              <h3 className="section-title section-title--goals">
+                Five Year Goals
+              </h3>
+              <p className="section-para">
+                List the 5 most important goals that you want to achieve within
+                the next five years. Don't sell yourself short here.
+              </p>
             </div>
           </div>
         </section>
