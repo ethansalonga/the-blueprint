@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Roboto:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Roboto:wght@300;400;500&display=swap");
 
 *,
 *::before,
@@ -23,13 +23,23 @@ body {
   max-width: 70rem;
 }
 
-.header__container {
+.container {
   padding: 3rem 0rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.bold {
+  font-weight: 500;
+}
+
+/* 
+
+  HEADER 
+
+*/
 
 .header__subtitle {
   font-size: 1.25em;
@@ -44,4 +54,42 @@ body {
   font-weight: 900;
   letter-spacing: 0.05em;
   color: #824936;
+}
+
+/* 
+
+  ROLES 
+
+*/
+
+.container--roles {
+  background-color: #fff;
+  padding: 3rem;
+}
+
+.roles__title {
+  font-family: "Playfair Display", serif;
+  font-size: 2em;
+  font-weight: 900;
+  color: #824936;
+}
+
+.roles__para {
+  font-size: 1.5em;
+  color: #222c2a;
+  margin-bottom: 2rem;
+}
+
+.roles__list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.roles__list > li {
+  list-style-type: none;
+  text-align: start;
+  font-size: 1.25em;
+  color: #222c2a;
+  line-height: 2.5rem;
 }
