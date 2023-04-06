@@ -1,10 +1,47 @@
-.headerContainer {
-  padding: 2rem 0;
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Roboto:wght@300;400&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
 }
 
-.widthContainer {
+html {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f3eed9;
+}
+
+.row {
   margin: 0 auto;
   width: 100%;
   max-width: 70rem;
+}
+
+.header__container {
+  padding: 3rem 0rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.header__subtitle {
+  font-size: 1.25em;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  color: #222c2a;
+}
+
+.header__title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5em;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: #824936;
 }
