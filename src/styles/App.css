@@ -45,6 +45,20 @@ body {
 .section-para {
   font-size: 1.5em;
   margin-bottom: 2rem;
+  position: relative;
+}
+
+.section-para:after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 3px;
+  top: 125%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  position: absolute;
+  border-radius: 40%;
+  opacity: 50%;
 }
 
 /* 
@@ -92,6 +106,10 @@ body {
   color: #824936;
 }
 
+.section-para--roles:after {
+  background: #824936;
+}
+
 .roles__list {
   display: flex;
   flex-direction: column;
@@ -125,6 +143,10 @@ body {
 
 .section-title--goals {
   color: #f3eed9;
+}
+
+.section-para--goals:after {
+  background: #f3eed9;
 }
 
 .five-year-goals__list {
@@ -182,6 +204,10 @@ body {
 
 .section-title--statement {
   color: #f3eed9;
+}
+
+.section-para--statement:after {
+  background: #f3eed9;
 }
 
 .statement-content-container {

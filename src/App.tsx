@@ -16,7 +16,7 @@ function App() {
           <div className="row">
             <div className="container container--roles">
               <h3 className="section-title section-title--roles">Roles</h3>
-              <p className="section-para">
+              <p className="section-para section-para--roles">
                 List out the various roles you play in your life in order of
                 importance. Write a short description for each role as if you
                 had just passed away. We all die sometime. Remember to focus on
@@ -95,7 +95,7 @@ function App() {
               <h3 className="section-title section-title--goals">
                 Five Year Goals
               </h3>
-              <p className="section-para">
+              <p className="section-para section-para--goals">
                 List the 5 most important goals that you want to achieve within
                 the next five years. What are your most ambitious dreams and
                 desires? Don't sell yourself short here.
@@ -130,7 +130,7 @@ function App() {
               <h3 className="section-title section-title--goals">
                 Milestone Goals
               </h3>
-              <p className="section-para">
+              <p className="section-para section-para--goals">
                 List out all of the general goals you want to complete in your
                 life and order them by category. Set realistic, measurable goals
                 that you can continuously improve upon. Every time you hit a
@@ -231,7 +231,7 @@ function App() {
               <h3 className="section-title section-title--statement">
                 Personal Statement
               </h3>
-              <p className="section-para">
+              <p className="section-para section-para--statement">
                 What would you say if you were to give yourself your most
                 profound advice? What words would be most important for you to
                 remember throughout your entire life? What drives you, gives
