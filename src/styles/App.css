@@ -121,7 +121,6 @@ body {
 
 .container--goals {
   color: #fff;
-  padding: 4rem 3rem;
 }
 
 .section-title--goals {
@@ -165,4 +164,35 @@ body {
 
 .milestone__complete {
   opacity: 0.5;
+}
+
+/* 
+
+  PERSONAL STATEMENT
+
+*/
+
+#personal-statement {
+  background-color: #824936;
+}
+
+.container--statement {
+  color: #fff;
+}
+
+.section-title--statement {
+  color: #f3eed9;
+}
+
+.statement-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.statement-para {
+  text-align: start;
+  font-style: italic;
+  font-size: 1.25em;
+  line-height: 2rem;
 }
