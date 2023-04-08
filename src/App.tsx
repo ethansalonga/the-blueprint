@@ -100,7 +100,7 @@ function App() {
                 the next five years. What are your most ambitious dreams and
                 desires? Don't sell yourself short here.
               </p>
-              <ol className="goals__list">
+              <ol className="five-year-goals__list">
                 <li>
                   On or before June 30, 2023, I have paid off all my student
                   loan debts.

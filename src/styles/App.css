@@ -23,7 +23,7 @@ body {
 .row {
   margin: 0 auto;
   width: 100%;
-  max-width: 70rem;
+  max-width: 80rem;
 }
 
 .container {
@@ -127,13 +127,13 @@ body {
   color: #f3eed9;
 }
 
-.goals__list {
+.five-year-goals__list {
   display: flex;
   flex-direction: column;
   gap: 3rem;
 }
 
-.goals__list > li {
+.five-year-goals__list > li {
   text-align: start;
   font-size: 1.25em;
   line-height: 2.5rem;
@@ -195,4 +195,52 @@ body {
   font-style: italic;
   font-size: 1.25em;
   line-height: 2rem;
+}
+
+@media (min-width: 900px) {
+  .container {
+    padding: 5rem 3rem;
+  }
+
+  .header__subtitle {
+    font-size: 2em;
+  }
+
+  .header__title {
+    font-size: 4em;
+    letter-spacing: 0.05em;
+  }
+
+  .section-title {
+    font-size: 2.75em;
+  }
+
+  .section-para {
+    font-size: 1.75em;
+  }
+
+  .roles__list > li,
+  .five-year-goals__list > li,
+  .milestone__list > li {
+    font-size: 1.5em;
+  }
+
+  .statement-content-container {
+    gap: 3rem;
+  }
+
+  .statement-para {
+    font-size: 1.5em;
+    line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .section-para {
+    margin-bottom: 4rem;
+  }
+
+  #five-year-goals {
+    padding-bottom: 4rem;
+  }
 }
