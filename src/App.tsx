@@ -23,7 +23,7 @@ function App() {
                 the things that truly matter to you. Be the best version of
                 yourself.
               </p>
-              <ol className="roles__list">
+              <ul className="roles__list">
                 <li>
                   <span className="bold">Me</span>: I want to die with no
                   regrets about my life. When I die, I want to know in my own
@@ -85,13 +85,13 @@ function App() {
                   remember me as owning an impressive physical manga collection
                   and many collectibles and figurines.
                 </li>
-              </ol>
+              </ul>
             </div>
           </div>
         </section>
         <section id="goals">
           <div className="row">
-            <div className="container container--goals">
+            <div id="five-year-goals" className="container container--goals">
               <h3 className="section-title section-title--goals">
                 Five Year Goals
               </h3>
@@ -99,6 +99,128 @@ function App() {
                 List the 5 most important goals that you want to achieve within
                 the next five years. Don't sell yourself short here.
               </p>
+              <ol className="goals__list">
+                <li>
+                  On or before June 30, 2023, I have paid off all my student
+                  loan debts.
+                </li>
+                <li>
+                  In the year 2023 or earlier, I have landed a job as a
+                  junior/mid-level frontend developer making at least $80k/year.
+                </li>
+                <li>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Natus deleniti assumenda eaque asperiores sequi ratione atque
+                  autem repudiandae delectus cupiditate?
+                </li>
+                <li>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Ducimus culpa voluptatum quibusdam fugiat esse doloribus
+                  numquam libero quae quisquam eius.
+                </li>
+                <li>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
+                  quis tempore sunt, natus ducimus sed laudantium eius. Quas,
+                  voluptatem ipsum.
+                </li>
+              </ol>
+            </div>
+            <div className="container container--goals">
+              <h3 className="section-title section-title--goals">
+                Milestone Goals
+              </h3>
+              <p className="section-para">
+                List out all of the general goals you want to complete in your
+                life and order them by category. Set realistic, measurable goals
+                that you can continuously improve upon. Every time you hit a
+                milestone goal, replace it with a new one. You'll be surprised
+                how far you can go.
+              </p>
+              <div className="milestone__container">
+                <p className="milestone__category">Health</p>
+                <ul className="milestone__list">
+                  <li className="milestone__complete">
+                    Start working out again.
+                  </li>
+                  <li>Bulk to 170bs body weight.</li>
+                  <li className="milestone__complete">
+                    Start routinely visiting the dentist again.
+                  </li>
+                  <li>Start routinely visiting the doctor.</li>
+                  <li>Start routinely visiting the dermatologist.</li>
+                  <li className="milestone__complete">
+                    Visit the eye doctor and update glasses and contacts
+                    prescriptions.
+                  </li>
+                  <li className="milestone__complete">Get invisalign.</li>
+                  <li>Quit porn for good.</li>
+                </ul>
+              </div>
+              <div className="milestone__container">
+                <p className="milestone__category">Career</p>
+                <ul className="milestone__list">
+                  <li>
+                    Land a job with good benefits (401k and health insurance).
+                  </li>
+                  <li>
+                    Land a job as a senior top tech frontend developer making at
+                    least 200k/year.
+                  </li>
+                </ul>
+              </div>
+              <div className="milestone__container">
+                <p className="milestone__category">Financial</p>
+                <ul className="milestone__list">
+                  <li className="milestone__complete">
+                    Pay off student loan debts.
+                  </li>
+                  <li>Pay off car lease.</li>
+                  <li>Get back to $28,571 net worth.</li>
+                  <li className="milestone__complete">
+                    Restructure budget and better organize finances.
+                  </li>
+                </ul>
+              </div>
+              <div className="milestone__container">
+                <p className="milestone__category">Intellectual</p>
+                <ul className="milestone__list">
+                  <li className="milestone__complete">Read 25 books.</li>
+                  <li className="milestone__complete">Read 50 books.</li>
+                  <li>Start practicing guitar again.</li>
+                  <li className="milestone__complete">
+                    Start learning Tagalog.
+                  </li>
+                  <li>Complete all Tagalog lessons on Pimselur.</li>
+                  <li className="milestone__complete">
+                    Learn and become skilled aat blackjack basic strategy.
+                  </li>
+                </ul>
+              </div>
+              <div className="milestone__container">
+                <p className="milestone__category">Spiritual</p>
+                <ul className="milestone__list">
+                  <li className="milestone__complete">
+                    Start meditating again.
+                  </li>
+                </ul>
+              </div>
+              <div className="milestone__container">
+                <p className="milestone__category">Travel</p>
+                <ul className="milestone__list">
+                  <li>Take a road trip across the country.</li>
+                  <li>Visit Europe.</li>
+                  <li>Visit 5 other countries.</li>
+                </ul>
+              </div>
+              <div className="milestone__container">
+                <p className="milestone__category">Lifestyle</p>
+                <ul className="milestone__list">
+                  <li>Move into my own apartment / buy a house or condo.</li>
+                  <li>Start rebuilding wardrobe from scratch.</li>
+                  <li className="milestone__complete">Get my next tattoo.</li>
+                  <li className="milestone__complete">Get contact lenses.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
