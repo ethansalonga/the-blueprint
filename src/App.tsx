@@ -30,7 +30,7 @@ function App() {
               href="#roles"
               className="scroll"
               data-aos="fade-up"
-              data-aos-delay="1600"
+              data-aos-delay="700"
             >
               <div className="scroll__icon click"></div>
             </a>
@@ -60,7 +60,7 @@ function App() {
               <ul className="roles__list">
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="300"
+                  data-aos-delay="200"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Me</span>: I want to die with no
@@ -71,7 +71,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="600"
+                  data-aos-delay="400"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Boyfriend</span>: I want Amanda to
@@ -82,7 +82,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="900"
+                  data-aos-delay="600"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Brother</span>: I want Bro to remember
@@ -93,7 +93,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="1200"
+                  data-aos-delay="800"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Son</span>: I want Mom and Dad to
@@ -103,7 +103,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="1500"
+                  data-aos-delay="1000"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Friend</span>: I want my friends to
@@ -114,7 +114,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="1800"
+                  data-aos-delay="1200"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Software Developer</span>: I want
@@ -125,7 +125,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="2100"
+                  data-aos-delay="1400"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Gym Guy</span>: I want people to
@@ -137,7 +137,7 @@ function App() {
                 </li>
                 <li
                   data-aos="fade-down"
-                  data-aos-delay="2400"
+                  data-aos-delay="1600"
                   data-aos-anchor="#roles"
                 >
                   <span className="bold">Gamer</span>: I want everyone to
@@ -152,52 +152,89 @@ function App() {
         <section id="goals">
           <div className="row">
             <div id="five-year-goals" className="container container--goals">
-              <h3 className="section-title section-title--goals">
+              <h3
+                className="section-title section-title--goals"
+                data-aos="fade-right"
+              >
                 Five Year Goals
               </h3>
-              <p className="section-para section-para--goals">
+              <p
+                className="section-para section-para--goals"
+                data-aos="fade-right"
+              >
                 List the 5 most important goals that you want to achieve within
                 the next five years. What are your most ambitious dreams and
                 desires? Don't sell yourself short here.
               </p>
               <ol className="five-year-goals__list">
-                <li>
+                <li
+                  data-aos="fade-right"
+                  data-aos-delay="200"
+                  data-aos-anchor="#five-year-goals"
+                >
                   On or before June 30, 2023, I have paid off all my student
                   loan debts.
                 </li>
-                <li>
+                <li
+                  data-aos="fade-right"
+                  data-aos-delay="400"
+                  data-aos-anchor="#five-year-goals"
+                >
                   In the year 2023 or earlier, I have landed a job as a
                   junior/mid-level frontend developer making at least $80k/year.
                 </li>
-                <li>
+                <li
+                  data-aos="fade-right"
+                  data-aos-delay="600"
+                  data-aos-anchor="#five-year-goals"
+                >
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                   Natus deleniti assumenda eaque asperiores sequi ratione atque
                   autem repudiandae delectus cupiditate?
                 </li>
-                <li>
+                <li
+                  data-aos="fade-right"
+                  data-aos-delay="800"
+                  data-aos-anchor="#five-year-goals"
+                >
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Ducimus culpa voluptatum quibusdam fugiat esse doloribus
                   numquam libero quae quisquam eius.
                 </li>
-                <li>
+                <li
+                  data-aos="fade-right"
+                  data-aos-delay="1000"
+                  data-aos-anchor="#five-year-goals"
+                >
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
                   quis tempore sunt, natus ducimus sed laudantium eius. Quas,
                   voluptatem ipsum.
                 </li>
               </ol>
             </div>
-            <div className="container container--goals">
-              <h3 className="section-title section-title--goals">
+            <div id="milestone-goals" className="container container--goals">
+              <h3
+                className="section-title section-title--goals"
+                data-aos="fade-left"
+              >
                 Milestone Goals
               </h3>
-              <p className="section-para section-para--goals">
+              <p
+                className="section-para section-para--goals"
+                data-aos="fade-left"
+              >
                 List out all of the general goals you want to complete in your
                 life and order them by category. Set realistic, measurable goals
                 that you can continuously improve upon. Every time you hit a
                 milestone goal, replace it with a new one. You'll be surprised
                 how far you can go.
               </p>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="200"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Health</p>
                 <ul className="milestone__list">
                   <li className="milestone__complete">
@@ -217,7 +254,12 @@ function App() {
                   <li>Quit porn for good.</li>
                 </ul>
               </div>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="400"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Career</p>
                 <ul className="milestone__list">
                   <li>
@@ -229,7 +271,12 @@ function App() {
                   </li>
                 </ul>
               </div>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="600"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Financial</p>
                 <ul className="milestone__list">
                   <li className="milestone__complete">
@@ -242,7 +289,12 @@ function App() {
                   </li>
                 </ul>
               </div>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="800"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Intellectual</p>
                 <ul className="milestone__list">
                   <li className="milestone__complete">Read 25 books.</li>
@@ -257,7 +309,12 @@ function App() {
                   </li>
                 </ul>
               </div>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="1000"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Spiritual</p>
                 <ul className="milestone__list">
                   <li className="milestone__complete">
@@ -265,7 +322,12 @@ function App() {
                   </li>
                 </ul>
               </div>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="1200"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Travel</p>
                 <ul className="milestone__list">
                   <li>Take a road trip across the country.</li>
@@ -273,7 +335,12 @@ function App() {
                   <li>Visit 5 other countries.</li>
                 </ul>
               </div>
-              <div className="milestone__container">
+              <div
+                className="milestone__container"
+                data-aos="fade-left"
+                data-aos-delay="1400"
+                data-aos-anchor="#milestone-goals"
+              >
                 <p className="milestone__category">Lifestyle</p>
                 <ul className="milestone__list">
                   <li>Move into my own apartment / buy a house or condo.</li>
