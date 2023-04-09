@@ -25,6 +25,14 @@ function App() {
             <h1 className="header__title" data-aos="fade-up">
               The Blueprint
             </h1>
+            <a
+              href="#roles"
+              className="scroll"
+              data-aos="fade-up"
+              data-aos-delay="1600"
+            >
+              <div className="scroll__icon click"></div>
+            </a>
           </div>
         </div>
       </header>
