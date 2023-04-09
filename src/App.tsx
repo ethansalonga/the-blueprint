@@ -355,10 +355,16 @@ function App() {
         <section id="personal-statement">
           <div className="row">
             <div className="container container--statement">
-              <h3 className="section-title section-title--statement">
+              <h3
+                className="section-title section-title--statement"
+                data-aos="fade-up"
+              >
                 Personal Statement
               </h3>
-              <p className="section-para section-para--statement">
+              <p
+                className="section-para section-para--statement"
+                data-aos="fade-up"
+              >
                 What would you say if you were to give yourself your most
                 profound advice? What words would be most important for you to
                 remember throughout your entire life? What drives you, gives
@@ -366,7 +372,12 @@ function App() {
                 unable to be genuine to anyone else.
               </p>
               <div className="statement-content-container">
-                <p className="statement-para">
+                <p
+                  className="statement-para"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                  data-aos-anchor="#personal-statement"
+                >
                   Love yourself. You’re the only person in this life that will
                   be with you no matter what. Take care of yourself, respect
                   yourself, better yourself. Learn to be on your own and be
@@ -374,7 +385,12 @@ function App() {
                   out of life, and anyone who gets in the way of that is not
                   worth keeping around.
                 </p>
-                <p className="statement-para">
+                <p
+                  className="statement-para"
+                  data-aos="fade-up"
+                  data-aos-delay="400"
+                  data-aos-anchor="#personal-statement"
+                >
                   Remember that while attaining absolute perfection will never
                   happen, striving to get as close to it as possible, to reach
                   the highest heights you could possibly go will always be worth
@@ -387,14 +403,24 @@ function App() {
                   as long as you’re improving in the long run, consider your
                   growth a success. Stop comparing yourself to others.
                 </p>
-                <p className="statement-para">
+                <p
+                  className="statement-para"
+                  data-aos="fade-up"
+                  data-aos-delay="600"
+                  data-aos-anchor="#personal-statement"
+                >
                   Never stop learning, and never close yourself off in terms of
                   personal growth. Stay true to your convictions, but be
                   receptive to personal change and always keep an open mind.
                   Truly love and serve those closest to you. Live each day in
                   line with the ideal person you envision yourself to be.
                 </p>
-                <p className="statement-para">
+                <p
+                  className="statement-para"
+                  data-aos="fade-up"
+                  data-aos-delay="800"
+                  data-aos-anchor="#personal-statement"
+                >
                   Remember that the feelings of sadness and emptiness will not
                   last forever. Be grateful for all the blessings in your life
                   and do your best to remain positive, no matter the situation
