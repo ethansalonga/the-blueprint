@@ -1,13 +1,30 @@
+import { useEffect } from "react"
+import AOS from "aos"
+import "aos/dist/aos.css"
 import "./styles/App.css"
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+    })
+  }, [])
+
   return (
     <>
       <header id="header">
         <div className="row">
           <div className="container container--header">
-            <h2 className="header__subtitle">Your standard for living life</h2>
-            <h1 className="header__title">The Blueprint</h1>
+            <h2
+              className="header__subtitle"
+              data-aos="fade-up"
+              data-aos-delay="700"
+            >
+              Your standard for living life
+            </h2>
+            <h1 className="header__title" data-aos="fade-up">
+              The Blueprint
+            </h1>
           </div>
         </div>
       </header>
