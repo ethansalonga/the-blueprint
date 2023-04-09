@@ -1,0 +1,39 @@
+#personal-statement {
+  background-color: #824936;
+}
+
+.container--statement {
+  color: #fff;
+}
+
+.section-title--statement {
+  color: #f3eed9;
+}
+
+.section-para--statement:after {
+  background: #f3eed9;
+}
+
+.statement-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.statement-para {
+  text-align: start;
+  font-style: italic;
+  font-size: 1.25em;
+  line-height: 2rem;
+}
+
+@media (min-width: 900px) {
+  .statement-content-container {
+    gap: 3rem;
+  }
+
+  .statement-para {
+    font-size: 1.5em;
+    line-height: 2.25rem;
+  }
+}

@@ -1,0 +1,31 @@
+.container--roles {
+  background-color: #fff;
+  color: #222c2a;
+}
+
+.section-title--roles {
+  color: #824936;
+}
+
+.section-para--roles:after {
+  background: #824936;
+}
+
+.roles__list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.roles__list > li {
+  list-style-type: none;
+  text-align: start;
+  font-size: 1.25em;
+  line-height: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .roles__list > li {
+    font-size: 1.5em;
+  }
+}
