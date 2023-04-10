@@ -1,17 +1,19 @@
+@use "src/scss/base";
+
 #personal-statement {
-  background-color: #824936;
+  background-color: base.$quaternary-color;
 }
 
 .container--statement {
-  color: #fff;
+  color: base.$secondary-color;
 }
 
 .section-title--statement {
-  color: #f3eed9;
+  color: base.$primary-color;
 }
 
-.section-para--statement:after {
-  background: #f3eed9;
+.section-desc--statement:after {
+  background: base.$primary-color;
 }
 
 .statement-content-container {

@@ -1,14 +1,16 @@
+@use "src/scss/base";
+
 .container--roles {
-  background-color: #fff;
-  color: #222c2a;
+  background-color: base.$secondary-color;
+  color: base.$tertiary-color;
 }
 
 .section-title--roles {
-  color: #824936;
+  color: base.$quaternary-color;
 }
 
-.section-para--roles:after {
-  background: #824936;
+.section-desc--roles:after {
+  background: base.$quaternary-color;
 }
 
 .roles__list {

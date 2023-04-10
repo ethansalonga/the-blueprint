@@ -1,5 +1,7 @@
+@use "src/scss/base";
+
 #goals {
-  background-color: #222c2a;
+  background-color: base.$tertiary-color;
 }
 
 #five-year-goals {
@@ -7,15 +9,15 @@
 }
 
 .container--goals {
-  color: #fff;
+  color: base.$secondary-color;
 }
 
 .section-title--goals {
-  color: #f3eed9;
+  color: base.$primary-color;
 }
 
-.section-para--goals:after {
-  background: #f3eed9;
+.section-desc--goals:after {
+  background: base.$primary-color;
 }
 
 .five-year-goals__list {

@@ -1,4 +1,4 @@
-import "./Goals.css"
+import "./Goals.scss"
 
 const Goals = () => {
   return (
@@ -11,7 +11,7 @@ const Goals = () => {
           >
             Five Year Goals
           </h3>
-          <p className="section-para section-para--goals" data-aos="fade-right">
+          <p className="section-desc section-desc--goals" data-aos="fade-right">
             List the 5 most important goals that you want to achieve within the
             next five years. What are your most ambitious dreams and desires?
             Don't sell yourself short here.
@@ -69,7 +69,7 @@ const Goals = () => {
           >
             Milestone Goals
           </h3>
-          <p className="section-para section-para--goals" data-aos="fade-left">
+          <p className="section-desc section-desc--goals" data-aos="fade-left">
             List out all of the general goals you want to complete in your life
             and order them by category. Set realistic, measurable goals that you
             can continuously improve upon. Every time you hit a milestone goal,

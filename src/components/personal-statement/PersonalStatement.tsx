@@ -1,4 +1,4 @@
-import "./PersonalStatement.css"
+import "./PersonalStatement.scss"
 
 const PersonalStatement = () => {
   return (
@@ -12,7 +12,7 @@ const PersonalStatement = () => {
             Personal Statement
           </h3>
           <p
-            className="section-para section-para--statement"
+            className="section-desc section-desc--statement"
             data-aos="fade-up"
           >
             What would you say if you were to give yourself your most profound

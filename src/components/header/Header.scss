@@ -1,5 +1,7 @@
+@use "src/scss/base";
+
 #header {
-  background-color: #f3eed9;
+  background-color: base.$primary-color;
 }
 
 .container--header {
@@ -12,15 +14,15 @@
   font-size: 1.25em;
   font-weight: 300;
   letter-spacing: 0.25em;
-  color: #222c2a;
+  color: base.$tertiary-color;
 }
 
 .header__title {
-  font-family: "Playfair Display", serif;
+  font-family: base.$playfair;
   font-size: 2.5em;
   font-weight: 900;
   letter-spacing: 0.05em;
-  color: #824936;
+  color: base.$quaternary-color;
 }
 
 .scroll {
@@ -36,7 +38,7 @@
 .scroll__icon {
   width: 28px;
   height: 50px;
-  border: 2px solid #222c2a;
+  border: 2px solid base.$tertiary-color;
   border-radius: 24px;
   display: flex;
   align-items: center;
@@ -47,7 +49,7 @@
   content: "";
   width: 4px;
   height: 6px;
-  background-color: #222c2a;
+  background-color: base.$tertiary-color;
   border-radius: 2px;
   animation: scroll 1000ms infinite alternate-reverse;
 }
