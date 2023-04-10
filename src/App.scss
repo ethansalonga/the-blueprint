@@ -36,31 +36,33 @@ body {
   gap: 0.5rem;
 }
 
-.section-title {
-  font-family: base.$playfair;
-  font-size: 2em;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-}
+.section {
+  &-title {
+    font-family: base.$playfair;
+    font-size: 2em;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
 
-.section-desc {
-  font-size: 1.5em;
-  margin-bottom: 2rem;
-  position: relative;
-}
+  &-desc {
+    font-size: 1.5em;
+    margin-bottom: 2rem;
+    position: relative;
+  }
 
-.section-desc::after {
-  content: "";
-  display: block;
-  width: 80%;
-  height: 3px;
-  top: 105%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  position: absolute;
-  border-radius: 40%;
-  opacity: 50%;
+  &-desc::after {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 3px;
+    top: 105%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    position: absolute;
+    border-radius: 40%;
+    opacity: 50%;
+  }
 }
 
 @media (min-width: 600px) {
@@ -74,21 +76,25 @@ body {
     padding: 5rem 3rem;
   }
 
-  .section-title {
-    font-size: 2.75em;
-  }
+  .section {
+    &-title {
+      font-size: 2.75em;
+    }
 
-  .section-desc {
-    font-size: 1.75em;
+    &-desc {
+      font-size: 1.75em;
+    }
   }
 }
 
 @media (min-width: 1200px) {
-  .section-desc::after {
-    top: 120%;
-  }
+  .section {
+    &-desc::after {
+      top: 120%;
+    }
 
-  .section-desc {
-    margin-bottom: 4rem;
+    &-desc {
+      margin-bottom: 4rem;
+    }
   }
 }

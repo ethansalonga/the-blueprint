@@ -5,21 +5,21 @@
   color: base.$tertiary-color;
 }
 
-.section-title--roles {
-  color: base.$quaternary-color;
-}
+.section {
+  &-title--roles {
+    color: base.$quaternary-color;
+  }
 
-.section-desc--roles::after {
-  background: base.$quaternary-color;
+  &-desc--roles::after {
+    background: base.$quaternary-color;
+  }
 }
 
 .roles__list {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-}
 
-.roles__list {
   li {
     list-style-type: none;
     text-align: start;

@@ -12,21 +12,21 @@
   color: base.$secondary-color;
 }
 
-.section-title--goals {
-  color: base.$primary-color;
-}
+.section {
+  &-title--goals {
+    color: base.$primary-color;
+  }
 
-.section-desc--goals:after {
-  background: base.$primary-color;
+  &-desc--goals::after {
+    background: base.$primary-color;
+  }
 }
 
 .five-year-goals__list {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-}
 
-.five-year-goals__list {
   li {
     text-align: start;
     font-size: 1.25em;
@@ -34,33 +34,33 @@
   }
 }
 
-.milestone__container {
-  margin-bottom: 2rem;
-}
-
-.milestone__category {
-  text-align: start;
-  text-decoration: underline;
-  font-size: 1.5em;
-  margin-bottom: 1rem;
-}
-
-.milestone__list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-left: 1.25rem;
-}
-
-.milestone__list {
-  li {
-    text-align: start;
-    font-size: 1.25em;
+.milestone {
+  &__container {
+    margin-bottom: 2rem;
   }
-}
 
-.milestone__complete {
-  opacity: 0.5;
+  &__category {
+    text-align: start;
+    text-decoration: underline;
+    font-size: 1.5em;
+    margin-bottom: 1rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 1.25rem;
+
+    li {
+      text-align: start;
+      font-size: 1.25em;
+    }
+  }
+
+  &__complete {
+    opacity: 0.5;
+  }
 }
 
 @media (min-width: 900px) {

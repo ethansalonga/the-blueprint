@@ -8,33 +8,39 @@
   color: base.$secondary-color;
 }
 
-.section-title--statement {
-  color: base.$primary-color;
+.section {
+  &-title--statement {
+    color: base.$primary-color;
+  }
+
+  &-desc--statement::after {
+    background: base.$primary-color;
+  }
 }
 
-.section-desc--statement::after {
-  background: base.$primary-color;
-}
+.statement {
+  &-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
 
-.statement-content-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.statement-para {
-  text-align: start;
-  font-size: 1.25em;
-  line-height: 2rem;
+  &-para {
+    text-align: start;
+    font-size: 1.25em;
+    line-height: 2rem;
+  }
 }
 
 @media (min-width: 900px) {
-  .statement-content-container {
-    gap: 3rem;
-  }
+  .statement {
+    &-content-container {
+      gap: 3rem;
+    }
 
-  .statement-para {
-    font-size: 1.5em;
-    line-height: 2.25rem;
+    &-para {
+      font-size: 1.5em;
+      line-height: 2.25rem;
+    }
   }
 }
