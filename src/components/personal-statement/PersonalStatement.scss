@@ -12,7 +12,7 @@
   color: base.$primary-color;
 }
 
-.section-desc--statement:after {
+.section-desc--statement::after {
   background: base.$primary-color;
 }
 

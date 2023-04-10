@@ -9,7 +9,7 @@
   color: base.$quaternary-color;
 }
 
-.section-desc--roles:after {
+.section-desc--roles::after {
   background: base.$quaternary-color;
 }
 
@@ -19,15 +19,19 @@
   gap: 3rem;
 }
 
-.roles__list > li {
-  list-style-type: none;
-  text-align: start;
-  font-size: 1.25em;
-  line-height: 2.5rem;
+.roles__list {
+  li {
+    list-style-type: none;
+    text-align: start;
+    font-size: 1.25em;
+    line-height: 2.5rem;
+  }
 }
 
 @media (min-width: 900px) {
-  .roles__list > li {
-    font-size: 1.5em;
+  .roles__list {
+    li {
+      font-size: 1.5em;
+    }
   }
 }

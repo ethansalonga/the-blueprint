@@ -26,10 +26,12 @@
   gap: 3rem;
 }
 
-.five-year-goals__list > li {
-  text-align: start;
-  font-size: 1.25em;
-  line-height: 2.5rem;
+.five-year-goals__list {
+  li {
+    text-align: start;
+    font-size: 1.25em;
+    line-height: 2.5rem;
+  }
 }
 
 .milestone__container {
@@ -50,9 +52,11 @@
   padding-left: 1.25rem;
 }
 
-.milestone__list > li {
-  text-align: start;
-  font-size: 1.25em;
+.milestone__list {
+  li {
+    text-align: start;
+    font-size: 1.25em;
+  }
 }
 
 .milestone__complete {
@@ -60,9 +64,11 @@
 }
 
 @media (min-width: 900px) {
-  .five-year-goals__list > li,
-  .milestone__list > li {
-    font-size: 1.5em;
+  .five-year-goals__list,
+  .milestone__list {
+    li {
+      font-size: 1.5em;
+    }
   }
 }
 
