@@ -33,8 +33,9 @@
   transition: all 600ms 800ms;
   position: absolute;
   bottom: 80px;
-  left: 50%;
-  transform: translate(-50%, 50%);
+  left: 20%;
+  cursor: pointer;
+  transition: all 300ms ease;
 
   &__icon {
     width: 28px;
@@ -44,6 +45,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: all 300ms ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
   }
 
   &__icon::after {
@@ -66,7 +77,14 @@
   }
 }
 
-.click {
+.dark-mode__icon {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 80px;
+  right: 20%;
+
+  color: #222c2a;
   cursor: pointer;
   transition: all 300ms ease;
 
@@ -78,6 +96,17 @@
     transform: scale(0.8);
   }
 }
+
+@media (min-width: 600px) {
+  .scroll {
+    left: 40%;
+  }
+
+  .dark-mode__icon {
+    right: 40%;
+  }
+}
+
 
 @media (min-width: 900px) {
   .header {
