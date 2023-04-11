@@ -1,0 +1,28 @@
+.section {
+  &-title {
+    font-family: playfair;
+    font-size: 2em;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  &-desc {
+    font-size: 1.5em;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  &-desc::after {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 3px;
+    top: 105%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    position: absolute;
+    border-radius: 40%;
+    opacity: 50%;
+  }
+}

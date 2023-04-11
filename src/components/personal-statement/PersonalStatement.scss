@@ -1,20 +1,20 @@
-@use "src/scss/base";
+@use "src/scss/config";
 
 #personal-statement {
-  background-color: base.$quaternary-color;
+  background-color: config.$quaternary-color;
 }
 
 .container--statement {
-  color: base.$secondary-color;
+  color: config.$secondary-color;
 }
 
 .section {
   &-title--statement {
-    color: base.$primary-color;
+    color: config.$primary-color;
   }
 
   &-desc--statement::after {
-    background: base.$primary-color;
+    background: config.$primary-color;
   }
 }
 

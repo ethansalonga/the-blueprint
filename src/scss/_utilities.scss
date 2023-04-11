@@ -1,0 +1,17 @@
+.bold {
+  font-weight: 500;
+}
+
+.row {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 80rem;
+}
+
+.container {
+  padding: 4rem 3rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

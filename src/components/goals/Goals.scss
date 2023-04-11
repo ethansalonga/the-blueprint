@@ -1,7 +1,7 @@
-@use "src/scss/base";
+@use "src/scss/config";
 
 #goals {
-  background-color: base.$tertiary-color;
+  background-color: config.$tertiary-color;
 }
 
 #five-year-goals {
@@ -9,16 +9,16 @@
 }
 
 .container--goals {
-  color: base.$secondary-color;
+  color: config.$secondary-color;
 }
 
 .section {
   &-title--goals {
-    color: base.$primary-color;
+    color: config.$primary-color;
   }
 
   &-desc--goals::after {
-    background: base.$primary-color;
+    background: config.$primary-color;
   }
 }
 

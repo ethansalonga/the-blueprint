@@ -1,17 +1,17 @@
-@use "src/scss/base";
+@use "src/scss/config";
 
 .container--roles {
-  background-color: base.$secondary-color;
-  color: base.$tertiary-color;
+  background-color: config.$secondary-color;
+  color: config.$tertiary-color;
 }
 
 .section {
   &-title--roles {
-    color: base.$quaternary-color;
+    color: config.$quaternary-color;
   }
 
   &-desc--roles::after {
-    background: base.$quaternary-color;
+    background: config.$quaternary-color;
   }
 }
 

@@ -1,7 +1,7 @@
-@use "src/scss/base";
+@use "src/scss/config";
 
 #header {
-  background-color: base.$primary-color;
+  background-color: config.$primary-color;
 }
 
 .container--header {
@@ -15,15 +15,15 @@
     font-size: 1.25em;
     font-weight: 300;
     letter-spacing: 0.25em;
-    color: base.$tertiary-color;
+    color: config.$tertiary-color;
   }
 
   &__title {
-    font-family: base.$playfair;
+    font-family: config.$playfair;
     font-size: 2.5em;
     font-weight: 900;
     letter-spacing: 0.05em;
-    color: base.$quaternary-color;
+    color: config.$quaternary-color;
   }
 }
 
@@ -39,7 +39,7 @@
   &__icon {
     width: 28px;
     height: 50px;
-    border: 2px solid base.$tertiary-color;
+    border: 2px solid config.$tertiary-color;
     border-radius: 24px;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@
     content: "";
     width: 4px;
     height: 6px;
-    background-color: base.$tertiary-color;
+    background-color: config.$tertiary-color;
     border-radius: 2px;
     animation: scroll 1000ms infinite alternate-reverse;
   }
