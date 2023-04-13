@@ -1,4 +1,3 @@
-import { MoonIcon } from "@heroicons/react/24/solid"
 import "./Header.scss"
 
 const Header = () => {
@@ -25,9 +24,6 @@ const Header = () => {
             >
               <div className="scroll__icon"></div>
             </a>
-            <button className="dark-mode__icon click">
-              <MoonIcon />
-            </button>
           </div>
         </div>
       </div>
