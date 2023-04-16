@@ -1,17 +1,15 @@
-@use "src/scss/config";
-
 .container--roles {
-  background-color: config.$secondary-color;
-  color: config.$tertiary-color;
+  background-color: #fff;
+  color: #222c2a;
 }
 
 .section {
   &-title--roles {
-    color: config.$quaternary-color;
+    color: #824936;
   }
 
   &-desc--roles::after {
-    background: config.$quaternary-color;
+    background: #824936;
   }
 }
 
@@ -22,7 +20,7 @@
 
   li {
     list-style-type: none;
-    text-align: start;
+    text-align: left;
     font-size: 1.25em;
     line-height: 2.5rem;
   }

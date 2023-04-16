@@ -1,4 +1,4 @@
-import "./Goals.scss"
+import "./Goals.css"
 
 const Goals = () => {
   return (

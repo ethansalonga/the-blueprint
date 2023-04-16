@@ -1,4 +1,4 @@
-import "./PersonalStatement.scss"
+import "./PersonalStatement.css"
 
 const PersonalStatement = () => {
   return (

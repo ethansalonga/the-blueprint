@@ -1,6 +1,5 @@
-@use "config";
-@use "utilities";
-@use "sections";
+@import "utilities";
+@import "sections";
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Roboto:wght@300;400;500&display=swap");
 
 *,
@@ -17,7 +16,7 @@ html {
 }
 
 body {
-  font-family: roboto;
+  font-family: "Roboto", sans-serif;
 }
 
 button {

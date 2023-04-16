@@ -1,6 +1,6 @@
 .section {
   &-title {
-    font-family: playfair;
+    font-family: "Playfair Display", serif;
     font-size: 2em;
     font-weight: 900;
     letter-spacing: 0.1em;

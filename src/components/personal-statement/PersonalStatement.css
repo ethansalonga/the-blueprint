@@ -1,20 +1,18 @@
-@use "src/scss/config";
-
 #personal-statement {
-  background-color: config.$quaternary-color;
+  background-color: #824936;
 }
 
 .container--statement {
-  color: config.$secondary-color;
+  color: #fff;
 }
 
 .section {
   &-title--statement {
-    color: config.$primary-color;
+    color: #f3eed9;
   }
 
   &-desc--statement::after {
-    background: config.$primary-color;
+    background: #f3eed9;
   }
 }
 

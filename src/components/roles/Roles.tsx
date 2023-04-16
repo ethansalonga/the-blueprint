@@ -1,4 +1,4 @@
-import "./Roles.scss"
+import "./Roles.css"
 
 const Roles = () => {
   return (
