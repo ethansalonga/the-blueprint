@@ -24,7 +24,7 @@
   }
 
   &-para {
-    text-align: start;
+    text-align: left;
     font-size: 1.25em;
     line-height: 2rem;
   }
