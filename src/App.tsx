@@ -5,7 +5,6 @@ import Goals from "./components/goals/Goals"
 import PersonalStatement from "./components/personal-statement/PersonalStatement"
 import AOS from "aos"
 import "aos/dist/aos.css"
-import "./styles/App.css"
 
 function App() {
   useEffect(() => {

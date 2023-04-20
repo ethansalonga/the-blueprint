@@ -1,6 +1,17 @@
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { darkModeToggled } from "../../features/global/globalSlice"
+import { MoonIcon } from "@heroicons/react/24/solid"
 import "./Header.css"
 
 const Header = () => {
+  const dispatch = useAppDispatch()
+
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
+
+  const toggleDarkMode = () => {
+    dispatch(darkModeToggled())
+  }
+
   return (
     <header id="header">
       <div className="row">
@@ -24,6 +35,13 @@ const Header = () => {
             >
               <div className="scroll__icon"></div>
             </a>
+            <button
+              type="button"
+              onClick={toggleDarkMode}
+              className="dark-mode__icon"
+            >
+              <MoonIcon data-aos="fade-up" data-aos-delay="700" />
+            </button>
           </div>
         </div>
       </div>
