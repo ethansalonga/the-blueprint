@@ -1,5 +1,14 @@
-#header {
+.header,
+.header--dark {
+  transition: background-color 300ms ease-in-out;
+}
+
+.header {
   background-color: #f3eed9;
+}
+
+.header--dark {
+  background-color: #1b2430;
 }
 
 .container--header {
@@ -9,33 +18,50 @@
 }
 
 .header {
-  &__subtitle {
+  &__subtitle,
+  &__subtitle--dark {
     font-size: 1.25em;
     font-weight: 300;
     letter-spacing: 0.25em;
+    transition: color 300ms ease-in-out;
+  }
+
+  &__subtitle {
     color: #222c2a;
   }
 
-  &__title {
+  &__subtitle--dark {
+    color: #d6d5a8;
+  }
+
+  &__title,
+  &__title--dark {
     font-family: "Playfair Display", serif;
     font-size: 2.5em;
     font-weight: 900;
     letter-spacing: 0.05em;
+  }
+
+  &__title {
     color: #824936;
+  }
+
+  &__title--dark {
+    color: #816797;
   }
 }
 
 .scroll {
   opacity: 1;
   visibility: visible;
-  transition: all 600ms 800ms;
   position: absolute;
   bottom: 80px;
   left: 20%;
   cursor: pointer;
   transition: all 300ms ease;
 
-  &__icon {
+  &__icon,
+  &__icon--dark {
     width: 28px;
     height: 50px;
     border: 2px solid #222c2a;
@@ -55,13 +81,26 @@
     }
   }
 
-  &__icon::after {
+  &__icon--dark {
+    border: 2px solid #d6d5a8;
+  }
+
+  &__icon::after,
+  &__icon--dark::after {
     content: "";
     width: 4px;
     height: 6px;
-    background-color: #222c2a;
     border-radius: 2px;
     animation: scroll 1000ms infinite alternate-reverse;
+    transition: color 300ms ease-in-out;
+  }
+
+  &__icon::after {
+    background-color: #222c2a;
+  }
+
+  &__icon--dark::after {
+    background-color: #d6d5a8;
   }
 }
 
@@ -75,7 +114,8 @@
   }
 }
 
-.dark-mode__icon {
+.dark-mode__icon,
+.dark-mode__icon--dark {
   position: absolute;
   bottom: 80px;
   right: 20%;
@@ -94,23 +134,30 @@
   }
 }
 
+.dark-mode__icon--dark {
+  color: #d6d5a8;
+}
+
 @media (min-width: 600px) {
   .scroll {
     left: 40%;
   }
 
-  .dark-mode__icon {
+  .dark-mode__icon,
+  .dark-mode__icon--dark {
     right: 40%;
   }
 }
 
 @media (min-width: 900px) {
   .header {
-    &__subtitle {
+    &__subtitle,
+    &__subtitle--dark {
       font-size: 2em;
     }
 
-    &__title {
+    &__title,
+    &__title--dark {
       font-size: 4em;
       letter-spacing: 0.05em;
     }

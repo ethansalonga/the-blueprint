@@ -13,19 +13,25 @@ const Header = () => {
   }
 
   return (
-    <header id="header">
+    <header id="header" className={isDarkMode ? "header--dark" : "header"}>
       <div className="row">
         <div className="container container--header">
-          <h2
-            className="header__subtitle"
-            data-aos="fade-up"
-            data-aos-delay="700"
-          >
-            Your standard for living life
-          </h2>
-          <h1 className="header__title" data-aos="fade-up">
-            The Blueprint
-          </h1>
+          <div data-aos="fade-up" data-aos-delay="700">
+            <h2
+              className={
+                isDarkMode ? "header__subtitle--dark" : "header__subtitle"
+              }
+            >
+              Your standard for living life
+            </h2>
+          </div>
+          <div data-aos="fade-up">
+            <h1
+              className={isDarkMode ? "header__title--dark" : "header__title"}
+            >
+              The Blueprint
+            </h1>
+          </div>
           <div>
             <a
               href="#roles"
@@ -33,12 +39,16 @@ const Header = () => {
               data-aos="fade-up"
               data-aos-delay="700"
             >
-              <div className="scroll__icon"></div>
+              <div
+                className={isDarkMode ? "scroll__icon--dark" : "scroll__icon"}
+              ></div>
             </a>
             <button
               type="button"
               onClick={toggleDarkMode}
-              className="dark-mode__icon"
+              className={
+                isDarkMode ? "dark-mode__icon--dark" : "dark-mode__icon"
+              }
             >
               <MoonIcon data-aos="fade-up" data-aos-delay="700" />
             </button>
