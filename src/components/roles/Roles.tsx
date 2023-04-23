@@ -5,7 +5,7 @@ const Roles = () => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
 
   return (
-    <section id="roles">
+    <section id="roles" className={isDarkMode ? "roles--dark" : ""}>
       <div className="row">
         <div
           className={`container ${
