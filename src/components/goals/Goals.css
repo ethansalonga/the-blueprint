@@ -1,5 +1,9 @@
-#goals {
+.goals {
   background-color: #222c2a;
+}
+
+.goals--dark {
+  background-color: #161616;
 }
 
 #five-year-goals {

@@ -1,6 +1,6 @@
 .header,
 .header--dark {
-  transition: background-color 300ms ease-in-out;
+  transition: background-color 300ms ease;
 }
 
 .header {
@@ -8,7 +8,7 @@
 }
 
 .header--dark {
-  background-color: #1b2430;
+  background-color: #161616;
 }
 
 .container--header {
@@ -23,7 +23,7 @@
     font-size: 1.25em;
     font-weight: 300;
     letter-spacing: 0.25em;
-    transition: color 300ms ease-in-out;
+    transition: color 300ms ease;
   }
 
   &__subtitle {
@@ -31,7 +31,7 @@
   }
 
   &__subtitle--dark {
-    color: #d6d5a8;
+    color: #fff;
   }
 
   &__title,
@@ -47,7 +47,7 @@
   }
 
   &__title--dark {
-    color: #816797;
+    color: #f3eed9;
   }
 }
 
@@ -82,7 +82,7 @@
   }
 
   &__icon--dark {
-    border: 2px solid #d6d5a8;
+    border: 2px solid #fff;
   }
 
   &__icon::after,
@@ -92,7 +92,7 @@
     height: 6px;
     border-radius: 2px;
     animation: scroll 1000ms infinite alternate-reverse;
-    transition: color 300ms ease-in-out;
+    transition: color 300ms ease;
   }
 
   &__icon::after {
@@ -100,7 +100,7 @@
   }
 
   &__icon--dark::after {
-    background-color: #d6d5a8;
+    background-color: #fff;
   }
 }
 
@@ -135,7 +135,7 @@
 }
 
 .dark-mode__icon--dark {
-  color: #d6d5a8;
+  color: #fff;
 }
 
 @media (min-width: 600px) {

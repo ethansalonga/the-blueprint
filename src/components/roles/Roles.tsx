@@ -1,22 +1,40 @@
+import { useAppSelector } from "../../app/hooks"
 import "./Roles.css"
 
 const Roles = () => {
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
+
   return (
     <section id="roles">
       <div className="row">
-        <div className="container container--roles">
-          <h3
-            className="section-title section-title--roles"
-            data-aos="fade-down"
-          >
-            Roles
-          </h3>
-          <p className="section-desc section-desc--roles" data-aos="fade-down">
-            List out the various roles you play in your life in order of
-            importance. Write a short description for each role as if you had
-            just passed away. We all die sometime. Remember to focus on the
-            things that truly matter to you. Be the best version of yourself.
-          </p>
+        <div
+          className={`container ${
+            isDarkMode ? "container--roles--dark" : "container--roles"
+          }`}
+        >
+          <div data-aos="fade-down">
+            <h3
+              className={`section-title ${
+                isDarkMode
+                  ? "section-title--roles--dark"
+                  : "section-title--roles"
+              }`}
+            >
+              Roles
+            </h3>
+          </div>
+          <div data-aos="fade-down">
+            <p
+              className={`section-desc ${
+                isDarkMode ? "section-desc--roles--dark" : "section-desc--roles"
+              }`}
+            >
+              List out the various roles you play in your life in order of
+              importance. Write a short description for each role as if you had
+              just passed away. We all die sometime. Remember to focus on the
+              things that truly matter to you. Be the best version of yourself.
+            </p>
+          </div>
           <ul className="roles__list">
             <li
               data-aos="fade-down"

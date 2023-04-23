@@ -1,15 +1,43 @@
+.container--roles,
+.container--roles--dark {
+  transition: all 300ms ease;
+}
+
 .container--roles {
   background-color: #fff;
   color: #222c2a;
 }
 
+.container--roles--dark {
+  background-color: #161616;
+  color: #d8d8d8;
+}
+
 .section {
+  &-title--roles,
+  &-title--roles--dark {
+    transition: color 300ms ease;
+  }
+
   &-title--roles {
     color: #824936;
   }
 
+  &-title--roles--dark {
+    color: #f3eed9;
+  }
+
+  &-desc--roles::after,
+  &-desc--roles--dark::after {
+    transition: background-color 300ms ease;
+  }
+
   &-desc--roles::after {
     background: #824936;
+  }
+
+  &-desc--roles--dark::after {
+    background: #f3eed9;
   }
 }
 

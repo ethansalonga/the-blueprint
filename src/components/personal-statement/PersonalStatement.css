@@ -1,5 +1,9 @@
-#personal-statement {
+.personal-statement {
   background-color: #824936;
+}
+
+.personal-statement--dark {
+  background-color: #161616;
 }
 
 .container--statement {

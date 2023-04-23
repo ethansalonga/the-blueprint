@@ -1,8 +1,15 @@
+import { useAppSelector } from "../../app/hooks"
+
 import "./PersonalStatement.css"
 
 const PersonalStatement = () => {
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
+
   return (
-    <section id="personal-statement">
+    <section
+      id="personal-statement"
+      className={isDarkMode ? "personal-statement--dark" : "personal-statement"}
+    >
       <div className="row">
         <div className="container container--statement">
           <h3

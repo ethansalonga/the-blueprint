@@ -1,8 +1,11 @@
+import { useAppSelector } from "../../app/hooks"
 import "./Goals.css"
 
 const Goals = () => {
+  const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
+
   return (
-    <section id="goals">
+    <section id="goals" className={isDarkMode ? "goals--dark" : "goals"}>
       <div className="row">
         <div id="five-year-goals" className="container container--goals">
           <h3
