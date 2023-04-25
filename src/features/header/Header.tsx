@@ -46,7 +46,7 @@ const Header = () => {
               data-aos-delay="700"
             >
               <div
-                className={`scroll-icon w-7 h-12 border-2 border-222c2a rounded-3xl flex justify-center items-center cursor-pointer transition-all duration-300 ease-out hover:scale-110 active:scale-90 ${
+                className={`scroll-icon w-7 h-12 border-2 border-222c2a rounded-3xl flex justify-center items-center cursor-pointer transition-all hover:scale-110 active:scale-90 ${
                   isDarkMode ? "border-white after:bg-white" : "after:bg-222c2a"
                 }`}
               ></div>

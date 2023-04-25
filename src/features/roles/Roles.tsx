@@ -24,17 +24,22 @@ const Roles = () => {
   }, [roles, dispatch])
 
   return (
-    <section id="roles" className={isDarkMode ? "roles--dark" : ""}>
+    <section
+      id="roles"
+      className={`transition-colors duration-500 ease-in-out ${
+        isDarkMode && "bg-161616 text-white"
+      }`}
+    >
       <div className="row">
         <div
-          className={`container ${
-            isDarkMode ? "container--roles--dark" : "container--roles"
+          className={`container transition-colors duration:500 ease-in-out ${
+            isDarkMode ? "text-white" : "text-222c2a"
           }`}
         >
           <div data-aos="fade-down">
             <h3
-              className={`sectionTitle ${
-                isDarkMode ? "sectionTitle--roles--dark" : "sectionTitle--roles"
+              className={`sectionTitle transition-colors duration:500 ease-in-out ${
+                isDarkMode ? "text-f3eed9" : "text-824936"
               }`}
             >
               Roles
@@ -42,8 +47,8 @@ const Roles = () => {
           </div>
           <div data-aos="fade-down">
             <p
-              className={`sectionDesc ${
-                isDarkMode ? "sectionDesc--roles--dark" : "sectionDesc--roles"
+              className={`sectionDesc after:transition-colors after:duration-500 after:ease-in-out after ${
+                isDarkMode ? "after:bg-f3eed9" : "after:bg-824936"
               }`}
             >
               List out the various roles you play in your life in order of
@@ -59,11 +64,12 @@ const Roles = () => {
               data-aos-anchor="#roles"
             />
           </div>
-          <ul className="roles__list">
+          <ul className="flex flex-col gap-12">
             {status === "loading" && <p>Loading roles...</p>}
             {status === "succeeded" &&
               roles.map((role, index) => (
                 <li
+                  className="list-none text-left text-xl leading-10 900:text-2xl 900:leading-10"
                   data-aos="fade-down"
                   data-aos-delay={`${200 * (index + 1)}`}
                   data-aos-anchor="#roles"
