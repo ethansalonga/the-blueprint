@@ -66,7 +66,8 @@ const Roles = () => {
                   data-aos-delay={`${200 * (index + 1)}`}
                   data-aos-anchor="#roles"
                 >
-                  <span className="bold">{role.title}</span>: {role.description}
+                  <span className="font-medium">{role.title}</span>:{" "}
+                  {role.description}
                 </li>
               ))}
             {status === "failed" && <p>{error}</p>}
