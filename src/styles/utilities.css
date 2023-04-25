@@ -11,3 +11,31 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.plus-icon,
+.plus-icon--dark {
+  margin: 0.5em auto;
+  height: 40px;
+  width: 40px;
+  color: #824936;
+  cursor: pointer;
+  transition: all 300ms ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  &:active {
+    transform: scale(0.8);
+  }
+}
+
+.plus-icon--dark {
+  color: #f3eed9;
+}
+
+@media (min-width: 900px) {
+  .container {
+    padding: 5rem 3rem;
+  }
+}

@@ -33,10 +33,8 @@ const Roles = () => {
         >
           <div data-aos="fade-down">
             <h3
-              className={`section-title ${
-                isDarkMode
-                  ? "section-title--roles--dark"
-                  : "section-title--roles"
+              className={`sectionTitle ${
+                isDarkMode ? "sectionTitle--roles--dark" : "sectionTitle--roles"
               }`}
             >
               Roles
@@ -44,8 +42,8 @@ const Roles = () => {
           </div>
           <div data-aos="fade-down">
             <p
-              className={`section-desc ${
-                isDarkMode ? "section-desc--roles--dark" : "section-desc--roles"
+              className={`sectionDesc ${
+                isDarkMode ? "sectionDesc--roles--dark" : "sectionDesc--roles"
               }`}
             >
               List out the various roles you play in your life in order of
@@ -54,7 +52,7 @@ const Roles = () => {
               things that truly matter to you. Be the best version of yourself.
             </p>
           </div>
-          <div className={isDarkMode ? "plus__icon--dark" : "plus__icon"}>
+          <div className={isDarkMode ? "plus-icon--dark" : "plus-icon"}>
             <PlusIcon
               data-aos="fade-down"
               data-aos-delay="200"

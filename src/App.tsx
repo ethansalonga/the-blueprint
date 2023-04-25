@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import Header from "./components/header/Header"
+import Header from "./features/header/Header"
 import Roles from "./features/roles/Roles"
 import Goals from "./components/goals/Goals"
 import PersonalStatement from "./components/personal-statement/PersonalStatement"

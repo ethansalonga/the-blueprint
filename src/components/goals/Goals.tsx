@@ -9,12 +9,12 @@ const Goals = () => {
       <div className="row">
         <div id="five-year-goals" className="container container--goals">
           <h3
-            className="section-title section-title--goals"
+            className="sectionTitle sectionTitle--goals"
             data-aos="fade-right"
           >
             Five Year Goals
           </h3>
-          <p className="section-desc section-desc--goals" data-aos="fade-right">
+          <p className="sectionDesc sectionDesc--goals" data-aos="fade-right">
             List the 5 most important goals that you want to achieve within the
             next five years. What are your most ambitious dreams and desires?
             Don't sell yourself short here.
@@ -67,12 +67,12 @@ const Goals = () => {
         </div>
         <div id="milestone-goals" className="container container--goals">
           <h3
-            className="section-title section-title--goals"
+            className="sectionTitle sectionTitle--goals"
             data-aos="fade-left"
           >
             Milestone Goals
           </h3>
-          <p className="section-desc section-desc--goals" data-aos="fade-left">
+          <p className="sectionDesc sectionDesc--goals" data-aos="fade-left">
             List out all of the general goals you want to complete in your life
             and order them by category. Set realistic, measurable goals that you
             can continuously improve upon. Every time you hit a milestone goal,

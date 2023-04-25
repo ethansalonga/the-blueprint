@@ -1,5 +1,5 @@
 .section {
-  &-title {
+  &Title {
     font-family: "Playfair Display", serif;
     font-size: 2em;
     font-weight: 900;
@@ -7,13 +7,13 @@
     margin-bottom: 0.5rem;
   }
 
-  &-desc {
+  &Desc {
     font-size: 1.5em;
     margin-bottom: 2rem;
     position: relative;
   }
 
-  &-desc::after {
+  &Desc::after {
     content: "";
     display: block;
     width: 80%;
@@ -27,24 +27,32 @@
   }
 }
 
-.plus__icon,
-.plus__icon--dark {
-  margin: 0.5em auto;
-  height: 40px;
-  width: 40px;
-  color: #824936;
-  cursor: pointer;
-  transition: all 300ms ease;
-
-  &:hover {
-    transform: scale(1.2);
-  }
-
-  &:active {
-    transform: scale(0.8);
+@media (min-width: 600px) {
+  .sectionDesc::after {
+    top: 110%;
   }
 }
 
-.plus__icon--dark {
-  color: #f3eed9;
+@media (min-width: 900px) {
+  .section {
+    &Title {
+      font-size: 2.75em;
+    }
+
+    &Desc {
+      font-size: 1.75em;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .section {
+    &Desc::after {
+      top: 120%;
+    }
+
+    &Desc {
+      margin-bottom: 4rem;
+    }
+  }
 }

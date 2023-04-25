@@ -13,13 +13,13 @@ const PersonalStatement = () => {
       <div className="row">
         <div className="container container--statement">
           <h3
-            className="section-title section-title--statement"
+            className="sectionTitle sectionTitle--statement"
             data-aos="fade-up"
           >
             Personal Statement
           </h3>
           <p
-            className="section-desc section-desc--statement"
+            className="sectionDesc sectionDesc--statement"
             data-aos="fade-up"
           >
             What would you say if you were to give yourself your most profound
