@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import Header from "./features/header/Header"
 import Roles from "./features/roles/Roles"
-import Goals from "./components/goals/Goals"
-import PersonalStatement from "./components/personal-statement/PersonalStatement"
+import Goals from "./features/goals/Goals"
+import PersonalStatement from "./features/personal-statement/PersonalStatement"
 import AOS from "aos"
 import "aos/dist/aos.css"
 

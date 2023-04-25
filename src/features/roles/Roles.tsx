@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react"
 import { fetchRoles } from "./rolesSlice"
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import { PlusIcon } from "@heroicons/react/24/solid"
-import "./Roles.css"
 
 const Roles = () => {
   const effectRan = useRef(false)
