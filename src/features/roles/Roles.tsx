@@ -55,7 +55,11 @@ const Roles = () => {
             </p>
           </div>
           <div className={isDarkMode ? "plus__icon--dark" : "plus__icon"}>
-            <PlusIcon data-aos="fade-down" data-aos-delay="200" />
+            <PlusIcon
+              data-aos="fade-down"
+              data-aos-delay="200"
+              data-aos-anchor="#roles"
+            />
           </div>
           <ul className="roles__list">
             {status === "loading" && <p>Loading roles...</p>}
