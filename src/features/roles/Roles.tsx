@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
-import { fetchRoles } from "../../features/roles/rolesSlice"
+import { fetchRoles } from "./rolesSlice"
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
+import { PlusIcon } from "@heroicons/react/24/solid"
 import "./Roles.css"
 
 const Roles = () => {
@@ -52,6 +53,9 @@ const Roles = () => {
               just passed away. We all die sometime. Remember to focus on the
               things that truly matter to you. Be the best version of yourself.
             </p>
+          </div>
+          <div className={isDarkMode ? "plus__icon--dark" : "plus__icon"}>
+            <PlusIcon data-aos="fade-down" data-aos-delay="200" />
           </div>
           <ul className="roles__list">
             {status === "loading" && <p>Loading roles...</p>}
