@@ -18,10 +18,13 @@
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 body {
   font-family: "Roboto", sans-serif;
+  width: 100vw;
 }
 
 button {

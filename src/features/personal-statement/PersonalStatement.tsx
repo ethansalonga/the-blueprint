@@ -1,7 +1,5 @@
 import { useAppSelector } from "../../app/hooks"
 
-import "./PersonalStatement.css"
-
 const PersonalStatement = () => {
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
 
