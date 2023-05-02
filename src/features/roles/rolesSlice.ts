@@ -41,7 +41,11 @@ export const addNewRole = createAsyncThunk(
 const rolesSlice = createSlice({
   name: "roles",
   initialState,
-  reducers: {},
+  reducers: {
+    setAddNewRoleStatusIdle(state) {
+      state.addNewRoleStatus = "idle"
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchRoles.pending, (state, _) => {
@@ -68,5 +72,7 @@ const rolesSlice = createSlice({
       })
   },
 })
+
+export const { setAddNewRoleStatusIdle } = rolesSlice.actions
 
 export default rolesSlice.reducer
