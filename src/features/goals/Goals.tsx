@@ -10,17 +10,17 @@ const Goals = () => {
           id="five-year-goals"
           className="container text-white pb-8 1200:pb-16"
         >
-          <h3 className="sectionTitle text-f3eed9" data-aos="fade-right">
+          <h3 className="sectionTitle text-f3eed9" data-aos="fade-down">
             Five Year Goals
           </h3>
-          <p className="sectionDesc after:bg-f3eed9" data-aos="fade-right">
+          <p className="sectionDesc after:bg-f3eed9" data-aos="fade-down">
             List the 5 most important goals that you want to achieve within the
             next five years. What are your most ambitious dreams and desires?
             Don't sell yourself short here.
           </p>
           <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
             <li
-              data-aos="fade-right"
+              data-aos="fade-down"
               data-aos-delay="200"
               data-aos-anchor="#five-year-goals"
             >
@@ -28,7 +28,7 @@ const Goals = () => {
               debts.
             </li>
             <li
-              data-aos="fade-right"
+              data-aos="fade-down"
               data-aos-delay="400"
               data-aos-anchor="#five-year-goals"
             >
@@ -36,7 +36,7 @@ const Goals = () => {
               junior/mid-level frontend developer making at least $80k/year.
             </li>
             <li
-              data-aos="fade-right"
+              data-aos="fade-down"
               data-aos-delay="600"
               data-aos-anchor="#five-year-goals"
             >
@@ -45,7 +45,7 @@ const Goals = () => {
               repudiandae delectus cupiditate?
             </li>
             <li
-              data-aos="fade-right"
+              data-aos="fade-down"
               data-aos-delay="800"
               data-aos-anchor="#five-year-goals"
             >
@@ -54,7 +54,7 @@ const Goals = () => {
               quae quisquam eius.
             </li>
             <li
-              data-aos="fade-right"
+              data-aos="fade-down"
               data-aos-delay="1000"
               data-aos-anchor="#five-year-goals"
             >
@@ -65,10 +65,10 @@ const Goals = () => {
           </ol>
         </div>
         <div id="milestone-goals" className="container text-white">
-          <h3 className="sectionTitle text-f3eed9" data-aos="fade-left">
+          <h3 className="sectionTitle text-f3eed9" data-aos="fade-down">
             Milestone Goals
           </h3>
-          <p className="sectionDesc after:bg-f3eed9" data-aos="fade-left">
+          <p className="sectionDesc after:bg-f3eed9" data-aos="fade-down">
             List out all of the general goals you want to complete in your life
             and order them by category. Set realistic, measurable goals that you
             can continuously improve upon. Every time you hit a milestone goal,
@@ -76,7 +76,7 @@ const Goals = () => {
           </p>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="200"
             data-aos-anchor="#milestone-goals"
           >
@@ -99,7 +99,7 @@ const Goals = () => {
           </div>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="400"
             data-aos-anchor="#milestone-goals"
           >
@@ -116,7 +116,7 @@ const Goals = () => {
           </div>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="600"
             data-aos-anchor="#milestone-goals"
           >
@@ -132,7 +132,7 @@ const Goals = () => {
           </div>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="800"
             data-aos-anchor="#milestone-goals"
           >
@@ -150,7 +150,7 @@ const Goals = () => {
           </div>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="1000"
             data-aos-anchor="#milestone-goals"
           >
@@ -161,7 +161,7 @@ const Goals = () => {
           </div>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="1200"
             data-aos-anchor="#milestone-goals"
           >
@@ -174,7 +174,7 @@ const Goals = () => {
           </div>
           <div
             className="mb-8"
-            data-aos="fade-left"
+            data-aos="fade-down"
             data-aos-delay="1400"
             data-aos-anchor="#milestone-goals"
           >

@@ -10,10 +10,10 @@ const PersonalStatement = () => {
     >
       <div className="row">
         <div className="container text-white">
-          <h3 className="sectionTitle text-f3eed9" data-aos="fade-up">
+          <h3 className="sectionTitle text-f3eed9" data-aos="fade-down">
             Personal Statement
           </h3>
-          <p className="sectionDesc after:bg-f3eed9" data-aos="fade-up">
+          <p className="sectionDesc after:bg-f3eed9" data-aos="fade-down">
             What would you say if you were to give yourself your most profound
             advice? What words would be most important for you to remember
             throughout your entire life? What drives you, gives your life
@@ -23,7 +23,7 @@ const PersonalStatement = () => {
           <div className="flex flex-col gap-8 900:gap-12">
             <p
               className="text-left text-xl 900:text-2xl leading-10 900:leading-10"
-              data-aos="fade-up"
+              data-aos="fade-down"
               data-aos-delay="200"
               data-aos-anchor="#personal-statement"
             >
@@ -35,7 +35,7 @@ const PersonalStatement = () => {
             </p>
             <p
               className="text-left text-xl 900:text-2xl leading-10 900:leading-10"
-              data-aos="fade-up"
+              data-aos="fade-down"
               data-aos-delay="400"
               data-aos-anchor="#personal-statement"
             >
@@ -53,7 +53,7 @@ const PersonalStatement = () => {
             </p>
             <p
               className="text-left text-xl 900:text-2xl leading-10 900:leading-10"
-              data-aos="fade-up"
+              data-aos="fade-down"
               data-aos-delay="600"
               data-aos-anchor="#personal-statement"
             >
@@ -65,7 +65,7 @@ const PersonalStatement = () => {
             </p>
             <p
               className="text-left text-xl 900:text-2xl leading-10 900:leading-10"
-              data-aos="fade-up"
+              data-aos="fade-down"
               data-aos-delay="800"
               data-aos-anchor="#personal-statement"
             >
