@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react"
+import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import AddNewRoleModal from "./modals/AddNewRoleModal"
 import DeleteRoleModal from "./modals/DeleteRoleModal"
 import { fetchRoles } from "./rolesSlice"
-import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import { Role } from "../../types/types"
 import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
 import Spinner from "../../assets/Spinner"
-import "./Roles.css"
 
 const Roles = () => {
   const effectRan = useRef(false)
@@ -88,7 +87,7 @@ const Roles = () => {
           </button>
           <ul className="flex flex-col gap-12 items-center">
             {fetchRolesStatus === "loading" && (
-              <Spinner className="h-24 w-24" />
+              <Spinner className="h-24 w-24 fill-824936" />
             )}
             {fetchRolesStatus === "succeeded" &&
               roles.map((role, index) => (

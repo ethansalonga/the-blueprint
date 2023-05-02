@@ -3,3 +3,8 @@ export type Role = {
   title: string
   description: string
 }
+
+export type Goal = {
+  id?: number
+  goal: string
+}

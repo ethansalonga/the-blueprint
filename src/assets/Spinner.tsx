@@ -8,7 +8,7 @@ const Spinner: FC<PropTypes> = ({ className }) => {
   return (
     <svg
       aria-hidden="true"
-      className={`${className} mr-2 text-gray-200 animate-spin fill-824936`}
+      className={`${className} mr-2 text-gray-500 animate-spin`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

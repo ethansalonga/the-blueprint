@@ -34,6 +34,18 @@
   color: #f3eed9;
 }
 
+.minus-icon {
+  opacity: 0;
+}
+
+.role-item:hover .minus-icon {
+  opacity: 100;
+}
+
+.goal-item:hover .minus-icon {
+  opacity: 100;
+}
+
 @media (min-width: 900px) {
   .container {
     padding: 5rem 3rem;

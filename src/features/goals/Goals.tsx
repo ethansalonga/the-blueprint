@@ -1,7 +1,36 @@
-import { useAppSelector } from "../../app/hooks"
+import { useRef, useEffect, useState } from "react"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { fetchGoals } from "./goalsSlice"
+import { Goal } from "../../types/types"
+import Spinner from "../../assets/Spinner"
+import { MinusIcon } from "@heroicons/react/24/solid"
 
 const Goals = () => {
-  const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
+  const effectRan = useRef(false)
+  const dispatch = useAppDispatch()
+
+  const { isDarkMode } = useAppSelector((state) => state.global)
+  const { goals, status, error } = useAppSelector((state) => state.goals)
+
+  const [isDeleteGoalModalOpen, setIsDeleteGoalModalOpen] = useState(false)
+  const [activeGoal, setActiveGoal] = useState<Goal>({ id: 0, goal: "" })
+
+  const onDeleteGoalClick = (goal: Goal) => {
+    setActiveGoal(goal)
+    setIsDeleteGoalModalOpen(true)
+  }
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      if (status === "idle") {
+        dispatch(fetchGoals())
+      }
+
+      return () => {
+        effectRan.current = true
+      }
+    }
+  }, [goals, dispatch])
 
   return (
     <section id="goals" className={isDarkMode ? "bg-161616" : "bg-222c2a"}>
@@ -19,49 +48,24 @@ const Goals = () => {
             Don't sell yourself short here.
           </p>
           <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
-            <li
-              data-aos="fade-down"
-              data-aos-delay="200"
-              data-aos-anchor="#five-year-goals"
-            >
-              On or before June 30, 2023, I have paid off all my student loan
-              debts.
-            </li>
-            <li
-              data-aos="fade-down"
-              data-aos-delay="400"
-              data-aos-anchor="#five-year-goals"
-            >
-              In the year 2023 or earlier, I have landed a job as a
-              junior/mid-level frontend developer making at least $80k/year.
-            </li>
-            <li
-              data-aos="fade-down"
-              data-aos-delay="600"
-              data-aos-anchor="#five-year-goals"
-            >
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Natus
-              deleniti assumenda eaque asperiores sequi ratione atque autem
-              repudiandae delectus cupiditate?
-            </li>
-            <li
-              data-aos="fade-down"
-              data-aos-delay="800"
-              data-aos-anchor="#five-year-goals"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-              culpa voluptatum quibusdam fugiat esse doloribus numquam libero
-              quae quisquam eius.
-            </li>
-            <li
-              data-aos="fade-down"
-              data-aos-delay="1000"
-              data-aos-anchor="#five-year-goals"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde quis
-              tempore sunt, natus ducimus sed laudantium eius. Quas, voluptatem
-              ipsum.
-            </li>
+            {status === "loading" && (
+              <Spinner className="h-24 w-24 fill-f3eed9 self-center" />
+            )}
+            {status === "succeeded" &&
+              goals.map((goal, index) => (
+                <li
+                  className="goal-item"
+                  data-aos="fade-down"
+                  data-aos-delay={`${200 * (index + 1)}`}
+                  data-aos-anchor="#five-year-goals"
+                >
+                  {goal.goal}{" "}
+                  <button onClick={() => onDeleteGoalClick(goal)}>
+                    <MinusIcon className="minus-icon w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                  </button>
+                </li>
+              ))}
+            {status === "failed" && <p>{error}</p>}
           </ol>
         </div>
         <div id="milestone-goals" className="container text-white">

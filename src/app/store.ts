@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import globalReducer from "../features/global/globalSlice"
 import rolesReducer from "../features/roles/rolesSlice"
+import goalsReducer from "../features/goals/goalsSlice"
 
 export const store = configureStore({
   reducer: {
     global: globalReducer,
     roles: rolesReducer,
+    goals: goalsReducer,
   },
 })
 

@@ -6,7 +6,7 @@ import "./Header.css"
 const Header = () => {
   const dispatch = useAppDispatch()
 
-  const isDarkMode = useAppSelector((state) => state.global.isDarkMode)
+  const { isDarkMode } = useAppSelector((state) => state.global)
 
   const toggleDarkMode = () => {
     dispatch(darkModeToggled())
