@@ -3,19 +3,22 @@ import AddNewRoleModal from "./AddNewRoleModal"
 import { fetchRoles } from "./rolesSlice"
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import { PlusIcon } from "@heroicons/react/24/solid"
+import Spinner from "../../assets/Spinner"
 
 const Roles = () => {
   const effectRan = useRef(false)
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { roles, status, error } = useAppSelector((state) => state.roles)
+  const { roles, fetchRolesStatus, fetchRolesError } = useAppSelector(
+    (state) => state.roles
+  )
 
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     if (effectRan.current === false) {
-      if (status === "idle") {
+      if (fetchRolesStatus === "idle") {
         dispatch(fetchRoles())
       }
 
@@ -60,9 +63,7 @@ const Roles = () => {
             </p>
           </div>
           <div
-            className={`1200:mb-6 ${
-              isDarkMode ? "plus-icon--dark" : "plus-icon"
-            }`}
+            className={`mb-6 ${isDarkMode ? "plus-icon--dark" : "plus-icon"}`}
             onClick={() => setIsOpen(true)}
           >
             <PlusIcon
@@ -72,9 +73,11 @@ const Roles = () => {
             />
             <AddNewRoleModal isOpen={isOpen} setIsOpen={setIsOpen} />
           </div>
-          <ul className="flex flex-col gap-12">
-            {status === "loading" && <p>Loading roles...</p>}
-            {status === "succeeded" &&
+          <ul className="flex flex-col gap-12 items-center">
+            {fetchRolesStatus === "loading" && (
+              <Spinner className="h-24 w-24" />
+            )}
+            {fetchRolesStatus === "succeeded" &&
               roles.map((role, index) => (
                 <li
                   className="list-none text-left text-xl leading-10 900:text-2xl 900:leading-10"
@@ -87,7 +90,7 @@ const Roles = () => {
                   {role.description}
                 </li>
               ))}
-            {status === "failed" && <p>{error}</p>}
+            {fetchRolesStatus === "failed" && <p>{fetchRolesError}</p>}
           </ul>
         </div>
       </div>
