@@ -1,0 +1,7 @@
+.minus-icon {
+  opacity: 0;
+}
+
+.role-item:hover .minus-icon {
+  opacity: 100;
+}

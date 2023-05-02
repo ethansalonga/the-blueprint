@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react"
-import AddNewRoleModal from "./AddNewRoleModal"
+import AddNewRoleModal from "./modals/AddNewRoleModal"
+import DeleteRoleModal from "./modals/DeleteRoleModal"
 import { fetchRoles } from "./rolesSlice"
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
-import { PlusIcon } from "@heroicons/react/24/solid"
+import { Role } from "../../types/types"
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
 import Spinner from "../../assets/Spinner"
+import "./Roles.css"
 
 const Roles = () => {
   const effectRan = useRef(false)
@@ -14,7 +17,18 @@ const Roles = () => {
     (state) => state.roles
   )
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isAddNewRoleModalOpen, setIsAddNewRoleModalOpen] = useState(false)
+  const [isDeleteRoleModalOpen, setIsDeleteRoleModalOpen] = useState(false)
+  const [activeRole, setActiveRole] = useState<Role>({
+    id: 0,
+    title: "",
+    description: "",
+  })
+
+  const onDeleteRoleClick = (role: Role) => {
+    setActiveRole(role)
+    setIsDeleteRoleModalOpen(true)
+  }
 
   useEffect(() => {
     if (effectRan.current === false) {
@@ -62,17 +76,16 @@ const Roles = () => {
               things that truly matter to you. Be the best version of yourself.
             </p>
           </div>
-          <div
+          <button
             className={`mb-6 ${isDarkMode ? "plus-icon--dark" : "plus-icon"}`}
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsAddNewRoleModalOpen(true)}
           >
             <PlusIcon
               data-aos="fade-down"
               data-aos-delay="200"
               data-aos-anchor="#roles"
             />
-            <AddNewRoleModal isOpen={isOpen} setIsOpen={setIsOpen} />
-          </div>
+          </button>
           <ul className="flex flex-col gap-12 items-center">
             {fetchRolesStatus === "loading" && (
               <Spinner className="h-24 w-24" />
@@ -80,20 +93,32 @@ const Roles = () => {
             {fetchRolesStatus === "succeeded" &&
               roles.map((role, index) => (
                 <li
-                  className="list-none text-left text-xl leading-10 900:text-2xl 900:leading-10"
+                  className="role-item list-none text-left text-xl leading-10 900:text-2xl 900:leading-10"
                   data-aos="fade-down"
                   data-aos-delay={`${200 * (index + 1)}`}
                   data-aos-anchor="#roles"
                   key={index}
                 >
                   <span className="font-medium">{role.title}</span>:{" "}
-                  {role.description}
+                  {role.description}{" "}
+                  <button onClick={() => onDeleteRoleClick(role)}>
+                    <MinusIcon className="minus-icon w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                  </button>
                 </li>
               ))}
             {fetchRolesStatus === "failed" && <p>{fetchRolesError}</p>}
           </ul>
         </div>
       </div>
+      <AddNewRoleModal
+        isOpen={isAddNewRoleModalOpen}
+        setIsOpen={setIsAddNewRoleModalOpen}
+      />
+      <DeleteRoleModal
+        isOpen={isDeleteRoleModalOpen}
+        setIsOpen={setIsDeleteRoleModalOpen}
+        role={activeRole}
+      />
     </section>
   )
 }

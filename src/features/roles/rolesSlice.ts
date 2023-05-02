@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { Role } from "../../types/types"
 import axios from "axios"
 
 interface InitialStateType {
@@ -7,12 +8,8 @@ interface InitialStateType {
   fetchRolesError: string | undefined
   addNewRoleStatus: string
   addNewRoleError: string | undefined
-}
-
-type Role = {
-  id?: number
-  title: string
-  description: string
+  deleteRoleStatus: string
+  deleteRoleError: string | undefined
 }
 
 const ROLES_URL = "https://6445b2bb0431e885f002abd2.mockapi.io/roles"
@@ -23,6 +20,8 @@ const initialState: InitialStateType = {
   fetchRolesError: "",
   addNewRoleStatus: "idle",
   addNewRoleError: "",
+  deleteRoleStatus: "idle",
+  deleteRoleError: "",
 }
 
 export const fetchRoles = createAsyncThunk("roles/fetchRoles", async () => {
@@ -38,6 +37,14 @@ export const addNewRole = createAsyncThunk(
   }
 )
 
+export const deleteRole = createAsyncThunk(
+  "roles/deleteRole",
+  async (id: number) => {
+    const response = await axios.delete(`${ROLES_URL}/${id}`)
+    return response.data
+  }
+)
+
 const rolesSlice = createSlice({
   name: "roles",
   initialState,
@@ -45,10 +52,13 @@ const rolesSlice = createSlice({
     setAddNewRoleStatusIdle(state) {
       state.addNewRoleStatus = "idle"
     },
+    setDeleteStatusIdle(state) {
+      state.deleteRoleStatus = "idle"
+    },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchRoles.pending, (state, _) => {
+      .addCase(fetchRoles.pending, (state) => {
         state.fetchRolesStatus = "loading"
       })
       .addCase(fetchRoles.fulfilled, (state, action) => {
@@ -59,7 +69,7 @@ const rolesSlice = createSlice({
         state.fetchRolesStatus = "failed"
         state.fetchRolesError = action.error.message
       })
-      .addCase(addNewRole.pending, (state, _) => {
+      .addCase(addNewRole.pending, (state) => {
         state.addNewRoleStatus = "loading"
       })
       .addCase(addNewRole.fulfilled, (state, action) => {
@@ -70,9 +80,23 @@ const rolesSlice = createSlice({
         state.addNewRoleStatus = "failed"
         state.addNewRoleError = action.error.message
       })
+      .addCase(deleteRole.pending, (state) => {
+        state.deleteRoleStatus = "loading"
+      })
+      .addCase(deleteRole.fulfilled, (state, action) => {
+        state.deleteRoleStatus = "succeeded"
+        const { id } = action.payload
+        const newRoles = state.roles.filter((role) => role.id !== id)
+        state.roles = newRoles
+      })
+      .addCase(deleteRole.rejected, (state, action) => {
+        state.deleteRoleStatus = "failed"
+        state.deleteRoleError = action.error.message
+      })
   },
 })
 
-export const { setAddNewRoleStatusIdle } = rolesSlice.actions
+export const { setAddNewRoleStatusIdle, setDeleteStatusIdle } =
+  rolesSlice.actions
 
 export default rolesSlice.reducer

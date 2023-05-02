@@ -1,8 +1,8 @@
 import { FC, Fragment, useState, FormEvent, ChangeEvent } from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { addNewRole, setAddNewRoleStatusIdle } from "./rolesSlice"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { addNewRole, setAddNewRoleStatusIdle } from "../rolesSlice"
 import { Dialog, Transition } from "@headlessui/react"
-import Spinner from "../../assets/Spinner"
+import Spinner from "../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
@@ -26,10 +26,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
   const canAdd =
     [title, description].every(Boolean) && addNewRoleStatus === "idle"
 
-  const onAddRole = () => {
+  const onAddRole = async () => {
     if (canAdd) {
       try {
-        dispatch(addNewRole({ title, description }))
+        await dispatch(addNewRole({ title, description }))
 
         setTitle("")
         setDescription("")
