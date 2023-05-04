@@ -150,10 +150,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       className={`${
                         isDarkMode && title && description
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-gray-400 cursor-auto"
-                      } ${
-                        title && description
-                          ? "bg-824936-200 text-824936-800 hover:bg-824936-300"
+                          : isDarkMode
+                          ? "bg-gray-400 cursor-auto"
+                          : title && description
+                          ? "bg-824936-200 text-824936-900 hover:bg-824936-300"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onAddRole}
@@ -163,9 +163,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                     <button
                       type="button"
                       className={`${
-                        isDarkMode &&
-                        "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                      } inline-flex justify-center rounded-md border border-transparent bg-824936-200 px-4 py-2 text-sm font-medium text-824936-800 hover:bg-824936-300 !outline-none`}
+                        isDarkMode
+                          ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                          : "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                      } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={() => setIsOpen(false)}
                     >
                       Cancel

@@ -13,6 +13,8 @@ interface PropTypes {
 
 const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
   const dispatch = useAppDispatch()
+
+  const { isDarkMode } = useAppSelector((state) => state.global)
   const { deleteRoleStatus, deleteRoleError } = useAppSelector(
     (state) => state.roles
   )
@@ -62,10 +64,16 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className={`${
+                  isDarkMode ? "bg-303030" : "bg-white"
+                } w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all`}
+              >
                 <Dialog.Title
                   as="h3"
-                  className="text-xl font-medium leading-6 text-gray-900 mb-4 text-center"
+                  className={`${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  } text-xl font-medium leading-6 mb-4 text-center`}
                 >
                   Delete role
                 </Dialog.Title>
@@ -81,12 +89,32 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                 )}
                 <div className="flex flex-col gap-2 mb-8">
                   <p>
-                    <span className="font-medium">Role:</span>{" "}
-                    <span className="text-gray-800">{role.title}</span>
+                    <span
+                      className={`${isDarkMode && "text-gray-200"} font-medium`}
+                    >
+                      Role:
+                    </span>{" "}
+                    <span
+                      className={`${
+                        isDarkMode ? "text-white" : "text-gray-800"
+                      }`}
+                    >
+                      {role.title}
+                    </span>
                   </p>
                   <p>
-                    <span className="font-medium">Description:</span>{" "}
-                    <span className="text-gray-800">{role.description}</span>
+                    <span
+                      className={`${isDarkMode && "text-gray-200"} font-medium`}
+                    >
+                      Description:
+                    </span>{" "}
+                    <span
+                      className={`${
+                        isDarkMode ? "text-white" : "text-gray-800"
+                      }`}
+                    >
+                      {role.description}
+                    </span>
                   </p>
                 </div>
 
