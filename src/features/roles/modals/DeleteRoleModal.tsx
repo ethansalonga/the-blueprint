@@ -129,14 +129,22 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                   <div className="mt-4 flex justify-end gap-4">
                     <button
                       type="button"
-                      className="bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none"
+                      className={`${
+                        isDarkMode
+                          ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                          : "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                      } bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onDeleteRole}
                     >
                       Delete role
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-824936-200 px-4 py-2 text-sm font-medium text-824936-800 hover:bg-824936-300 !outline-none"
+                      className={`${
+                        isDarkMode
+                          ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                          : "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                      } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={() => setIsOpen(false)}
                     >
                       Cancel
