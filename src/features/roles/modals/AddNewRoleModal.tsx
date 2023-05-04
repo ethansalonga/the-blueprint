@@ -11,6 +11,8 @@ interface PropTypes {
 
 const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
   const dispatch = useAppDispatch()
+
+  const { isDarkMode } = useAppSelector((state) => state.global)
   const { addNewRoleStatus, addNewRoleError } = useAppSelector(
     (state) => state.roles
   )
@@ -75,10 +77,16 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className={`${
+                  isDarkMode ? "bg-303030" : "bg-white"
+                } w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all`}
+              >
                 <Dialog.Title
                   as="h3"
-                  className="text-xl font-medium leading-6 text-gray-900 mb-4 text-center"
+                  className={`${
+                    isDarkMode ? "text-white" : "text-gray-900"
+                  } text-xl font-medium leading-6 mb-4 text-center`}
                 >
                   Add new role
                 </Dialog.Title>
@@ -94,7 +102,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                 )}
                 <form className="flex flex-col gap-4 mb-8">
                   <div>
-                    <label htmlFor="roleTitle" className="block mb-2">
+                    <label
+                      htmlFor="roleTitle"
+                      className={`${isDarkMode && "text-white"} block mb-2`}
+                    >
                       Role:
                     </label>
                     <input
@@ -108,7 +119,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="roleDescription" className="block mb-2">
+                    <label
+                      htmlFor="roleDescription"
+                      className={`${isDarkMode && "text-white"} block mb-2`}
+                    >
                       Description:
                     </label>
                     <textarea
@@ -134,6 +148,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                     <button
                       type="button"
                       className={`${
+                        isDarkMode && title && description
+                          ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                          : "bg-gray-400 cursor-auto"
+                      } ${
                         title && description
                           ? "bg-824936-200 text-824936-800 hover:bg-824936-300"
                           : "bg-gray-200 text-gray-900 cursor-auto"
@@ -144,7 +162,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-824936-200 px-4 py-2 text-sm font-medium text-824936-800 hover:bg-824936-300 !outline-none"
+                      className={`${
+                        isDarkMode &&
+                        "bg-gray-200 text-gray-900 hover:bg-gray-300"
+                      } inline-flex justify-center rounded-md border border-transparent bg-824936-200 px-4 py-2 text-sm font-medium text-824936-800 hover:bg-824936-300 !outline-none`}
                       onClick={() => setIsOpen(false)}
                     >
                       Cancel
