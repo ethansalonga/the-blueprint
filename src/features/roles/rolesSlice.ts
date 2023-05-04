@@ -52,7 +52,7 @@ const rolesSlice = createSlice({
     setAddNewRoleStatusIdle(state) {
       state.addNewRoleStatus = "idle"
     },
-    setDeleteStatusIdle(state) {
+    setDeleteRoleStatusIdle(state) {
       state.deleteRoleStatus = "idle"
     },
   },
@@ -96,7 +96,7 @@ const rolesSlice = createSlice({
   },
 })
 
-export const { setAddNewRoleStatusIdle, setDeleteStatusIdle } =
+export const { setAddNewRoleStatusIdle, setDeleteRoleStatusIdle } =
   rolesSlice.actions
 
 export default rolesSlice.reducer

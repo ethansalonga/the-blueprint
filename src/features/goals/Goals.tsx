@@ -4,13 +4,16 @@ import { fetchGoals } from "./goalsSlice"
 import { Goal } from "../../types/types"
 import Spinner from "../../assets/Spinner"
 import { MinusIcon } from "@heroicons/react/24/solid"
+import DeleteGoalModal from "./modals/DeleteGoalModal"
 
 const Goals = () => {
   const effectRan = useRef(false)
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { goals, status, error } = useAppSelector((state) => state.goals)
+  const { goals, fetchGoalsStatus, fetchGoalsError } = useAppSelector(
+    (state) => state.goals
+  )
 
   const [isDeleteGoalModalOpen, setIsDeleteGoalModalOpen] = useState(false)
   const [activeGoal, setActiveGoal] = useState<Goal>({ id: 0, goal: "" })
@@ -22,7 +25,7 @@ const Goals = () => {
 
   useEffect(() => {
     if (effectRan.current === false) {
-      if (status === "idle") {
+      if (fetchGoalsStatus === "idle") {
         dispatch(fetchGoals())
       }
 
@@ -48,16 +51,17 @@ const Goals = () => {
             Don't sell yourself short here.
           </p>
           <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
-            {status === "loading" && (
+            {fetchGoalsStatus === "loading" && (
               <Spinner className="h-24 w-24 fill-f3eed9 self-center" />
             )}
-            {status === "succeeded" &&
+            {fetchGoalsStatus === "succeeded" &&
               goals.map((goal, index) => (
                 <li
                   className="goal-item"
                   data-aos="fade-down"
                   data-aos-delay={`${200 * (index + 1)}`}
                   data-aos-anchor="#five-year-goals"
+                  key={index}
                 >
                   {goal.goal}{" "}
                   <button onClick={() => onDeleteGoalClick(goal)}>
@@ -65,7 +69,7 @@ const Goals = () => {
                   </button>
                 </li>
               ))}
-            {status === "failed" && <p>{error}</p>}
+            {fetchGoalsStatus === "failed" && <p>{fetchGoalsError}</p>}
           </ol>
         </div>
         <div id="milestone-goals" className="container text-white">
@@ -192,6 +196,11 @@ const Goals = () => {
           </div>
         </div>
       </div>
+      <DeleteGoalModal
+        isOpen={isDeleteGoalModalOpen}
+        setIsOpen={setIsDeleteGoalModalOpen}
+        goal={activeGoal}
+      />
     </section>
   )
 }

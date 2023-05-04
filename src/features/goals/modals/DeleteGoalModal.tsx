@@ -1,30 +1,30 @@
 import { FC, Fragment } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { deleteRole, setDeleteRoleStatusIdle } from "../rolesSlice"
-import { Role } from "../../../types/types"
+import { deleteGoal, setDeleteGoalStatusIdle } from "../goalsSlice"
+import { Goal } from "../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
-  role: Role
+  goal: Goal
 }
 
-const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
+const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { deleteRoleStatus, deleteRoleError } = useAppSelector(
-    (state) => state.roles
+  const { deleteGoalStatus, deleteGoalError } = useAppSelector(
+    (state) => state.goals
   )
 
   const onDeleteRole = () => {
     try {
-      dispatch(deleteRole(role.id!)).then((res) => {
+      dispatch(deleteGoal(goal.id!)).then((res) => {
         res.meta.requestStatus === "fulfilled" &&
           setTimeout(() => {
-            dispatch(setDeleteRoleStatusIdle())
+            dispatch(setDeleteGoalStatusIdle())
             setIsOpen(false)
           }, 2000)
       })
@@ -76,16 +76,16 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                     isDarkMode ? "text-white" : "text-gray-900"
                   } text-xl font-medium leading-6 mb-4 text-center`}
                 >
-                  Delete role
+                  Delete goal
                 </Dialog.Title>
-                {deleteRoleError && (
+                {deleteGoalError && (
                   <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mb-4">
-                    {deleteRoleError}
+                    {deleteGoalError}
                   </p>
                 )}
-                {deleteRoleStatus === "succeeded" && (
+                {deleteGoalStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
-                    Role deleted!
+                    Goal deleted!
                   </p>
                 )}
                 <div className="flex flex-col gap-2 mb-8">
@@ -93,37 +93,23 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                     <span
                       className={`${isDarkMode && "text-gray-200"} font-medium`}
                     >
-                      Role:
+                      Goal:
                     </span>{" "}
                     <span
                       className={`${
                         isDarkMode ? "text-white" : "text-gray-800"
                       }`}
                     >
-                      {role.title}
-                    </span>
-                  </p>
-                  <p>
-                    <span
-                      className={`${isDarkMode && "text-gray-200"} font-medium`}
-                    >
-                      Description:
-                    </span>{" "}
-                    <span
-                      className={`${
-                        isDarkMode ? "text-white" : "text-gray-800"
-                      }`}
-                    >
-                      {role.description}
+                      {goal.goal}
                     </span>
                   </p>
                 </div>
 
-                {deleteRoleStatus === "loading" ? (
+                {deleteGoalStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium">
                       <Spinner className="h-5 w-5" />
-                      Deleting role...
+                      Deleting goal...
                     </div>
                   </div>
                 ) : (
@@ -137,7 +123,7 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                       } bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onDeleteRole}
                     >
-                      Delete role
+                      Delete goal
                     </button>
                     <button
                       type="button"
@@ -161,4 +147,4 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
   )
 }
 
-export default DeleteRoleModal
+export default DeleteGoalModal
