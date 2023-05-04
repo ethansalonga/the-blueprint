@@ -2,9 +2,10 @@ import { useRef, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { fetchGoals } from "./goalsSlice"
 import { Goal } from "../../types/types"
-import Spinner from "../../assets/Spinner"
-import { MinusIcon } from "@heroicons/react/24/solid"
+import AddNewGoalModal from "./modals/AddNewGoalModal"
 import DeleteGoalModal from "./modals/DeleteGoalModal"
+import Spinner from "../../assets/Spinner"
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
 
 const Goals = () => {
   const effectRan = useRef(false)
@@ -15,6 +16,7 @@ const Goals = () => {
     (state) => state.goals
   )
 
+  const [isAddNewGoalModalOpen, setIsAddNewGoalModalOpen] = useState(false)
   const [isDeleteGoalModalOpen, setIsDeleteGoalModalOpen] = useState(false)
   const [activeGoal, setActiveGoal] = useState<Goal>({ id: 0, goal: "" })
 
@@ -50,6 +52,18 @@ const Goals = () => {
             next five years. What are your most ambitious dreams and desires?
             Don't sell yourself short here.
           </p>
+          <button
+            className={`${
+              isDarkMode ? "plus-icon--dark" : "plus-icon text-f3eed9"
+            } mb-6`}
+            onClick={() => setIsAddNewGoalModalOpen(true)}
+          >
+            <PlusIcon
+              data-aos="fade-down"
+              data-aos-delay="200"
+              data-aos-anchor="#roles"
+            />
+          </button>
           <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
             {fetchGoalsStatus === "loading" && (
               <Spinner className="h-24 w-24 fill-f3eed9 self-center" />
@@ -196,6 +210,10 @@ const Goals = () => {
           </div>
         </div>
       </div>
+      <AddNewGoalModal
+        isOpen={isAddNewGoalModalOpen}
+        setIsOpen={setIsAddNewGoalModalOpen}
+      />
       <DeleteGoalModal
         isOpen={isDeleteGoalModalOpen}
         setIsOpen={setIsDeleteGoalModalOpen}

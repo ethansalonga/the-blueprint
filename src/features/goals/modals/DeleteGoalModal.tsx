@@ -67,14 +67,12 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
             >
               <Dialog.Panel
                 className={`${
-                  isDarkMode ? "bg-303030" : "bg-white"
+                  isDarkMode ? "bg-303030" : "bg-222c2a"
                 } w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all`}
               >
                 <Dialog.Title
                   as="h3"
-                  className={`${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  } text-xl font-medium leading-6 mb-4 text-center`}
+                  className="text-white text-xl font-medium leading-6 mb-4 text-center"
                 >
                   Delete goal
                 </Dialog.Title>
@@ -90,18 +88,8 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                 )}
                 <div className="flex flex-col gap-2 mb-8">
                   <p>
-                    <span
-                      className={`${isDarkMode && "text-gray-200"} font-medium`}
-                    >
-                      Goal:
-                    </span>{" "}
-                    <span
-                      className={`${
-                        isDarkMode ? "text-white" : "text-gray-800"
-                      }`}
-                    >
-                      {goal.goal}
-                    </span>
+                    <span className="text-gray-200">Goal:</span>{" "}
+                    <span className="text-white">{goal.goal}</span>
                   </p>
                 </div>
 
@@ -119,7 +107,7 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                       className={`${
                         isDarkMode
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                          : "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                       } bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onDeleteRole}
                     >
@@ -130,7 +118,7 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                       className={`${
                         isDarkMode
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                          : "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={() => setIsOpen(false)}
                     >

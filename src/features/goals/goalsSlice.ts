@@ -6,6 +6,8 @@ interface InitialStateType {
   goals: Goal[]
   fetchGoalsStatus: string
   fetchGoalsError: string | undefined
+  addNewGoalStatus: string
+  addNewGoalError: string | undefined
   deleteGoalStatus: string
   deleteGoalError: string | undefined
 }
@@ -16,6 +18,14 @@ export const fetchGoals = createAsyncThunk("goals/fetchGoals", async () => {
   const response = await axios.get(GOALS_URL)
   return response.data
 })
+
+export const addNewGoal = createAsyncThunk(
+  "roles/addNewGoal",
+  async (newGoal: Goal) => {
+    const response = await axios.post(GOALS_URL, newGoal)
+    return response.data
+  }
+)
 
 export const deleteGoal = createAsyncThunk(
   "roles/deleteGoal",
@@ -29,6 +39,8 @@ const initialState: InitialStateType = {
   goals: [],
   fetchGoalsStatus: "idle", // "idle", "loading", "succeeded", "failed"
   fetchGoalsError: "",
+  addNewGoalStatus: "idle", // "idle", "loading", "succeeded", "failed"
+  addNewGoalError: "",
   deleteGoalStatus: "idle", // "idle", "loading", "succeeded", "failed"
   deleteGoalError: "",
 }
@@ -37,6 +49,9 @@ const goalsSlice = createSlice({
   name: "goals",
   initialState,
   reducers: {
+    setAddNewGoalStatusIdle(state) {
+      state.addNewGoalStatus = "idle"
+    },
     setDeleteGoalStatusIdle(state) {
       state.deleteGoalStatus = "idle"
     },
@@ -54,6 +69,17 @@ const goalsSlice = createSlice({
         state.fetchGoalsStatus = "failed"
         state.deleteGoalError = action.error.message
       })
+      .addCase(addNewGoal.pending, (state) => {
+        state.addNewGoalStatus = "loading"
+      })
+      .addCase(addNewGoal.fulfilled, (state, action) => {
+        state.addNewGoalStatus = "succeeded"
+        state.goals.push(action.payload)
+      })
+      .addCase(addNewGoal.rejected, (state, action) => {
+        state.addNewGoalStatus = "failed"
+        state.addNewGoalError = action.error.message
+      })
       .addCase(deleteGoal.pending, (state) => {
         state.deleteGoalStatus = "loading"
       })
@@ -70,6 +96,7 @@ const goalsSlice = createSlice({
   },
 })
 
-export const { setDeleteGoalStatusIdle } = goalsSlice.actions
+export const { setAddNewGoalStatusIdle, setDeleteGoalStatusIdle } =
+  goalsSlice.actions
 
 export default goalsSlice.reducer

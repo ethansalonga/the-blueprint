@@ -153,7 +153,7 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                           : isDarkMode
                           ? "bg-gray-400 cursor-auto"
                           : title && description
-                          ? "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                          ? "bg-824936 text-white hover:bg-8f5b4a"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onAddRole}
@@ -165,7 +165,7 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       className={`${
                         isDarkMode
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-824936-200 text-824936-900 hover:bg-824936-300"
+                          : "bg-824936 text-white hover:bg-8f5b4a"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={() => setIsOpen(false)}
                     >

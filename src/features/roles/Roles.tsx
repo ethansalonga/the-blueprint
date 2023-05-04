@@ -76,7 +76,9 @@ const Roles = () => {
             </p>
           </div>
           <button
-            className={`mb-6 ${isDarkMode ? "plus-icon--dark" : "plus-icon"}`}
+            className={`${
+              isDarkMode ? "plus-icon--dark" : "plus-icon text-824936"
+            } mb-6`}
             onClick={() => setIsAddNewRoleModalOpen(true)}
           >
             <PlusIcon
