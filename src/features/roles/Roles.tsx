@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react"
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import AddNewRoleModal from "./modals/AddNewRoleModal"
 import DeleteRoleModal from "./modals/DeleteRoleModal"
+import UpdateRoleModal from "./modals/UpdateRoleModal"
 import { fetchRoles } from "./rolesSlice"
 import { Role } from "../../types/types"
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
+import { PlusIcon, MinusIcon, PencilIcon } from "@heroicons/react/24/solid"
 import Spinner from "../../assets/Spinner"
 
 const Roles = () => {
@@ -17,12 +18,18 @@ const Roles = () => {
   )
 
   const [isAddNewRoleModalOpen, setIsAddNewRoleModalOpen] = useState(false)
+  const [isUpdateRoleModalOpen, setIsUpdateRoleModalOpen] = useState(false)
   const [isDeleteRoleModalOpen, setIsDeleteRoleModalOpen] = useState(false)
   const [activeRole, setActiveRole] = useState<Role>({
     id: 0,
     title: "",
     description: "",
   })
+
+  const onUpdateRoleClick = (role: Role) => {
+    setActiveRole(role)
+    setIsUpdateRoleModalOpen(true)
+  }
 
   const onDeleteRoleClick = (role: Role) => {
     setActiveRole(role)
@@ -102,8 +109,11 @@ const Roles = () => {
                 >
                   <span className="font-medium">{role.title}</span>:{" "}
                   {role.description}{" "}
+                  <button onClick={() => onUpdateRoleClick(role)}>
+                    <PencilIcon className="data-icons w-5 h-5 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                  </button>
                   <button onClick={() => onDeleteRoleClick(role)}>
-                    <MinusIcon className="minus-icon w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                    <MinusIcon className="data-icons w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
                   </button>
                 </li>
               ))}
@@ -118,6 +128,11 @@ const Roles = () => {
       <DeleteRoleModal
         isOpen={isDeleteRoleModalOpen}
         setIsOpen={setIsDeleteRoleModalOpen}
+        role={activeRole}
+      />
+      <UpdateRoleModal
+        isOpen={isUpdateRoleModalOpen}
+        setIsOpen={setIsUpdateRoleModalOpen}
         role={activeRole}
       />
     </section>

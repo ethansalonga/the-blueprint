@@ -81,7 +81,7 @@ const Goals = () => {
                 >
                   {goal.goal}{" "}
                   <button onClick={() => onDeleteGoalClick(goal)}>
-                    <MinusIcon className="minus-icon w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                    <MinusIcon className="data-icons w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
                   </button>
                 </li>
               ))}

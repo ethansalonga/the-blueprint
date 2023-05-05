@@ -33,15 +33,16 @@
   color: #f3eed9;
 }
 
-.minus-icon {
+.data-icons {
   opacity: 0;
+  margin-left: 0.2em;
 }
 
-.role-item:hover .minus-icon {
+.role-item:hover .data-icons {
   opacity: 100;
 }
 
-.goal-item:hover .minus-icon {
+.goal-item:hover .data-icons {
   opacity: 100;
 }
 

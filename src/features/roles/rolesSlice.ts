@@ -10,6 +10,8 @@ interface InitialStateType {
   addNewRoleError: string | undefined
   deleteRoleStatus: string
   deleteRoleError: string | undefined
+  updateRoleStatus: string
+  updateRoleError: string | undefined
 }
 
 const ROLES_URL = "https://6445b2bb0431e885f002abd2.mockapi.io/roles"
@@ -20,6 +22,8 @@ const initialState: InitialStateType = {
   fetchRolesError: "",
   addNewRoleStatus: "idle",
   addNewRoleError: "",
+  updateRoleStatus: "idle",
+  updateRoleError: "",
   deleteRoleStatus: "idle",
   deleteRoleError: "",
 }
@@ -33,6 +37,16 @@ export const addNewRole = createAsyncThunk(
   "roles/addNewRole",
   async (newRole: Role) => {
     const response = await axios.post(ROLES_URL, newRole)
+    return response.data
+  }
+)
+
+export const updateRole = createAsyncThunk(
+  "roles/updateRole",
+  async (newRole: Role) => {
+    const { id } = newRole
+
+    const response = await axios.put(`${ROLES_URL}/${id}`, newRole)
     return response.data
   }
 )
@@ -52,12 +66,16 @@ const rolesSlice = createSlice({
     setAddNewRoleStatusIdle(state) {
       state.addNewRoleStatus = "idle"
     },
+    setUpdateRoleStatusIdle(state) {
+      state.updateRoleStatus = "idle"
+    },
     setDeleteRoleStatusIdle(state) {
       state.deleteRoleStatus = "idle"
     },
   },
   extraReducers(builder) {
     builder
+      // Fetch roles
       .addCase(fetchRoles.pending, (state) => {
         state.fetchRolesStatus = "loading"
       })
@@ -69,6 +87,8 @@ const rolesSlice = createSlice({
         state.fetchRolesStatus = "failed"
         state.fetchRolesError = action.error.message
       })
+
+      // Add new role
       .addCase(addNewRole.pending, (state) => {
         state.addNewRoleStatus = "loading"
       })
@@ -80,6 +100,23 @@ const rolesSlice = createSlice({
         state.addNewRoleStatus = "failed"
         state.addNewRoleError = action.error.message
       })
+
+      // Update role
+      .addCase(updateRole.pending, (state) => {
+        state.updateRoleStatus = "loading"
+      })
+      .addCase(updateRole.fulfilled, (state, action) => {
+        state.updateRoleStatus = "succeeded"
+        const { id } = action.payload
+        const newRoles = state.roles.filter((role) => role.id !== id)
+        state.roles = [...newRoles, action.payload].sort((a, b) => a.id - b.id)
+      })
+      .addCase(updateRole.rejected, (state, action) => {
+        state.updateRoleStatus = "failed"
+        state.updateRoleError = action.error.message
+      })
+
+      // Delete role
       .addCase(deleteRole.pending, (state) => {
         state.deleteRoleStatus = "loading"
       })
@@ -96,7 +133,10 @@ const rolesSlice = createSlice({
   },
 })
 
-export const { setAddNewRoleStatusIdle, setDeleteRoleStatusIdle } =
-  rolesSlice.actions
+export const {
+  setAddNewRoleStatusIdle,
+  setUpdateRoleStatusIdle,
+  setDeleteRoleStatusIdle,
+} = rolesSlice.actions
 
 export default rolesSlice.reducer

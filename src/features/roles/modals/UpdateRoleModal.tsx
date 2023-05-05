@@ -1,19 +1,28 @@
-import { FC, Fragment, useState, FormEvent, ChangeEvent } from "react"
+import {
+  FC,
+  Fragment,
+  useState,
+  FormEvent,
+  ChangeEvent,
+  useEffect,
+} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { addNewRole, setAddNewRoleStatusIdle } from "../rolesSlice"
+import { updateRole, setUpdateRoleStatusIdle } from "../rolesSlice"
+import { Role } from "../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
+  role: Role
 }
 
-const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
+const UpdateRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { addNewRoleStatus, addNewRoleError } = useAppSelector(
+  const { updateRoleStatus, updateRoleError } = useAppSelector(
     (state) => state.roles
   )
 
@@ -25,25 +34,30 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
   const onDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setDescription(e.currentTarget.value)
 
-  const canAdd =
-    [title, description].every(Boolean) && addNewRoleStatus === "idle"
+  const canUpdate =
+    [title, description].every(Boolean) && updateRoleStatus === "idle"
 
   const onAddRole = async () => {
-    if (canAdd) {
+    if (canUpdate) {
       try {
-        await dispatch(addNewRole({ title, description }))
-
-        setTitle("")
-        setDescription("")
+        await dispatch(
+          updateRole({ id: role.id, title: title, description: description })
+        )
       } catch (err) {
         console.log(err)
       } finally {
         setTimeout(() => {
-          dispatch(setAddNewRoleStatusIdle())
+          dispatch(setUpdateRoleStatusIdle())
+          setIsOpen(false)
         }, 3000)
       }
     }
   }
+
+  useEffect(() => {
+    setTitle(role.title)
+    setDescription(role.description)
+  }, [role])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -88,16 +102,16 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                     isDarkMode ? "text-white" : "text-gray-900"
                   } text-xl font-medium leading-6 mb-4 text-center`}
                 >
-                  Add new role
+                  Update role
                 </Dialog.Title>
-                {addNewRoleError && (
+                {updateRoleError && (
                   <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mb-4">
-                    {addNewRoleError}
+                    {updateRoleError}
                   </p>
                 )}
-                {addNewRoleStatus === "succeeded" && (
+                {updateRoleStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
-                    Role added!
+                    Role updated!
                   </p>
                 )}
                 <form className="flex flex-col gap-4 mb-8">
@@ -115,7 +129,7 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       value={title}
                       onChange={onTitleChange}
                       className="bg-gray-50 border border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 !outline-none"
-                      disabled={addNewRoleStatus === "loading"}
+                      disabled={updateRoleStatus === "loading"}
                     />
                   </div>
                   <div>
@@ -131,16 +145,16 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       value={description}
                       onChange={onDescriptionChange}
                       className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
-                      disabled={addNewRoleStatus === "loading"}
+                      disabled={updateRoleStatus === "loading"}
                     />
                   </div>
                 </form>
 
-                {addNewRoleStatus === "loading" ? (
+                {updateRoleStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none">
                       <Spinner className="h-5 w-5 fill-824936" />
-                      Adding role...
+                      Updating role...
                     </div>
                   </div>
                 ) : (
@@ -158,7 +172,7 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onAddRole}
                     >
-                      Add role
+                      Update role
                     </button>
                     <button
                       type="button"
@@ -182,4 +196,4 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
   )
 }
 
-export default AddNewRoleModal
+export default UpdateRoleModal
