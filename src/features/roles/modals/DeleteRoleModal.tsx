@@ -133,8 +133,8 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                       className={`${
                         isDarkMode
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-824936-200 text-824936 hover:bg-824936-300"
-                      } bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
+                          : "bg-824936 text-white hover:bg-8f5b4a"
+                      } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onDeleteRole}
                     >
                       Delete role
@@ -144,7 +144,7 @@ const DeleteRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                       className={`${
                         isDarkMode
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-824936-200 text-824936 hover:bg-824936-300"
+                          : "bg-824936 text-white hover:bg-8f5b4a"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={() => setIsOpen(false)}
                     >
