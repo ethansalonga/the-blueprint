@@ -61,7 +61,7 @@ const Goals = () => {
             <PlusIcon
               data-aos="fade-down"
               data-aos-delay="200"
-              data-aos-anchor="#roles"
+              data-aos-anchor="#five-year-goals"
             />
           </button>
           <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
