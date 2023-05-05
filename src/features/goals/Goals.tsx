@@ -52,18 +52,20 @@ const Goals = () => {
             next five years. What are your most ambitious dreams and desires?
             Don't sell yourself short here.
           </p>
-          <button
-            className={`${
-              isDarkMode ? "plus-icon--dark" : "plus-icon text-f3eed9"
-            } mb-6`}
-            onClick={() => setIsAddNewGoalModalOpen(true)}
-          >
-            <PlusIcon
-              data-aos="fade-down"
-              data-aos-delay="200"
-              data-aos-anchor="#five-year-goals"
-            />
-          </button>
+          {goals.length < 5 && (
+            <button
+              className={`${
+                isDarkMode ? "plus-icon--dark" : "plus-icon text-f3eed9"
+              } mb-6`}
+              onClick={() => setIsAddNewGoalModalOpen(true)}
+            >
+              <PlusIcon
+                data-aos="fade-down"
+                data-aos-delay="200"
+                data-aos-anchor="#five-year-goals"
+              />
+            </button>
+          )}
           <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
             {fetchGoalsStatus === "loading" && (
               <Spinner className="h-24 w-24 fill-f3eed9 self-center" />

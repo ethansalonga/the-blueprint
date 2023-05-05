@@ -88,7 +88,7 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                 )}
                 <div className="flex flex-col gap-2 mb-8">
                   <p>
-                    <span className="text-gray-200">Goal:</span>{" "}
+                    <span className="text-gray-200 font-medium">Goal:</span>{" "}
                     <span className="text-white">{goal.goal}</span>
                   </p>
                 </div>
