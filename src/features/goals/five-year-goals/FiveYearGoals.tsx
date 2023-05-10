@@ -68,10 +68,10 @@ const FiveYearGoals = () => {
           />
         </button>
       )}
-      <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10 ml-6">
-        {fetchGoalsStatus === "loading" && (
-          <Spinner className="h-24 w-24 fill-f3eed9 self-center" />
-        )}
+      {fetchGoalsStatus === "loading" && (
+        <Spinner className="h-24 w-24 fill-f3eed9 self-center" />
+      )}
+      <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
         {fetchGoalsStatus === "succeeded" &&
           goals.map((goal, index) => (
             <li

@@ -8,3 +8,12 @@ export type Goal = {
   id?: number
   goal: string
 }
+
+export type MilestoneSection = {
+  category: string
+  goals: {
+    id?: number
+    goal: string
+    status: string
+  }[]
+}
