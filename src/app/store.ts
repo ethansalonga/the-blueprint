@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import globalReducer from "../features/global/globalSlice"
 import rolesReducer from "../features/roles/rolesSlice"
-import goalsReducer from "../features/goals/goalsSlice"
+import goalsReducer from "../features/goals/five-year-goals/goalsSlice"
 
 export const store = configureStore({
   reducer: {

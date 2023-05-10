@@ -1,8 +1,8 @@
 import { FC, Fragment, useState, FormEvent, ChangeEvent } from "react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { addNewGoal, setAddNewGoalStatusIdle } from "../goalsSlice"
 import { Dialog, Transition } from "@headlessui/react"
-import Spinner from "../../../assets/Spinner"
+import Spinner from "../../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
