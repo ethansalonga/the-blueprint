@@ -8,6 +8,8 @@ interface InitialStateType {
   fetchGoalsError: string | undefined
   addNewGoalStatus: string
   addNewGoalError: string | undefined
+  updateGoalStatus: string
+  updateGoalError: string | undefined
   deleteGoalStatus: string
   deleteGoalError: string | undefined
 }
@@ -20,15 +22,25 @@ export const fetchGoals = createAsyncThunk("goals/fetchGoals", async () => {
 })
 
 export const addNewGoal = createAsyncThunk(
-  "roles/addNewGoal",
+  "goals/addNewGoal",
   async (newGoal: Goal) => {
     const response = await axios.post(GOALS_URL, newGoal)
     return response.data
   }
 )
 
+export const updateGoal = createAsyncThunk(
+  "goals/updateGoal",
+  async (newGoal: Goal) => {
+    const { id } = newGoal
+
+    const response = await axios.put(`${GOALS_URL}/${id}`, newGoal)
+    return response.data
+  }
+)
+
 export const deleteGoal = createAsyncThunk(
-  "roles/deleteGoal",
+  "goals/deleteGoal",
   async (id: number) => {
     const response = await axios.delete(`${GOALS_URL}/${id}`)
     return response.data
@@ -39,9 +51,11 @@ const initialState: InitialStateType = {
   goals: [],
   fetchGoalsStatus: "idle", // "idle", "loading", "succeeded", "failed"
   fetchGoalsError: "",
-  addNewGoalStatus: "idle", // "idle", "loading", "succeeded", "failed"
+  addNewGoalStatus: "idle",
   addNewGoalError: "",
-  deleteGoalStatus: "idle", // "idle", "loading", "succeeded", "failed"
+  updateGoalStatus: "idle",
+  updateGoalError: "",
+  deleteGoalStatus: "idle",
   deleteGoalError: "",
 }
 
@@ -52,12 +66,16 @@ const goalsSlice = createSlice({
     setAddNewGoalStatusIdle(state) {
       state.addNewGoalStatus = "idle"
     },
+    setUpdateGoalStatusIdle(state) {
+      state.updateGoalStatus = "idle"
+    },
     setDeleteGoalStatusIdle(state) {
       state.deleteGoalStatus = "idle"
     },
   },
   extraReducers(builder) {
     builder
+      // Fetch goals
       .addCase(fetchGoals.pending, (state) => {
         state.fetchGoalsStatus = "loading"
       })
@@ -69,6 +87,8 @@ const goalsSlice = createSlice({
         state.fetchGoalsStatus = "failed"
         state.deleteGoalError = action.error.message
       })
+
+      // Add new goal
       .addCase(addNewGoal.pending, (state) => {
         state.addNewGoalStatus = "loading"
       })
@@ -80,6 +100,23 @@ const goalsSlice = createSlice({
         state.addNewGoalStatus = "failed"
         state.addNewGoalError = action.error.message
       })
+
+      // Update goal
+      .addCase(updateGoal.pending, (state) => {
+        state.updateGoalStatus = "loading"
+      })
+      .addCase(updateGoal.fulfilled, (state, action) => {
+        state.updateGoalStatus = "succeeded"
+        const { id } = action.payload
+        const newGoals = state.goals.filter((role) => role.id !== id)
+        state.goals = [...newGoals, action.payload].sort((a, b) => a.id - b.id)
+      })
+      .addCase(updateGoal.rejected, (state, action) => {
+        state.updateGoalStatus = "failed"
+        state.updateGoalError = action.error.message
+      })
+
+      // Delete goal
       .addCase(deleteGoal.pending, (state) => {
         state.deleteGoalStatus = "loading"
       })
@@ -96,7 +133,10 @@ const goalsSlice = createSlice({
   },
 })
 
-export const { setAddNewGoalStatusIdle, setDeleteGoalStatusIdle } =
-  goalsSlice.actions
+export const {
+  setAddNewGoalStatusIdle,
+  setUpdateGoalStatusIdle,
+  setDeleteGoalStatusIdle,
+} = goalsSlice.actions
 
 export default goalsSlice.reducer

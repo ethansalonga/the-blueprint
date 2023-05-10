@@ -1,6 +1,6 @@
-import { FC, Fragment } from "react"
+import { FC, Fragment, useState, ChangeEvent, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { deleteGoal, setDeleteGoalStatusIdle } from "../goalsSlice"
+import { updateGoal, setUpdateGoalStatusIdle } from "../goalsSlice"
 import { Goal } from "../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../assets/Spinner"
@@ -11,27 +11,39 @@ interface PropTypes {
   goal: Goal
 }
 
-const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
+const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { deleteGoalStatus, deleteGoalError } = useAppSelector(
+  const { updateGoalStatus, updateGoalError } = useAppSelector(
     (state) => state.goals
   )
 
-  const onDeleteRole = () => {
-    try {
-      dispatch(deleteGoal(goal.id!)).then((res) => {
-        res.meta.requestStatus === "fulfilled" &&
-          setTimeout(() => {
-            dispatch(setDeleteGoalStatusIdle())
-            setIsOpen(false)
-          }, 2000)
-      })
-    } catch (err) {
-      console.log(err)
+  const [goalDesc, setGoalDesc] = useState("")
+
+  const onGoalChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
+    setGoalDesc(e.currentTarget.value)
+
+  const canUpdate = goalDesc && updateGoalStatus === "idle"
+
+  const onAddRole = async () => {
+    if (canUpdate) {
+      try {
+        await dispatch(updateGoal({ id: goal.id, goal: goalDesc }))
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setTimeout(() => {
+          dispatch(setUpdateGoalStatusIdle())
+          setIsOpen(false)
+        }, 3000)
+      }
     }
   }
+
+  useEffect(() => {
+    setGoalDesc(goal.goal)
+  }, [goal, isOpen])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -74,30 +86,37 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                   as="h3"
                   className="text-white text-xl font-medium leading-6 mb-4 text-center"
                 >
-                  Delete goal
+                  Update goal
                 </Dialog.Title>
-                {deleteGoalError && (
+                {updateGoalError && (
                   <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mb-4">
-                    {deleteGoalError}
+                    {updateGoalError}
                   </p>
                 )}
-                {deleteGoalStatus === "succeeded" && (
+                {updateGoalStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
-                    Goal deleted!
+                    Goal updated!
                   </p>
                 )}
-                <div className="flex flex-col gap-2 mb-8">
-                  <p>
-                    <span className="text-gray-200 font-medium">Goal:</span>{" "}
-                    <span className="text-white">{goal.goal}</span>
-                  </p>
-                </div>
+                <form className="flex flex-col mb-8">
+                  <label htmlFor="goal" className="text-gray-200 block mb-2">
+                    Goal:
+                  </label>
+                  <textarea
+                    id="goal"
+                    name="goal"
+                    value={goalDesc}
+                    onChange={onGoalChange}
+                    className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
+                    disabled={updateGoalStatus === "loading"}
+                  />
+                </form>
 
-                {deleteGoalStatus === "loading" ? (
+                {updateGoalStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
-                    <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium">
+                    <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none">
                       <Spinner className="h-5 w-5 fill-f3eed9" />
-                      Deleting goal...
+                      Updating goal...
                     </div>
                   </div>
                 ) : (
@@ -105,13 +124,17 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                     <button
                       type="button"
                       className={`${
-                        isDarkMode
+                        isDarkMode && goalDesc
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
-                          : "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
-                      } bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onDeleteRole}
+                          : isDarkMode
+                          ? "bg-gray-400 cursor-auto"
+                          : goalDesc
+                          ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
+                          : "bg-gray-200 text-gray-900 cursor-auto"
+                      } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
+                      onClick={onAddRole}
                     >
-                      Delete goal
+                      Update goal
                     </button>
                     <button
                       type="button"
@@ -135,4 +158,4 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   )
 }
 
-export default DeleteGoalModal
+export default UpdateGoalModal

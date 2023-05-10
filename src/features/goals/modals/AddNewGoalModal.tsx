@@ -112,7 +112,7 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                 {addNewGoalStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none">
-                      <Spinner className="h-5 w-5" />
+                      <Spinner className="h-5 w-5 fill-f3eed9" />
                       Adding goal...
                     </div>
                   </div>

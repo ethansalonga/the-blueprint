@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { fetchGoals } from "./goalsSlice"
 import { Goal } from "../../types/types"
 import AddNewGoalModal from "./modals/AddNewGoalModal"
+import UpdateGoalModal from "./modals/UpdateGoalModal"
 import DeleteGoalModal from "./modals/DeleteGoalModal"
 import Spinner from "../../assets/Spinner"
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid"
+import { PlusIcon, MinusIcon, PencilIcon } from "@heroicons/react/24/solid"
 
 const Goals = () => {
   const effectRan = useRef(false)
@@ -17,8 +18,14 @@ const Goals = () => {
   )
 
   const [isAddNewGoalModalOpen, setIsAddNewGoalModalOpen] = useState(false)
+  const [isUpdateGoalModalOpen, setIsUpdateGoalModalOpen] = useState(false)
   const [isDeleteGoalModalOpen, setIsDeleteGoalModalOpen] = useState(false)
   const [activeGoal, setActiveGoal] = useState<Goal>({ id: 0, goal: "" })
+
+  const onUpdateGoalClick = (goal: Goal) => {
+    setActiveGoal(goal)
+    setIsUpdateGoalModalOpen(true)
+  }
 
   const onDeleteGoalClick = (goal: Goal) => {
     setActiveGoal(goal)
@@ -80,9 +87,16 @@ const Goals = () => {
                   key={index}
                 >
                   {goal.goal}{" "}
-                  <button onClick={() => onDeleteGoalClick(goal)}>
-                    <MinusIcon className="data-icons w-7 h-7 inline-block cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
-                  </button>
+                  <div className="inline-block">
+                    <div className="flex items-center">
+                      <button onClick={() => onUpdateGoalClick(goal)}>
+                        <PencilIcon className="data-icons w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                      </button>
+                      <button onClick={() => onDeleteGoalClick(goal)}>
+                        <MinusIcon className="data-icons w-7 h-7 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                      </button>
+                    </div>
+                  </div>
                 </li>
               ))}
             {fetchGoalsStatus === "failed" && <p>{fetchGoalsError}</p>}
@@ -215,6 +229,11 @@ const Goals = () => {
       <AddNewGoalModal
         isOpen={isAddNewGoalModalOpen}
         setIsOpen={setIsAddNewGoalModalOpen}
+      />
+      <UpdateGoalModal
+        isOpen={isUpdateGoalModalOpen}
+        setIsOpen={setIsUpdateGoalModalOpen}
+        goal={activeGoal}
       />
       <DeleteGoalModal
         isOpen={isDeleteGoalModalOpen}
