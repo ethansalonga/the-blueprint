@@ -1,8 +1,8 @@
 import { useEffect } from "react"
-import Header from "./features/header/Header"
-import Roles from "./features/roles/Roles"
-import Goals from "./features/goals/Goals"
-import PersonalStatement from "./features/personal-statement/PersonalStatement"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home"
+import SignUp from "./pages/SignUp"
+import SignIn from "./pages/SignIn"
 import AOS from "aos"
 import "aos/dist/aos.css"
 
@@ -16,12 +16,13 @@ function App() {
 
   return (
     <>
-      <Header />
-      <main>
-        <Roles />
-        <Goals />
-        <PersonalStatement />
-      </main>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/sign-in" element={<SignIn />} />
+        </Routes>
+      </Router>
     </>
   )
 }
