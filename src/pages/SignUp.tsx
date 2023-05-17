@@ -1,8 +1,11 @@
 import { useState, FormEvent, ChangeEvent } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { auth } from "../firebase/init.js"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 
 const SignUp = () => {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -20,6 +23,7 @@ const SignUp = () => {
       setError("")
       setLoading(true)
       await createUserWithEmailAndPassword(auth, email, password)
+      navigate("/")
     } catch {
       setError("Failed to create an account")
     }
@@ -110,7 +114,7 @@ const SignUp = () => {
                 <input
                   id="confirm-password"
                   name="confirm-password"
-                  type="confirm-password"
+                  type="password"
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
@@ -129,6 +133,12 @@ const SignUp = () => {
               </button>
             </div>
           </form>
+        </div>
+        <div className="text-sm text-center mt-4">
+          Already have an account?{" "}
+          <Link className="font-medium" to="/sign-in">
+            Sign in
+          </Link>
         </div>
       </div>
     </>
