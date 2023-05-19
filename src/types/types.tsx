@@ -17,3 +17,8 @@ export type MilestoneSection = {
     status: string
   }[]
 }
+
+export type AuthFormData = {
+  email: string
+  password: string
+}

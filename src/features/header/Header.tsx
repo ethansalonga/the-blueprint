@@ -1,15 +1,33 @@
+import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useNavigate } from "react-router-dom"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebase/init"
 import { darkModeToggled } from "../global/globalSlice"
 import { MoonIcon } from "@heroicons/react/24/solid"
 import "./Header.css"
 
 const Header = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
 
+  const [error, setError] = useState("")
+
   const toggleDarkMode = () => {
     dispatch(darkModeToggled())
+  }
+
+  const handleSignout = async () => {
+    navigate("/sign-up")
+    // setError("")
+
+    // try {
+    //   await signOut(auth)
+    // } catch {
+    //   setError("Failed to sign out")
+    // }
   }
 
   return (
@@ -18,6 +36,9 @@ const Header = () => {
         isDarkMode ? "bg-161616" : "bg-f3eed9"
       }`}
     >
+      <button className="absolute top-0 left-2 z-10" onClick={handleSignout}>
+        Sign out
+      </button>
       <div className="row">
         <div className="container min-h-screen justify-center relative">
           <div data-aos="fade-up" data-aos-delay="700">
