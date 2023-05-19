@@ -73,16 +73,9 @@ const authSlice = createSlice({
         state.error = action.error.message
         state.loading = false
       })
-      .addCase(signUserOut.pending, (state) => {
-        state.error = ""
-        state.loading = true
-      })
       .addCase(signUserOut.fulfilled, (state) => {
+        state.error = ""
         state.userSignedIn = false
-        state.loading = false
-      })
-      .addCase(signUserOut.rejected, (state, action) => {
-        state.error = action.error.message
         state.loading = false
       })
   },

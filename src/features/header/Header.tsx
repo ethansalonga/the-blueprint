@@ -1,5 +1,3 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { darkModeToggled } from "../global/globalSlice"
 import { signUserOut } from "../auth/authSlice"
@@ -8,10 +6,8 @@ import "./Header.css"
 
 const Header = () => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { userSignedIn } = useAppSelector((state) => state.auth)
 
   const toggleDarkMode = () => {
     dispatch(darkModeToggled())
@@ -20,10 +16,6 @@ const Header = () => {
   const handleSignout = async () => {
     dispatch(signUserOut())
   }
-
-  useEffect(() => {
-    !userSignedIn && navigate("/sign-in")
-  }, [userSignedIn])
 
   return (
     <header
