@@ -1,9 +1,8 @@
-import { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { signOut } from "firebase/auth"
-import { auth } from "../../firebase/init"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { darkModeToggled } from "../global/globalSlice"
+import { signUserOut } from "../auth/authSlice"
 import { MoonIcon } from "@heroicons/react/24/solid"
 import "./Header.css"
 
@@ -12,23 +11,19 @@ const Header = () => {
   const navigate = useNavigate()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-
-  const [error, setError] = useState("")
+  const { userSignedIn } = useAppSelector((state) => state.auth)
 
   const toggleDarkMode = () => {
     dispatch(darkModeToggled())
   }
 
   const handleSignout = async () => {
-    navigate("/sign-up")
-    // setError("")
-
-    // try {
-    //   await signOut(auth)
-    // } catch {
-    //   setError("Failed to sign out")
-    // }
+    dispatch(signUserOut())
   }
+
+  useEffect(() => {
+    !userSignedIn && navigate("/sign-in")
+  }, [userSignedIn])
 
   return (
     <header

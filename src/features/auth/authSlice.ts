@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth"
 import { auth } from "../../firebase/init"
 import { AuthFormData } from "../../types/types"
@@ -34,6 +35,10 @@ export const signIn = createAsyncThunk(
   }
 )
 
+export const signUserOut = createAsyncThunk("auth/signOut", async () => {
+  await signOut(auth)
+})
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -65,6 +70,18 @@ const authSlice = createSlice({
         state.loading = false
       })
       .addCase(signIn.rejected, (state, action) => {
+        state.error = action.error.message
+        state.loading = false
+      })
+      .addCase(signUserOut.pending, (state) => {
+        state.error = ""
+        state.loading = true
+      })
+      .addCase(signUserOut.fulfilled, (state) => {
+        state.userSignedIn = false
+        state.loading = false
+      })
+      .addCase(signUserOut.rejected, (state, action) => {
         state.error = action.error.message
         state.loading = false
       })
