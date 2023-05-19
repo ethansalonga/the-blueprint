@@ -1,29 +1,22 @@
-import { useState, FormEvent, ChangeEvent } from "react"
+import { useState, useEffect, FormEvent, ChangeEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { auth } from "../firebase/init.js"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { useAppSelector, useAppDispatch } from "../app/hooks.js"
+import { signIn } from "../features/auth/authSlice.js"
+import Spinner from "../assets/Spinner.js"
 
 const SignIn = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const { error, loading, userSignedIn } = useAppSelector((state) => state.auth)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    try {
-      setError("")
-      setLoading(true)
-      await signInWithEmailAndPassword(auth, email, password)
-      navigate("/")
-    } catch {
-      setError("Failed to sign in")
-    }
-
-    setLoading(false)
+    await dispatch(signIn({ email, password }))
   }
 
   const handleInputChange = (
@@ -33,15 +26,14 @@ const SignIn = () => {
     setStateFunction(e.target.value)
   }
 
+  useEffect(() => {
+    userSignedIn && navigate("/")
+  }, [userSignedIn])
+
   return (
     <>
       <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
           <h2 className="mt-10 text-center text-2xl font-medium leading-9 tracking-tight text-gray-900">
             Sign into your account
           </h2>
@@ -99,10 +91,18 @@ const SignIn = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className={`${
+                  loading
+                    ? "bg-gray-200 text-gray-900 cursor-auto"
+                    : "bg-824936 text-white hover:bg-8f5b4a"
+                } flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-medium leading-6  shadow-sm`}
                 disabled={loading}
               >
-                Sign in
+                {loading ? (
+                  <Spinner className="h-6 w-6 fill-824936" />
+                ) : (
+                  "Sign in"
+                )}
               </button>
             </div>
           </form>

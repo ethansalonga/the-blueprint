@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth"
 import { auth } from "../../firebase/init"
 import { AuthFormData } from "../../types/types"
 
@@ -23,6 +26,14 @@ export const signUp = createAsyncThunk(
   }
 )
 
+export const signIn = createAsyncThunk(
+  "auth/signIn",
+  async (formData: AuthFormData) => {
+    const { email, password } = formData
+    await signInWithEmailAndPassword(auth, email, password)
+  }
+)
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -42,6 +53,18 @@ const authSlice = createSlice({
         state.loading = false
       })
       .addCase(signUp.rejected, (state, action) => {
+        state.error = action.error.message
+        state.loading = false
+      })
+      .addCase(signIn.pending, (state) => {
+        state.error = ""
+        state.loading = true
+      })
+      .addCase(signIn.fulfilled, (state) => {
+        state.userSignedIn = true
+        state.loading = false
+      })
+      .addCase(signIn.rejected, (state, action) => {
         state.error = action.error.message
         state.loading = false
       })
