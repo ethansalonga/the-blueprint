@@ -1,7 +1,12 @@
 import { useEffect } from "react"
+import { useAppDispatch } from "./app/hooks.js"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./firebase/init"
+import { setCurrentUser } from "./features/auth/authSlice"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import PrivateRoutes from "./utilities/PrivateRoutes"
 import Home from "./pages/Home"
+import UpdateProfile from "./pages/UpdateProfile"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import ForgotPassword from "./pages/ForgotPassword"
@@ -9,6 +14,18 @@ import AOS from "aos"
 import "aos/dist/aos.css"
 
 function App() {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(setCurrentUser(user))
+      } else {
+        setCurrentUser(null)
+      }
+    })
+  }, [])
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -21,6 +38,7 @@ function App() {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Home />} />
+          <Route path="/update-profile" element={<UpdateProfile />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />

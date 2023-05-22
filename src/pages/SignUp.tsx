@@ -8,7 +8,7 @@ const SignUp = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { error, loading, userSignedIn } = useAppSelector((state) => state.auth)
+  const { error, loading, currentUser } = useAppSelector((state) => state.auth)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -32,8 +32,8 @@ const SignUp = () => {
   }
 
   useEffect(() => {
-    userSignedIn && navigate("/")
-  }, [userSignedIn])
+    currentUser && navigate("/")
+  }, [currentUser])
 
   return (
     <>

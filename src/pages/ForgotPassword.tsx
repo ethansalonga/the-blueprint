@@ -8,7 +8,7 @@ const ForgotPassword = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { error, message, loading, userSignedIn } = useAppSelector(
+  const { error, message, loading, currentUser } = useAppSelector(
     (state) => state.auth
   )
 
@@ -28,8 +28,8 @@ const ForgotPassword = () => {
   }
 
   useEffect(() => {
-    userSignedIn && navigate("/")
-  }, [userSignedIn])
+    currentUser && navigate("/")
+  }, [currentUser])
 
   return (
     <>

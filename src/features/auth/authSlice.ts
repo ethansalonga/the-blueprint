@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  User,
 } from "firebase/auth"
 import { auth } from "../../firebase/init"
 import { AuthFormData } from "../../types/types"
@@ -12,14 +13,14 @@ interface initialStateType {
   error: string | undefined
   message: string
   loading: boolean
-  userSignedIn: boolean
+  currentUser: User | null
 }
 
 const initialState: initialStateType = {
   error: "",
   message: "",
   loading: false,
-  userSignedIn: false,
+  currentUser: null,
 }
 
 export const signUp = createAsyncThunk(
@@ -56,6 +57,9 @@ const authSlice = createSlice({
     setError(state, action) {
       state.error = action.payload
     },
+    setCurrentUser(state, action) {
+      state.currentUser = action.payload
+    },
   },
   extraReducers(builder) {
     builder
@@ -65,7 +69,6 @@ const authSlice = createSlice({
         state.loading = true
       })
       .addCase(signUp.fulfilled, (state) => {
-        state.userSignedIn = true
         state.loading = false
       })
       .addCase(signUp.rejected, (state, action) => {
@@ -79,7 +82,6 @@ const authSlice = createSlice({
         state.loading = true
       })
       .addCase(signIn.fulfilled, (state) => {
-        state.userSignedIn = true
         state.loading = false
       })
       .addCase(signIn.rejected, (state, action) => {
@@ -90,7 +92,7 @@ const authSlice = createSlice({
       // Sign out
       .addCase(signUserOut.fulfilled, (state) => {
         state.error = ""
-        state.userSignedIn = false
+        state.currentUser = null
         state.loading = false
       })
 
@@ -110,6 +112,6 @@ const authSlice = createSlice({
   },
 })
 
-export const { setError } = authSlice.actions
+export const { setError, setCurrentUser } = authSlice.actions
 
 export default authSlice.reducer
