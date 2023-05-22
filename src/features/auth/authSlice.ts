@@ -3,18 +3,21 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth"
 import { auth } from "../../firebase/init"
 import { AuthFormData } from "../../types/types"
 
 interface initialStateType {
   error: string | undefined
+  message: string
   loading: boolean
   userSignedIn: boolean
 }
 
 const initialState: initialStateType = {
   error: "",
+  message: "",
   loading: false,
   userSignedIn: false,
 }
@@ -39,6 +42,13 @@ export const signUserOut = createAsyncThunk("auth/signOut", async () => {
   await signOut(auth)
 })
 
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (email: string) => {
+    await sendPasswordResetEmail(auth, email)
+  }
+)
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -49,6 +59,7 @@ const authSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      // Sign up
       .addCase(signUp.pending, (state) => {
         state.error = ""
         state.loading = true
@@ -61,6 +72,8 @@ const authSlice = createSlice({
         state.error = action.error.message
         state.loading = false
       })
+
+      // Sign in
       .addCase(signIn.pending, (state) => {
         state.error = ""
         state.loading = true
@@ -73,9 +86,25 @@ const authSlice = createSlice({
         state.error = action.error.message
         state.loading = false
       })
+
+      // Sign out
       .addCase(signUserOut.fulfilled, (state) => {
         state.error = ""
         state.userSignedIn = false
+        state.loading = false
+      })
+
+      // Reset password
+      .addCase(resetPassword.pending, (state) => {
+        state.error = ""
+        state.loading = true
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.message = "Please check your inbox for further instructions"
+        state.loading = false
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.error = action.error.message
         state.loading = false
       })
   },
