@@ -1,3 +1,5 @@
+import { User } from "firebase/auth"
+
 export type Role = {
   id?: number
   title: string
@@ -19,6 +21,12 @@ export type MilestoneSection = {
 }
 
 export type AuthFormData = {
+  email: string
+  password: string
+}
+
+export type AuthUpdateData = {
+  user: User
   email: string
   password: string
 }

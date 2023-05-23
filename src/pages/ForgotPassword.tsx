@@ -38,14 +38,14 @@ const ForgotPassword = () => {
           <h2 className="text-center text-2xl font-medium leading-9 tracking-tight text-gray-900">
             Reset your password
           </h2>
-          {error && (
-            <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mt-4">
-              {error}
-            </p>
-          )}
           {message && (
             <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mt-4">
               {message}
+            </p>
+          )}
+          {error && (
+            <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mt-4">
+              {error}
             </p>
           )}
         </div>

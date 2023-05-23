@@ -1,25 +1,32 @@
-import { useState, useEffect, FormEvent, ChangeEvent } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState, FormEvent, ChangeEvent } from "react"
+import { Link } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../app/hooks.js"
-import { signUp, setError } from "../features/auth/authSlice.js"
+import { updateProfile, setError } from "../features/auth/authSlice.js"
 import Spinner from "../assets/Spinner"
 
 const UpdateProfile = () => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
-  const { error, loading, currentUser } = useAppSelector((state) => state.auth)
+  const { currentUser, loading, message, error } = useAppSelector(
+    (state) => state.auth
+  )
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    // e.preventDefault()
-    // if (password !== confirmPassword) {
-    //   return dispatch(setError("Passwords do not match"))
-    // }
-    // await dispatch(signUp({ email, password }))
+    e.preventDefault()
+
+    if (password !== confirmPassword) {
+      return dispatch(setError("Passwords do not match"))
+    }
+
+    if (currentUser) {
+      dispatch(
+        updateProfile({ user: currentUser, email: email, password: password })
+      )
+    }
   }
 
   const handleInputChange = (
@@ -29,10 +36,6 @@ const UpdateProfile = () => {
     setStateFunction(e.target.value)
   }
 
-  // useEffect(() => {
-  //   currentUser && navigate("/")
-  // }, [currentUser])
-
   return (
     <>
       <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -40,6 +43,11 @@ const UpdateProfile = () => {
           <h2 className="mt-10 text-center text-2xl font-medium leading-9 tracking-tight text-gray-900">
             Update profile
           </h2>
+          {message && (
+            <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mt-4">
+              {message}
+            </p>
+          )}
           {error && (
             <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mt-4">
               {error}
@@ -63,7 +71,7 @@ const UpdateProfile = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  // defaultValue={currentUser!.email as string}
+                  defaultValue={currentUser!.email as string}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
                   onChange={(e) => handleInputChange(e, setEmail)}
                 />
@@ -85,7 +93,6 @@ const UpdateProfile = () => {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   placeholder="Leave blank to leave unchanged"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
                   onChange={(e) => handleInputChange(e, setPassword)}
@@ -108,7 +115,6 @@ const UpdateProfile = () => {
                   name="confirm-password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   placeholder="Leave blank to leave unchanged"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
                   onChange={(e) => handleInputChange(e, setConfirmPassword)}
@@ -129,16 +135,15 @@ const UpdateProfile = () => {
                 {loading ? (
                   <Spinner className="h-6 w-6 fill-824936" />
                 ) : (
-                  "Sign up"
+                  "Update"
                 )}
               </button>
             </div>
           </form>
         </div>
         <div className="text-sm text-center mt-4">
-          Already have an account?{" "}
-          <Link className="font-medium" to="/sign-in">
-            Sign in
+          <Link className="font-medium" to="/">
+            Cancel
           </Link>
         </div>
       </div>

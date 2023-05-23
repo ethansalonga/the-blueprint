@@ -4,10 +4,12 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  updateEmail,
+  updatePassword,
   User,
 } from "firebase/auth"
 import { auth } from "../../firebase/init"
-import { AuthFormData } from "../../types/types"
+import { AuthFormData, AuthUpdateData } from "../../types/types"
 
 interface initialStateType {
   error: string | undefined
@@ -47,6 +49,18 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (email: string) => {
     await sendPasswordResetEmail(auth, email)
+  }
+)
+
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (formData: AuthUpdateData) => {
+    const { user, email, password } = formData
+    await updateEmail(user, email)
+
+    if (password) {
+      await updatePassword(user, password)
+    }
   }
 )
 
@@ -106,6 +120,20 @@ const authSlice = createSlice({
         state.loading = false
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.error = action.error.message
+        state.loading = false
+      })
+
+      // Update profile
+      .addCase(updateProfile.pending, (state) => {
+        state.error = ""
+        state.loading = true
+      })
+      .addCase(updateProfile.fulfilled, (state) => {
+        state.message = "Information successfully updated"
+        state.loading = false
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
         state.error = action.error.message
         state.loading = false
       })
