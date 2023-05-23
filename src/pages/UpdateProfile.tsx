@@ -1,23 +1,25 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react"
-import { Link, useNavigate, useLocation } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../app/hooks.js"
-import { signIn } from "../features/auth/authSlice.js"
-import Spinner from "../assets/Spinner.js"
+import { signUp, setError } from "../features/auth/authSlice.js"
+import Spinner from "../assets/Spinner"
 
-const SignIn = () => {
+const UpdateProfile = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { state } = useLocation()
 
   const { error, loading, currentUser } = useAppSelector((state) => state.auth)
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    await dispatch(signIn({ email, password }))
+    // e.preventDefault()
+    // if (password !== confirmPassword) {
+    //   return dispatch(setError("Passwords do not match"))
+    // }
+    // await dispatch(signUp({ email, password }))
   }
 
   const handleInputChange = (
@@ -27,18 +29,16 @@ const SignIn = () => {
     setStateFunction(e.target.value)
   }
 
-  useEffect(() => {
-    if (currentUser) {
-      state ? navigate(state) : navigate("/sign-in")
-    }
-  }, [currentUser])
+  // useEffect(() => {
+  //   currentUser && navigate("/")
+  // }, [currentUser])
 
   return (
     <>
       <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="text-center text-2xl font-medium leading-9 tracking-tight text-gray-900">
-            Sign into your account
+          <h2 className="mt-10 text-center text-2xl font-medium leading-9 tracking-tight text-gray-900">
+            Update profile
           </h2>
           {error && (
             <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mt-4">
@@ -47,7 +47,7 @@ const SignIn = () => {
           )}
         </div>
 
-        <div className="mt-6 mb-4 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
@@ -63,6 +63,7 @@ const SignIn = () => {
                   type="email"
                   autoComplete="email"
                   required
+                  // defaultValue={currentUser!.email as string}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
                   onChange={(e) => handleInputChange(e, setEmail)}
                 />
@@ -85,8 +86,32 @@ const SignIn = () => {
                   type="password"
                   autoComplete="current-password"
                   required
+                  placeholder="Leave blank to leave unchanged"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
                   onChange={(e) => handleInputChange(e, setPassword)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="confirm-password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Confirm password
+                </label>
+              </div>
+              <div className="mt-1">
+                <input
+                  id="confirm-password"
+                  name="confirm-password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  placeholder="Leave blank to leave unchanged"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-300 sm:text-sm sm:leading-6"
+                  onChange={(e) => handleInputChange(e, setConfirmPassword)}
                 />
               </div>
             </div>
@@ -104,31 +129,21 @@ const SignIn = () => {
                 {loading ? (
                   <Spinner className="h-6 w-6 fill-824936" />
                 ) : (
-                  "Sign in"
+                  "Sign up"
                 )}
               </button>
             </div>
           </form>
         </div>
-        <div>
-          <div className="text-sm text-center mb-2">
-            <Link
-              className="font-medium hover:text-slate-800"
-              to="/forgot-password"
-            >
-              Forgot password?
-            </Link>
-          </div>
-          <div className="text-sm text-center">
-            Need an account?{" "}
-            <Link className="font-medium hover:text-slate-800" to="/sign-up">
-              Sign up
-            </Link>
-          </div>
+        <div className="text-sm text-center mt-4">
+          Already have an account?{" "}
+          <Link className="font-medium" to="/sign-in">
+            Sign in
+          </Link>
         </div>
       </div>
     </>
   )
 }
 
-export default SignIn
+export default UpdateProfile

@@ -17,13 +17,11 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(setCurrentUser(user))
-      } else {
-        setCurrentUser(null)
-      }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      dispatch(setCurrentUser(user))
     })
+
+    return unsubscribe
   }, [])
 
   useEffect(() => {
