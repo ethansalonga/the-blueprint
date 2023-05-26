@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { darkModeToggled } from "../global/globalSlice"
-import { signUserOut } from "../auth/authSlice"
 import { MoonIcon } from "@heroicons/react/24/solid"
 import "./Header.css"
 
@@ -13,19 +12,12 @@ const Header = () => {
     dispatch(darkModeToggled())
   }
 
-  const handleSignout = async () => {
-    dispatch(signUserOut())
-  }
-
   return (
     <header
       className={`transition-colors duration-500 ease-in-out ${
         isDarkMode ? "bg-161616" : "bg-f3eed9"
       }`}
     >
-      <button className="absolute top-0 left-2 z-10" onClick={handleSignout}>
-        Sign out
-      </button>
       <div className="row">
         <div className="container min-h-screen justify-center relative">
           <div data-aos="fade-up" data-aos-delay="700">
