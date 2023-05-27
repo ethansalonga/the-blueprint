@@ -8,8 +8,13 @@ import {
   updatePassword,
   User,
 } from "firebase/auth"
-import { auth } from "../../firebase/init"
-import { AuthFormData, AuthUpdateData } from "../../types/types"
+import { doc, setDoc, serverTimestamp } from "firebase/firestore"
+import { auth, db } from "../../firebase/init"
+import {
+  AuthFormData,
+  AuthFormDataCopy,
+  AuthUpdateData,
+} from "../../types/types"
 
 interface initialStateType {
   error: string | undefined
@@ -29,7 +34,18 @@ export const signUp = createAsyncThunk(
   "auth/signUp",
   async (formData: AuthFormData) => {
     const { email, password } = formData
-    await createUserWithEmailAndPassword(auth, email, password)
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    )
+    const user = userCredential.user
+
+    const formDataCopy: AuthFormDataCopy = { ...formData }
+    delete formDataCopy.password
+    formDataCopy.timestamp = serverTimestamp()
+
+    await setDoc(doc(db, "users", user.uid), formDataCopy)
   }
 )
 
