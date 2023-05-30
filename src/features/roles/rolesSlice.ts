@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { collection, getDocs, query, orderBy, where } from "firebase/firestore"
+import { db } from "../../firebase/init"
 import { Role } from "../../types/types"
 import axios from "axios"
 
@@ -28,10 +30,36 @@ const initialState: InitialStateType = {
   deleteRoleError: "",
 }
 
-export const fetchRoles = createAsyncThunk("roles/fetchRoles", async () => {
-  const response = await axios.get(ROLES_URL)
-  return response.data
-})
+export const fetchRoles = createAsyncThunk(
+  "roles/fetchRoles",
+  async (uid: string) => {
+    try {
+      const rolesRef = collection(db, "roles")
+      const q = query(
+        rolesRef,
+        orderBy("rank", "asc"),
+        where("userRef", "==", uid)
+      )
+      const querySnap = await getDocs(q)
+
+      let roles: Role[] = []
+      querySnap.forEach((doc) => {
+        const { title, description, rank, userRef } = doc.data()
+        roles.push({
+          id: doc.id,
+          title,
+          description,
+          rank,
+          userRef,
+        })
+      })
+
+      return roles
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
 
 export const addNewRole = createAsyncThunk(
   "roles/addNewRole",
@@ -81,7 +109,7 @@ const rolesSlice = createSlice({
       })
       .addCase(fetchRoles.fulfilled, (state, action) => {
         state.fetchRolesStatus = "succeeded"
-        state.roles = state.roles.concat(action.payload)
+        state.roles = action.payload as Role[]
       })
       .addCase(fetchRoles.rejected, (state, action) => {
         state.fetchRolesStatus = "failed"

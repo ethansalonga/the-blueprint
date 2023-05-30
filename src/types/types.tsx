@@ -2,9 +2,11 @@ import { User } from "firebase/auth"
 import { FieldValue } from "firebase/firestore"
 
 export type Role = {
-  id?: number
+  id: string
   title: string
   description: string
+  rank: number
+  userRef: string
 }
 
 export type Goal = {

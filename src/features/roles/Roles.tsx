@@ -13,6 +13,7 @@ const Roles = () => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
+  const { currentUser } = useAppSelector((state) => state.auth)
   const { roles, fetchRolesStatus, fetchRolesError } = useAppSelector(
     (state) => state.roles
   )
@@ -21,9 +22,11 @@ const Roles = () => {
   const [isUpdateRoleModalOpen, setIsUpdateRoleModalOpen] = useState(false)
   const [isDeleteRoleModalOpen, setIsDeleteRoleModalOpen] = useState(false)
   const [activeRole, setActiveRole] = useState<Role>({
-    id: 0,
+    id: "",
     title: "",
     description: "",
+    rank: 0,
+    userRef: "",
   })
 
   const onUpdateRoleClick = (role: Role) => {
@@ -38,15 +41,15 @@ const Roles = () => {
 
   useEffect(() => {
     if (effectRan.current === false) {
-      if (fetchRolesStatus === "idle") {
-        dispatch(fetchRoles())
+      if (currentUser) {
+        dispatch(fetchRoles(currentUser.uid))
       }
 
       return () => {
         effectRan.current = true
       }
     }
-  }, [roles, dispatch])
+  }, [roles, dispatch, currentUser])
 
   return (
     <section
@@ -107,8 +110,8 @@ const Roles = () => {
                   data-aos-anchor="#roles"
                   key={index}
                 >
-                  <span className="font-medium">{role.title}</span>:{" "}
-                  {role.description}{" "}
+                  <span className="font-medium">{role?.title}</span>:{" "}
+                  {role?.description}{" "}
                   <div className="inline-block">
                     <div className="flex items-center">
                       <button onClick={() => onUpdateRoleClick(role)}>
