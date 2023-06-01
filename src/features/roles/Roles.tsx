@@ -131,6 +131,7 @@ const Roles = () => {
       <AddNewRoleModal
         isOpen={isAddNewRoleModalOpen}
         setIsOpen={setIsAddNewRoleModalOpen}
+        userRef={currentUser?.uid}
       />
       <UpdateRoleModal
         isOpen={isUpdateRoleModalOpen}

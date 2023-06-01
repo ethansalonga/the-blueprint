@@ -1,4 +1,11 @@
-import { FC, Fragment, useState, FormEvent, ChangeEvent } from "react"
+import {
+  FC,
+  Fragment,
+  useState,
+  FormEvent,
+  ChangeEvent,
+  useEffect,
+} from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { addNewRole, setAddNewRoleStatusIdle } from "../rolesSlice"
 import { Dialog, Transition } from "@headlessui/react"
@@ -7,23 +14,27 @@ import Spinner from "../../../assets/Spinner"
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
+  userRef: string | undefined
 }
 
-const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
+const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { addNewRoleStatus, addNewRoleError } = useAppSelector(
+  const { addNewRoleStatus, addNewRoleError, roles } = useAppSelector(
     (state) => state.roles
   )
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [rank, setRank] = useState(0)
 
   const onTitleChange = (e: FormEvent<HTMLInputElement>) =>
     setTitle(e.currentTarget.value)
   const onDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setDescription(e.currentTarget.value)
+  const onRankChange = (e: FormEvent<HTMLInputElement>) =>
+    setRank(+e.currentTarget.value)
 
   const canAdd =
     [title, description].every(Boolean) && addNewRoleStatus === "idle"
@@ -31,10 +42,12 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
   const onAddRole = async () => {
     if (canAdd) {
       try {
-        await dispatch(addNewRole({ title, description }))
+        if (userRef) {
+          await dispatch(addNewRole({ title, description, rank, userRef }))
 
-        setTitle("")
-        setDescription("")
+          setTitle("")
+          setDescription("")
+        }
       } catch (err) {
         console.log(err)
       } finally {
@@ -44,6 +57,10 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
       }
     }
   }
+
+  useEffect(() => {
+    setRank(roles.length + 1)
+  }, [roles])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -114,7 +131,7 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       name="roleTitle"
                       value={title}
                       onChange={onTitleChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 !outline-none"
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
                       disabled={addNewRoleStatus === "loading"}
                     />
                   </div>
@@ -130,7 +147,24 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       name="roleDescription"
                       value={description}
                       onChange={onDescriptionChange}
-                      className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300 resize-none h-[6em]"
+                      disabled={addNewRoleStatus === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="roleRank"
+                      className={`${isDarkMode && "text-white"} block mb-2`}
+                    >
+                      Rank:
+                    </label>
+                    <input
+                      type="number"
+                      id="roleRank"
+                      name="roleRank"
+                      value={rank}
+                      onChange={onRankChange}
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
                       disabled={addNewRoleStatus === "loading"}
                     />
                   </div>
