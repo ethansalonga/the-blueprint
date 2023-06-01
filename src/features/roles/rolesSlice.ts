@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { collection, getDocs, query, orderBy, where } from "firebase/firestore"
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  addDoc,
+} from "firebase/firestore"
 import { db } from "../../firebase/init"
 import { Role } from "../../types/types"
 import axios from "axios"
@@ -64,8 +71,12 @@ export const fetchRoles = createAsyncThunk(
 export const addNewRole = createAsyncThunk(
   "roles/addNewRole",
   async (newRole: Role) => {
-    const response = await axios.post(ROLES_URL, newRole)
-    return response.data
+    const docRef = await addDoc(collection(db, "roles"), newRole)
+    const createdRole = {
+      ...newRole,
+      id: docRef.id,
+    }
+    return createdRole
   }
 )
 
