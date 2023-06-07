@@ -7,6 +7,7 @@ import {
   useEffect,
 } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { fetchRoles } from "../rolesSlice"
 import { updateRole, setUpdateRoleStatusIdle } from "../rolesSlice"
 import { Role } from "../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
@@ -22,27 +23,39 @@ const UpdateRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
+  const { currentUser } = useAppSelector((state) => state.auth)
   const { updateRoleStatus, updateRoleError } = useAppSelector(
     (state) => state.roles
   )
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [rank, setRank] = useState(0)
 
   const onTitleChange = (e: FormEvent<HTMLInputElement>) =>
     setTitle(e.currentTarget.value)
   const onDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setDescription(e.currentTarget.value)
+  const onRankChange = (e: FormEvent<HTMLInputElement>) =>
+    setRank(+e.currentTarget.value)
 
   const canUpdate =
-    [title, description].every(Boolean) && updateRoleStatus === "idle"
+    [title, description, rank].every(Boolean) && updateRoleStatus === "idle"
 
   const onAddRole = async () => {
     if (canUpdate) {
       try {
         await dispatch(
-          updateRole({ id: role.id, title: title, description: description })
+          updateRole({
+            id: role.id,
+            title,
+            description,
+            rank,
+            userRef: role.userRef,
+          })
         )
+
+        currentUser && fetchRoles(currentUser.uid)
       } catch (err) {
         console.log(err)
       } finally {
@@ -57,6 +70,7 @@ const UpdateRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
   useEffect(() => {
     setTitle(role.title)
     setDescription(role.description)
+    setRank(role.rank)
   }, [role])
 
   return (
@@ -128,7 +142,7 @@ const UpdateRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                       name="roleTitle"
                       value={title}
                       onChange={onTitleChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 !outline-none"
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 placeholder:text-gray-400 focus:ring-gray-300"
                       disabled={updateRoleStatus === "loading"}
                     />
                   </div>
@@ -144,7 +158,24 @@ const UpdateRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, role }) => {
                       name="roleDescription"
                       value={description}
                       onChange={onDescriptionChange}
-                      className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300 resize-none h-[6em]"
+                      disabled={updateRoleStatus === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="roleRank"
+                      className={`${isDarkMode && "text-white"} block mb-2`}
+                    >
+                      Rank:
+                    </label>
+                    <input
+                      type="number"
+                      id="roleRank"
+                      name="roleRank"
+                      value={rank}
+                      onChange={onRankChange}
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
                       disabled={updateRoleStatus === "loading"}
                     />
                   </div>

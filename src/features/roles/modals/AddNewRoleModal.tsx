@@ -37,7 +37,7 @@ const AddNewRoleModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
     setRank(+e.currentTarget.value)
 
   const canAdd =
-    [title, description].every(Boolean) && addNewRoleStatus === "idle"
+    [title, description, rank].every(Boolean) && addNewRoleStatus === "idle"
 
   const onAddRole = async () => {
     if (canAdd) {

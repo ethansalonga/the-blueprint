@@ -6,6 +6,8 @@ import {
   orderBy,
   where,
   addDoc,
+  doc,
+  updateDoc,
 } from "firebase/firestore"
 import { db } from "../../firebase/init"
 import { Role } from "../../types/types"
@@ -84,9 +86,11 @@ export const updateRole = createAsyncThunk(
   "roles/updateRole",
   async (newRole: Role) => {
     const { id } = newRole
-
-    const response = await axios.put(`${ROLES_URL}/${id}`, newRole)
-    return response.data
+    const docRef = doc(db, "roles", id!)
+    const newRoleCopy = { ...newRole }
+    delete newRoleCopy.id
+    await updateDoc(docRef, newRoleCopy)
+    return newRole
   }
 )
 
@@ -148,7 +152,9 @@ const rolesSlice = createSlice({
         state.updateRoleStatus = "succeeded"
         const { id } = action.payload
         const newRoles = state.roles.filter((role) => role.id !== id)
-        state.roles = [...newRoles, action.payload].sort((a, b) => a.id - b.id)
+        state.roles = [...newRoles, action.payload].sort(
+          (a, b) => a.rank - b.rank
+        )
       })
       .addCase(updateRole.rejected, (state, action) => {
         state.updateRoleStatus = "failed"
