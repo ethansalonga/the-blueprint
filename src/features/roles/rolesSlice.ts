@@ -8,10 +8,10 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore"
 import { db } from "../../firebase/init"
 import { Role } from "../../types/types"
-import axios from "axios"
 
 interface InitialStateType {
   roles: Role[]
@@ -24,8 +24,6 @@ interface InitialStateType {
   updateRoleStatus: string
   updateRoleError: string | undefined
 }
-
-const ROLES_URL = "https://6445b2bb0431e885f002abd2.mockapi.io/roles"
 
 const initialState: InitialStateType = {
   roles: [],
@@ -96,9 +94,9 @@ export const updateRole = createAsyncThunk(
 
 export const deleteRole = createAsyncThunk(
   "roles/deleteRole",
-  async (id: number) => {
-    const response = await axios.delete(`${ROLES_URL}/${id}`)
-    return response.data
+  async (id: string) => {
+    await deleteDoc(doc(db, "roles", id))
+    return id
   }
 )
 
@@ -167,7 +165,7 @@ const rolesSlice = createSlice({
       })
       .addCase(deleteRole.fulfilled, (state, action) => {
         state.deleteRoleStatus = "succeeded"
-        const { id } = action.payload
+        const id = action.payload
         const newRoles = state.roles.filter((role) => role.id !== id)
         state.roles = newRoles
       })
