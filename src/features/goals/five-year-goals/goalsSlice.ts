@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { collection, getDocs, query, orderBy, where } from "firebase/firestore"
+import { db } from "../../../firebase/init"
 import { Goal } from "../../../types/types"
 import axios from "axios"
 
@@ -16,10 +18,40 @@ interface InitialStateType {
 
 const GOALS_URL = "https://6445b2bb0431e885f002abd2.mockapi.io/goals"
 
-export const fetchGoals = createAsyncThunk("goals/fetchGoals", async () => {
-  const response = await axios.get(GOALS_URL)
-  return response.data
-})
+// export const fetchGoals = createAsyncThunk("goals/fetchGoals", async () => {
+//   const response = await axios.get(GOALS_URL)
+//   return response.data
+// })
+
+export const fetchGoals = createAsyncThunk(
+  "goals/fetchGoals",
+  async (uid: string) => {
+    try {
+      const goalsRef = collection(db, "goals")
+      const q = query(
+        goalsRef,
+        orderBy("rank", "asc"),
+        where("userRef", "==", uid)
+      )
+      const querySnap = await getDocs(q)
+
+      let goals: Goal[] = []
+      querySnap.forEach((doc) => {
+        const { goal, rank, userRef } = doc.data()
+        goals.push({
+          id: doc.id,
+          goal,
+          rank,
+          userRef,
+        })
+      })
+
+      return goals
+    } catch (err) {
+      console.log(err)
+    }
+  }
+)
 
 export const addNewGoal = createAsyncThunk(
   "goals/addNewGoal",
@@ -81,7 +113,7 @@ const goalsSlice = createSlice({
       })
       .addCase(fetchGoals.fulfilled, (state, action) => {
         state.fetchGoalsStatus = "succeeded"
-        state.goals = state.goals.concat(action.payload)
+        state.goals = action.payload as Goal[]
       })
       .addCase(fetchGoals.rejected, (state, action) => {
         state.fetchGoalsStatus = "failed"

@@ -13,26 +13,20 @@ const FiveYearGoals = () => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
+  const { currentUser } = useAppSelector((state) => state.auth)
   const { goals, fetchGoalsStatus, fetchGoalsError } = useAppSelector(
     (state) => state.goals
   )
 
-  useEffect(() => {
-    if (effectRan.current === false) {
-      if (fetchGoalsStatus === "idle") {
-        dispatch(fetchGoals())
-      }
-
-      return () => {
-        effectRan.current = true
-      }
-    }
-  }, [goals, dispatch])
-
   const [isAddNewGoalModalOpen, setIsAddNewGoalModalOpen] = useState(false)
   const [isUpdateGoalModalOpen, setIsUpdateGoalModalOpen] = useState(false)
   const [isDeleteGoalModalOpen, setIsDeleteGoalModalOpen] = useState(false)
-  const [activeGoal, setActiveGoal] = useState<Goal>({ id: 0, goal: "" })
+  const [activeGoal, setActiveGoal] = useState<Goal>({
+    id: "",
+    goal: "",
+    rank: 0,
+    userRef: "",
+  })
 
   const onUpdateGoalClick = (goal: Goal) => {
     setActiveGoal(goal)
@@ -44,6 +38,18 @@ const FiveYearGoals = () => {
     setIsDeleteGoalModalOpen(true)
   }
 
+  useEffect(() => {
+    if (effectRan.current === false) {
+      if (currentUser) {
+        dispatch(fetchGoals(currentUser.uid))
+      }
+
+      return () => {
+        effectRan.current = true
+      }
+    }
+  }, [goals, dispatch, currentUser])
+
   return (
     <div id="five-year-goals" className="container text-white pb-8 1200:pb-16">
       <h3 className="sectionTitle text-f3eed9" data-aos="fade-down">
@@ -54,7 +60,7 @@ const FiveYearGoals = () => {
         five years. What are your most ambitious dreams and desires? Don't sell
         yourself short here.
       </p>
-      {goals.length < 5 && (
+      {goals?.length < 5 && (
         <button
           className={`${
             isDarkMode ? "plus-icon--dark" : "plus-icon text-f3eed9"
@@ -73,7 +79,7 @@ const FiveYearGoals = () => {
       )}
       <ol className="flex flex-col gap-12 list-decimal text-left text-xl leading-10 900:text-2xl 900:leading-10">
         {fetchGoalsStatus === "succeeded" &&
-          goals.map((goal, index) => (
+          goals?.map((goal, index) => (
             <li
               className="goal-item"
               data-aos="fade-down"
