@@ -105,6 +105,7 @@ const FiveYearGoals = () => {
       <AddNewGoalModal
         isOpen={isAddNewGoalModalOpen}
         setIsOpen={setIsAddNewGoalModalOpen}
+        userRef={currentUser?.uid}
       />
       <UpdateGoalModal
         isOpen={isUpdateGoalModalOpen}

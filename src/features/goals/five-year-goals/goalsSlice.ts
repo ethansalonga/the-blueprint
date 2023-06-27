@@ -1,5 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { collection, getDocs, query, orderBy, where } from "firebase/firestore"
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore"
 import { db } from "../../../firebase/init"
 import { Goal } from "../../../types/types"
 import axios from "axios"
@@ -17,11 +27,6 @@ interface InitialStateType {
 }
 
 const GOALS_URL = "https://6445b2bb0431e885f002abd2.mockapi.io/goals"
-
-// export const fetchGoals = createAsyncThunk("goals/fetchGoals", async () => {
-//   const response = await axios.get(GOALS_URL)
-//   return response.data
-// })
 
 export const fetchGoals = createAsyncThunk(
   "goals/fetchGoals",
@@ -56,8 +61,12 @@ export const fetchGoals = createAsyncThunk(
 export const addNewGoal = createAsyncThunk(
   "goals/addNewGoal",
   async (newGoal: Goal) => {
-    const response = await axios.post(GOALS_URL, newGoal)
-    return response.data
+    const docRef = await addDoc(collection(db, "goals"), newGoal)
+    const createdGoal = {
+      ...newGoal,
+      id: docRef.id,
+    }
+    return createdGoal
   }
 )
 

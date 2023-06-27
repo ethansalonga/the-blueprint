@@ -1,4 +1,11 @@
-import { FC, Fragment, useState, FormEvent, ChangeEvent } from "react"
+import {
+  FC,
+  Fragment,
+  useState,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+} from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { addNewGoal, setAddNewGoalStatusIdle } from "../goalsSlice"
 import { Dialog, Transition } from "@headlessui/react"
@@ -7,29 +14,35 @@ import Spinner from "../../../../assets/Spinner"
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
+  userRef: string | undefined
 }
 
-const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
+const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { addNewGoalStatus, addNewGoalError } = useAppSelector(
+  const { addNewGoalStatus, addNewGoalError, goals } = useAppSelector(
     (state) => state.goals
   )
 
   const [goal, setGoal] = useState("")
+  const [rank, setRank] = useState(0)
 
   const onGoalChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setGoal(e.currentTarget.value)
+  const onRankChange = (e: FormEvent<HTMLInputElement>) =>
+    setRank(+e.currentTarget.value)
 
-  const canAdd = goal && addNewGoalStatus === "idle"
+  const canAdd = [goal, rank].every(Boolean) && addNewGoalStatus === "idle"
 
-  const onAddRole = async () => {
+  const onAddGoal = async () => {
     if (canAdd) {
       try {
-        await dispatch(addNewGoal({ goal }))
+        if (userRef) {
+          await dispatch(addNewGoal({ goal, rank, userRef }))
 
-        setGoal("")
+          setGoal("")
+        }
       } catch (err) {
         console.log(err)
       } finally {
@@ -39,6 +52,10 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
       }
     }
   }
+
+  useEffect(() => {
+    setRank(goals.length + 1)
+  }, [goals])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -107,6 +124,23 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                       disabled={addNewGoalStatus === "loading"}
                     />
                   </div>
+                  <div>
+                    <label
+                      htmlFor="goalRank"
+                      className={`${isDarkMode && "text-white"} block mb-2`}
+                    >
+                      Rank:
+                    </label>
+                    <input
+                      type="number"
+                      id="goalRank"
+                      name="goalRank"
+                      value={rank}
+                      onChange={onRankChange}
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
+                      disabled={addNewGoalStatus === "loading"}
+                    />
+                  </div>
                 </form>
 
                 {addNewGoalStatus === "loading" ? (
@@ -129,7 +163,7 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen }) => {
                           ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onAddRole}
+                      onClick={onAddGoal}
                     >
                       Add goal
                     </button>
