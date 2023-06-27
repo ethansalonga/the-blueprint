@@ -12,7 +12,6 @@ import {
 } from "firebase/firestore"
 import { db } from "../../../firebase/init"
 import { Goal } from "../../../types/types"
-import axios from "axios"
 
 interface InitialStateType {
   goals: Goal[]
@@ -25,8 +24,6 @@ interface InitialStateType {
   deleteGoalStatus: string
   deleteGoalError: string | undefined
 }
-
-const GOALS_URL = "https://6445b2bb0431e885f002abd2.mockapi.io/goals"
 
 export const fetchGoals = createAsyncThunk(
   "goals/fetchGoals",
@@ -84,9 +81,9 @@ export const updateGoal = createAsyncThunk(
 
 export const deleteGoal = createAsyncThunk(
   "goals/deleteGoal",
-  async (id: number) => {
-    const response = await axios.delete(`${GOALS_URL}/${id}`)
-    return response.data
+  async (id: string) => {
+    await deleteDoc(doc(db, "goals", id))
+    return id
   }
 )
 
@@ -167,7 +164,7 @@ const goalsSlice = createSlice({
       })
       .addCase(deleteGoal.fulfilled, (state, action) => {
         state.deleteGoalStatus = "succeeded"
-        const { id } = action.payload
+        const id = action.payload
         const newGoals = state.goals.filter((goal) => goal.id !== id)
         state.goals = newGoals
       })
