@@ -74,9 +74,11 @@ export const updateGoal = createAsyncThunk(
   "goals/updateGoal",
   async (newGoal: Goal) => {
     const { id } = newGoal
-
-    const response = await axios.put(`${GOALS_URL}/${id}`, newGoal)
-    return response.data
+    const docRef = doc(db, "goals", id!)
+    const newGoalCopy = { ...newGoal }
+    delete newGoalCopy.id
+    await updateDoc(docRef, newGoalCopy)
+    return newGoal
   }
 )
 
@@ -149,8 +151,10 @@ const goalsSlice = createSlice({
       .addCase(updateGoal.fulfilled, (state, action) => {
         state.updateGoalStatus = "succeeded"
         const { id } = action.payload
-        const newGoals = state.goals.filter((role) => role.id !== id)
-        state.goals = [...newGoals, action.payload].sort((a, b) => a.id - b.id)
+        const newGoals = state.goals.filter((goal) => goal.id !== id)
+        state.goals = [...newGoals, action.payload].sort(
+          (a, b) => a.rank - b.rank
+        )
       })
       .addCase(updateGoal.rejected, (state, action) => {
         state.updateGoalStatus = "failed"

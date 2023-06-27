@@ -1,4 +1,11 @@
-import { FC, Fragment, useState, ChangeEvent, useEffect } from "react"
+import {
+  FC,
+  Fragment,
+  useState,
+  ChangeEvent,
+  useEffect,
+  FormEvent,
+} from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { updateGoal, setUpdateGoalStatusIdle } from "../goalsSlice"
 import { Goal } from "../../../../types/types"
@@ -20,16 +27,27 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   )
 
   const [goalDesc, setGoalDesc] = useState("")
+  const [rank, setRank] = useState(0)
 
   const onGoalChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setGoalDesc(e.currentTarget.value)
+  const onRankChange = (e: FormEvent<HTMLInputElement>) =>
+    setRank(+e.currentTarget.value)
 
-  const canUpdate = goalDesc && updateGoalStatus === "idle"
+  const canUpdate =
+    [goalDesc, rank].every(Boolean) && updateGoalStatus === "idle"
 
   const onAddRole = async () => {
     if (canUpdate) {
       try {
-        await dispatch(updateGoal({ id: goal.id, goal: goalDesc }))
+        await dispatch(
+          updateGoal({
+            id: goal.id,
+            goal: goalDesc,
+            rank,
+            userRef: goal.userRef,
+          })
+        )
       } catch (err) {
         console.log(err)
       } finally {
@@ -43,6 +61,7 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
 
   useEffect(() => {
     setGoalDesc(goal.goal)
+    setRank(goal.rank)
   }, [goal, isOpen])
 
   return (
@@ -98,7 +117,7 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                     Goal updated!
                   </p>
                 )}
-                <form className="flex flex-col mb-8">
+                <form className="flex flex-col gap-4 mb-8">
                   <label htmlFor="goal" className="text-gray-200 block mb-2">
                     Goal:
                   </label>
@@ -110,6 +129,23 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                     className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
                     disabled={updateGoalStatus === "loading"}
                   />
+                  <div>
+                    <label
+                      htmlFor="goalRank"
+                      className="text-gray-200 block mb-2"
+                    >
+                      Rank:
+                    </label>
+                    <input
+                      type="number"
+                      id="goalRank"
+                      name="goalRank"
+                      value={rank}
+                      onChange={onRankChange}
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
+                      disabled={updateGoalStatus === "loading"}
+                    />
+                  </div>
                 </form>
 
                 {updateGoalStatus === "loading" ? (
