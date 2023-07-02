@@ -31,6 +31,12 @@ export type Milestone = {
   userRef: string
 }
 
+export type NewMilestone = {
+  category: string
+  pathName: string
+  userRef: string
+}
+
 export type AuthFormData = {
   email: string
   password: string

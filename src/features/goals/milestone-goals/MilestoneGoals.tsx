@@ -1,7 +1,8 @@
 import { useRef, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchMilestones } from "./milestonesSlice"
-import { Goal } from "../../../types/types"
+import { Milestone } from "../../../types/types"
+import AddNewMilestoneModal from "./modals/AddNewMilestoneModal"
 import Spinner from "../../../assets/Spinner"
 import { PlusIcon, MinusIcon, PencilIcon } from "@heroicons/react/24/solid"
 
@@ -13,6 +14,9 @@ const MilestoneGoals = () => {
   const { currentUser } = useAppSelector((state) => state.auth)
   const { milestones, fetchMilestonesStatus, fetchMilestonesError } =
     useAppSelector((state) => state.milestones)
+
+  const [isAddNewMilestoneModalOpen, setIsAddNewMilestoneModalOpen] =
+    useState(false)
 
   const convertTimestamp = (timestamp: Date) => {
     // Convert the timestamp to a JavaScript Date object
@@ -65,6 +69,18 @@ const MilestoneGoals = () => {
         continuously improve upon. Every time you hit a milestone goal, replace
         it with a new one. You'll be surprised how far you can go.
       </p>
+      <button
+        className={`${
+          isDarkMode ? "plus-icon--dark" : "plus-icon text-f3eed9"
+        } mb-6`}
+        onClick={() => setIsAddNewMilestoneModalOpen(true)}
+      >
+        <PlusIcon
+          data-aos="fade-down"
+          data-aos-delay="200"
+          data-aos-anchor="#milestone-goals"
+        />
+      </button>
       {fetchMilestonesStatus === "succeeded" &&
         milestones?.map((milestone, index) => (
           <div
@@ -125,6 +141,11 @@ const MilestoneGoals = () => {
           </div>
         ))}
       {fetchMilestonesStatus === "failed" && <p>{fetchMilestonesError}</p>}
+      <AddNewMilestoneModal
+        isOpen={isAddNewMilestoneModalOpen}
+        setIsOpen={setIsAddNewMilestoneModalOpen}
+        userRef={currentUser?.uid}
+      />
     </div>
   )
 }

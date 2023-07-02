@@ -1,13 +1,9 @@
-import {
-  FC,
-  Fragment,
-  useState,
-  useEffect,
-  FormEvent,
-  ChangeEvent,
-} from "react"
+import { FC, Fragment, useState, ChangeEvent } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
-import { addNewGoal, setAddNewGoalStatusIdle } from "../goalsSlice"
+import {
+  addNewMilestone,
+  setAddNewMilestoneStatusIdle,
+} from "../milestonesSlice"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../../assets/Spinner"
 
@@ -17,45 +13,47 @@ interface PropTypes {
   userRef: string | undefined
 }
 
-const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
+const AddNewMilestoneModal: FC<PropTypes> = ({
+  isOpen,
+  setIsOpen,
+  userRef,
+}) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { addNewGoalStatus, addNewGoalError, goals } = useAppSelector(
-    (state) => state.goals
+  const { addNewMilestoneStatus, addNewMilestoneError } = useAppSelector(
+    (state) => state.milestones
   )
 
-  const [goal, setGoal] = useState("")
-  const [rank, setRank] = useState(0)
+  const [category, setCategory] = useState("")
+  const [pathName, setPathName] = useState("")
 
-  const onGoalChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setGoal(e.currentTarget.value)
-  const onRankChange = (e: FormEvent<HTMLInputElement>) =>
-    setRank(+e.currentTarget.value)
+  const onCategoryChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setCategory(e.currentTarget.value)
+  const onPathNameChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setPathName(e.currentTarget.value)
 
-  const canAdd = [goal, rank].every(Boolean) && addNewGoalStatus === "idle"
+  const canAdd =
+    [pathName, category].every(Boolean) && addNewMilestoneStatus === "idle"
 
-  const onAddGoal = async () => {
+  const onAddMilestone = async () => {
     if (canAdd) {
       try {
         if (userRef) {
-          await dispatch(addNewGoal({ goal, rank, userRef }))
+          await dispatch(addNewMilestone({ category, pathName, userRef }))
 
-          setGoal("")
+          setCategory("")
+          setPathName("")
         }
       } catch (err) {
         console.log(err)
       } finally {
         setTimeout(() => {
-          dispatch(setAddNewGoalStatusIdle())
+          dispatch(setAddNewMilestoneStatusIdle())
         }, 3000)
       }
     }
   }
-
-  useEffect(() => {
-    setRank(goals.length + 1)
-  }, [goals])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -98,56 +96,58 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
                   as="h3"
                   className="text-white text-xl font-medium leading-6 mb-4 text-center"
                 >
-                  Add new five year goal
+                  Add new milestone
                 </Dialog.Title>
-                {addNewGoalError && (
+                {addNewMilestoneError && (
                   <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mb-4">
-                    {addNewGoalError}
+                    {addNewMilestoneError}
                   </p>
                 )}
-                {addNewGoalStatus === "succeeded" && (
+                {addNewMilestoneStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
                     Goal added!
                   </p>
                 )}
                 <form className="flex flex-col gap-4 mb-8">
                   <div>
-                    <label htmlFor="goal" className="text-gray-200 block mb-2">
-                      Goal:
+                    <label
+                      htmlFor="category"
+                      className="text-gray-200 block mb-2"
+                    >
+                      Category:
                     </label>
-                    <textarea
-                      id="goal"
-                      name="goal"
-                      value={goal}
-                      onChange={onGoalChange}
-                      className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
-                      disabled={addNewGoalStatus === "loading"}
+                    <input
+                      id="category"
+                      name="category"
+                      value={category}
+                      onChange={onCategoryChange}
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm focus:outline-none"
+                      disabled={addNewMilestoneStatus === "loading"}
                     />
                   </div>
                   <div>
                     <label
-                      htmlFor="goalRank"
+                      htmlFor="pathName"
                       className="text-gray-200 block mb-2"
                     >
-                      Rank:
+                      First path:
                     </label>
                     <input
-                      type="number"
-                      id="goalRank"
-                      name="goalRank"
-                      value={rank}
-                      onChange={onRankChange}
-                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
-                      disabled={addNewGoalStatus === "loading"}
+                      id="pathName"
+                      name="pathName"
+                      value={pathName}
+                      onChange={onPathNameChange}
+                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm focus:outline-none"
+                      disabled={addNewMilestoneStatus === "loading"}
                     />
                   </div>
                 </form>
 
-                {addNewGoalStatus === "loading" ? (
+                {addNewMilestoneStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none">
                       <Spinner className="h-5 w-5 fill-f3eed9" />
-                      Adding goal...
+                      Adding milestone...
                     </div>
                   </div>
                 ) : (
@@ -155,17 +155,17 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
                     <button
                       type="button"
                       className={`${
-                        isDarkMode && goal
+                        isDarkMode && category && pathName
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           : isDarkMode
                           ? "bg-gray-400 cursor-auto"
-                          : goal
+                          : category && pathName
                           ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onAddGoal}
+                      onClick={onAddMilestone}
                     >
-                      Add goal
+                      Add milestone
                     </button>
                     <button
                       type="button"
@@ -189,4 +189,4 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
   )
 }
 
-export default AddNewGoalModal
+export default AddNewMilestoneModal
