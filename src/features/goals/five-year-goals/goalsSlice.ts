@@ -25,6 +25,18 @@ interface InitialStateType {
   deleteGoalError: string | undefined
 }
 
+const initialState: InitialStateType = {
+  goals: [],
+  fetchGoalsStatus: "idle", // "idle", "loading", "succeeded", "failed"
+  fetchGoalsError: "",
+  addNewGoalStatus: "idle",
+  addNewGoalError: "",
+  updateGoalStatus: "idle",
+  updateGoalError: "",
+  deleteGoalStatus: "idle",
+  deleteGoalError: "",
+}
+
 export const fetchGoals = createAsyncThunk(
   "goals/fetchGoals",
   async (uid: string) => {
@@ -87,18 +99,6 @@ export const deleteGoal = createAsyncThunk(
   }
 )
 
-const initialState: InitialStateType = {
-  goals: [],
-  fetchGoalsStatus: "idle", // "idle", "loading", "succeeded", "failed"
-  fetchGoalsError: "",
-  addNewGoalStatus: "idle",
-  addNewGoalError: "",
-  updateGoalStatus: "idle",
-  updateGoalError: "",
-  deleteGoalStatus: "idle",
-  deleteGoalError: "",
-}
-
 const goalsSlice = createSlice({
   name: "goals",
   initialState,
@@ -125,7 +125,7 @@ const goalsSlice = createSlice({
       })
       .addCase(fetchGoals.rejected, (state, action) => {
         state.fetchGoalsStatus = "failed"
-        state.deleteGoalError = action.error.message
+        state.fetchGoalsError = action.error.message
       })
 
       // Add new goal

@@ -1,5 +1,5 @@
 import { User } from "firebase/auth"
-import { FieldValue } from "firebase/firestore"
+import { FieldValue, Timestamp } from "firebase/firestore"
 
 export type Role = {
   id?: string
@@ -16,13 +16,19 @@ export type Goal = {
   userRef: string
 }
 
-export type MilestoneSection = {
+export type Milestone = {
+  id?: string
   category: string
-  goals: {
-    id?: number
-    goal: string
-    status: string
+  paths: {
+    name: string
+    goals: {
+      goal: string
+      isComplete: boolean
+      createdAt: Timestamp
+      completedAt?: Timestamp
+    }[]
   }[]
+  userRef: string
 }
 
 export type AuthFormData = {
