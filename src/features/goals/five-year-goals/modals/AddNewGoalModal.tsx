@@ -120,7 +120,7 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
                       name="goal"
                       value={goal}
                       onChange={onGoalChange}
-                      className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
+                      className="focus:ring-0 focus:border-gray-300 bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm resize-none h-[6em]"
                       disabled={addNewGoalStatus === "loading"}
                     />
                   </div>
@@ -137,7 +137,7 @@ const AddNewGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, userRef }) => {
                       name="goalRank"
                       value={rank}
                       onChange={onRankChange}
-                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
+                      className="focus:ring-0 focus:border-gray-300 bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
                       disabled={addNewGoalStatus === "loading"}
                     />
                   </div>

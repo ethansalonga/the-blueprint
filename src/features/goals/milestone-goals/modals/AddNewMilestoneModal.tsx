@@ -121,7 +121,7 @@ const AddNewMilestoneModal: FC<PropTypes> = ({
                       name="category"
                       value={category}
                       onChange={onCategoryChange}
-                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm focus:outline-none"
+                      className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
                       disabled={addNewMilestoneStatus === "loading"}
                     />
                   </div>
@@ -137,7 +137,7 @@ const AddNewMilestoneModal: FC<PropTypes> = ({
                       name="pathName"
                       value={pathName}
                       onChange={onPathNameChange}
-                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm focus:outline-none"
+                      className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
                       disabled={addNewMilestoneStatus === "loading"}
                     />
                   </div>
