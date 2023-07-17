@@ -37,7 +37,7 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   const canUpdate =
     [goalDesc, rank].every(Boolean) && updateGoalStatus === "idle"
 
-  const onAddRole = async () => {
+  const onAddGoal = async () => {
     if (canUpdate) {
       try {
         await dispatch(
@@ -168,7 +168,7 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                           ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onAddRole}
+                      onClick={onAddGoal}
                     >
                       Update goal
                     </button>

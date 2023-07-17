@@ -17,8 +17,8 @@ const PersonalStatement = () => {
             What would you say if you were to give yourself your most profound
             advice? What words would be most important for you to remember
             throughout your entire life? What drives you, gives your life
-            meaning? Without being genuine to yourself you are unable to be
-            genuine to anyone else.
+            meaning? Without being genuine with yourself you are unable to be
+            genuine with anyone else.
           </p>
           <div className="flex flex-col gap-8 900:gap-12">
             <p

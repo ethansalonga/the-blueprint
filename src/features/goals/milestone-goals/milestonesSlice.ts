@@ -1,5 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { collection, getDocs, query, where, addDoc } from "firebase/firestore"
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  addDoc,
+  updateDoc,
+} from "firebase/firestore"
 import { db } from "../../../firebase/init"
 import { Milestone, NewMilestone } from "../../../types/types"
 
@@ -9,6 +17,8 @@ type InitialStateType = {
   fetchMilestonesError: string | undefined
   addNewMilestoneStatus: string
   addNewMilestoneError: string | undefined
+  updateMilestoneStatus: string
+  updateMilestoneError: string | undefined
 }
 
 const initialState: InitialStateType = {
@@ -17,6 +27,8 @@ const initialState: InitialStateType = {
   fetchMilestonesError: "",
   addNewMilestoneStatus: "idle",
   addNewMilestoneError: "",
+  updateMilestoneStatus: "idle",
+  updateMilestoneError: "",
 }
 
 export const fetchMilestones = createAsyncThunk(
@@ -66,12 +78,27 @@ export const addNewMilestone = createAsyncThunk(
   }
 )
 
+export const updateMilestone = createAsyncThunk(
+  "milestones/updateMilestone",
+  async (newMilestone: Milestone) => {
+    const { id } = newMilestone
+    const docRef = doc(db, "milestones", id!)
+    const newMilestoneCopy = { ...newMilestone }
+    delete newMilestoneCopy.id
+    await updateDoc(docRef, newMilestoneCopy)
+    return newMilestone
+  }
+)
+
 const milestonesSlice = createSlice({
   name: "milestones",
   initialState,
   reducers: {
     setAddNewMilestoneStatusIdle(state) {
       state.addNewMilestoneStatus = "idle"
+    },
+    setUpdateMilestoneStatusIdle(state) {
+      state.updateMilestoneStatus = "idle"
     },
   },
   extraReducers(builder) {
@@ -101,9 +128,27 @@ const milestonesSlice = createSlice({
         state.addNewMilestoneStatus = "failed"
         state.addNewMilestoneError = action.error.message
       })
+
+      // Update milestone
+      .addCase(updateMilestone.pending, (state) => {
+        state.updateMilestoneStatus = "loading"
+      })
+      .addCase(updateMilestone.fulfilled, (state, action) => {
+        state.updateMilestoneStatus = "succeeded"
+        const { id } = action.payload
+        const newMilestones = state.milestones.map((milestone) =>
+          milestone.id === id ? action.payload : milestone
+        )
+        state.milestones = [...newMilestones]
+      })
+      .addCase(updateMilestone.rejected, (state, action) => {
+        state.updateMilestoneStatus = "failed"
+        state.updateMilestoneError = action.error.message
+      })
   },
 })
 
-export const { setAddNewMilestoneStatusIdle } = milestonesSlice.actions
+export const { setAddNewMilestoneStatusIdle, setUpdateMilestoneStatusIdle } =
+  milestonesSlice.actions
 
 export default milestonesSlice.reducer

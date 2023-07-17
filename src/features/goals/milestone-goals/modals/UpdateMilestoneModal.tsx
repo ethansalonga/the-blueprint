@@ -7,52 +7,56 @@ import {
   FormEvent,
 } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
-import { updateGoal, setUpdateGoalStatusIdle } from "../goalsSlice"
-import { Goal } from "../../../../types/types"
+import {
+  updateMilestone,
+  setUpdateMilestoneStatusIdle,
+} from "../milestonesSlice"
+import { Milestone } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
-  goal: Goal
+  milestone: Milestone
 }
 
-const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
+const UpdateMilestoneModal: FC<PropTypes> = ({
+  isOpen,
+  setIsOpen,
+  milestone,
+}) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { updateGoalStatus, updateGoalError } = useAppSelector(
-    (state) => state.goals
+  const { updateMilestoneStatus, updateMilestoneError } = useAppSelector(
+    (state) => state.milestones
   )
 
-  const [goalDesc, setGoalDesc] = useState("")
-  const [rank, setRank] = useState(0)
+  const [category, setCategory] = useState("")
 
-  const onGoalChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
-    setGoalDesc(e.currentTarget.value)
-  const onRankChange = (e: FormEvent<HTMLInputElement>) =>
-    setRank(+e.currentTarget.value)
+  const onCategoryChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setCategory(e.currentTarget.value)
 
   const canUpdate =
-    [goalDesc, rank].every(Boolean) && updateGoalStatus === "idle"
+    [category].every(Boolean) && updateMilestoneStatus === "idle"
 
-  const onAddRole = async () => {
+  const onAddMilestone = async () => {
     if (canUpdate) {
       try {
         await dispatch(
-          updateGoal({
-            id: goal.id,
-            goal: goalDesc,
-            rank,
-            userRef: goal.userRef,
+          updateMilestone({
+            id: milestone.id,
+            category: category,
+            paths: milestone.paths,
+            userRef: milestone.userRef,
           })
         )
       } catch (err) {
         console.log(err)
       } finally {
         setTimeout(() => {
-          dispatch(setUpdateGoalStatusIdle())
+          dispatch(setUpdateMilestoneStatusIdle())
           setIsOpen(false)
         }, 3000)
       }
@@ -60,9 +64,8 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   }
 
   useEffect(() => {
-    setGoalDesc(goal.goal)
-    setRank(goal.rank)
-  }, [goal, isOpen])
+    setCategory(milestone.category)
+  }, [milestone, isOpen])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -105,50 +108,36 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                   as="h3"
                   className="text-white text-xl font-medium leading-6 mb-4 text-center"
                 >
-                  Update goal
+                  Update milestone
                 </Dialog.Title>
-                {updateGoalError && (
+                {updateMilestoneError && (
                   <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mb-4">
-                    {updateGoalError}
+                    {updateMilestoneError}
                   </p>
                 )}
-                {updateGoalStatus === "succeeded" && (
+                {updateMilestoneStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
-                    Goal updated!
+                    Milestone updated!
                   </p>
                 )}
                 <form className="flex flex-col gap-4 mb-8">
-                  <label htmlFor="goal" className="text-gray-200 block mb-2">
-                    Goal:
+                  <label
+                    htmlFor="category"
+                    className="text-gray-200 block mb-2"
+                  >
+                    Category:
                   </label>
-                  <textarea
-                    id="goal"
-                    name="goal"
-                    value={goalDesc}
-                    onChange={onGoalChange}
-                    className="block p-2.5 w-full text-gray-800 bg-gray-50 rounded-lg border border-gray-300 !outline-none resize-none h-[6em]"
-                    disabled={updateGoalStatus === "loading"}
+                  <input
+                    id="category"
+                    name="category"
+                    value={category}
+                    onChange={onCategoryChange}
+                    className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
+                    disabled={updateMilestoneStatus === "loading"}
                   />
-                  <div>
-                    <label
-                      htmlFor="goalRank"
-                      className="text-gray-200 block mb-2"
-                    >
-                      Rank:
-                    </label>
-                    <input
-                      type="number"
-                      id="goalRank"
-                      name="goalRank"
-                      value={rank}
-                      onChange={onRankChange}
-                      className="bg-gray-50 border-0 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 ring-gray-300 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-gray-300"
-                      disabled={updateGoalStatus === "loading"}
-                    />
-                  </div>
                 </form>
 
-                {updateGoalStatus === "loading" ? (
+                {updateMilestoneStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none">
                       <Spinner className="h-5 w-5 fill-f3eed9" />
@@ -160,15 +149,15 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                     <button
                       type="button"
                       className={`${
-                        isDarkMode && goalDesc
+                        isDarkMode && category
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           : isDarkMode
                           ? "bg-gray-400 cursor-auto"
-                          : goalDesc
+                          : category
                           ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onAddRole}
+                      onClick={onAddMilestone}
                     >
                       Update goal
                     </button>
@@ -194,4 +183,4 @@ const UpdateGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
   )
 }
 
-export default UpdateGoalModal
+export default UpdateMilestoneModal

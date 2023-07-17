@@ -2,7 +2,9 @@ import { useRef, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchMilestones } from "./milestonesSlice"
 import { Milestone } from "../../../types/types"
+import { Timestamp } from "firebase/firestore"
 import AddNewMilestoneModal from "./modals/AddNewMilestoneModal"
+import UpdateMilestoneModal from "./modals/UpdateMilestoneModal"
 import Spinner from "../../../assets/Spinner"
 import { PlusIcon, MinusIcon, PencilIcon } from "@heroicons/react/24/solid"
 
@@ -17,6 +19,27 @@ const MilestoneGoals = () => {
 
   const [isAddNewMilestoneModalOpen, setIsAddNewMilestoneModalOpen] =
     useState(false)
+  const [isUpdateMilestoneModalOpen, setIsUpdateMilestoneModalOpen] =
+    useState(false)
+  const [isDeleteMilestoneModalOpen, setIsDeleteMilestoneModalOpen] =
+    useState(false)
+  const [activeMilestone, setActiveMilestone] = useState<Milestone>({
+    id: "",
+    category: "",
+    paths: [
+      {
+        name: "",
+        goals: [
+          {
+            goal: "",
+            isComplete: false,
+            createdAt: Timestamp.fromDate(new Date()),
+          },
+        ],
+      },
+    ],
+    userRef: "",
+  })
 
   const convertTimestamp = (timestamp: Date) => {
     // Convert the timestamp to a JavaScript Date object
@@ -44,6 +67,16 @@ const MilestoneGoals = () => {
     minutes = ("0" + minutes).slice(-2)
 
     return hours + ":" + minutes + ampm
+  }
+
+  const onUpdateMilestoneClick = (milestone: Milestone) => {
+    setActiveMilestone(milestone)
+    setIsUpdateMilestoneModalOpen(true)
+  }
+
+  const onDeleteMilestoneClick = (milestone: Milestone) => {
+    setActiveMilestone(milestone)
+    setIsDeleteMilestoneModalOpen(true)
   }
 
   useEffect(() => {
@@ -90,9 +123,19 @@ const MilestoneGoals = () => {
             data-aos-anchor="#milestone-goals"
             key={index}
           >
-            <p className="text-left font-medium tracking-wide underline text-2xl mb-4">
+            <div className="milestone-item text-left font-medium tracking-wide underline text-2xl mb-4">
               {milestone.category}
-            </p>
+              <div className="ml-2 inline-block">
+                <div className="flex items-center">
+                  <button onClick={() => onUpdateMilestoneClick(milestone)}>
+                    <PencilIcon className="data-icons w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                  </button>
+                  <button onClick={() => onDeleteMilestoneClick(milestone)}>
+                    <MinusIcon className="data-icons w-7 h-7 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                  </button>
+                </div>
+              </div>
+            </div>
             <ul className="list-disc text-left flex flex-col gap-4 text-xl">
               {milestone.paths.map((path, index) => (
                 <li key={index} className="list-none">
@@ -145,6 +188,11 @@ const MilestoneGoals = () => {
         isOpen={isAddNewMilestoneModalOpen}
         setIsOpen={setIsAddNewMilestoneModalOpen}
         userRef={currentUser?.uid}
+      />
+      <UpdateMilestoneModal
+        isOpen={isUpdateMilestoneModalOpen}
+        setIsOpen={setIsUpdateMilestoneModalOpen}
+        milestone={activeMilestone}
       />
     </div>
   )
