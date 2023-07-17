@@ -1,30 +1,34 @@
-import { FC, Fragment } from "react"
+import { FC, Fragment, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
-import { deleteGoal, setDeleteGoalStatusIdle } from "../goalsSlice"
-import { Goal } from "../../../../types/types"
+import {
+  deleteMilestone,
+  setDeleteMilestoneStatusIdle,
+} from "../milestonesSlice"
+import { Milestone } from "../../../../types/types"
+import { convertTimestamp } from "../../../../helpers/convertTimestamp"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
-  goal: Goal
+  milestone: Milestone
 }
 
-const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
+const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, milestone }) => {
   const dispatch = useAppDispatch()
 
   const { isDarkMode } = useAppSelector((state) => state.global)
-  const { deleteGoalStatus, deleteGoalError } = useAppSelector(
-    (state) => state.goals
+  const { deleteMilestoneStatus, deleteMilestoneError } = useAppSelector(
+    (state) => state.milestones
   )
 
-  const onDeleteRole = () => {
+  const onDeleteMilestone = () => {
     try {
-      dispatch(deleteGoal(goal.id!)).then((res) => {
+      dispatch(deleteMilestone(milestone.id!)).then((res) => {
         res.meta.requestStatus === "fulfilled" &&
           setTimeout(() => {
-            dispatch(setDeleteGoalStatusIdle())
+            dispatch(setDeleteMilestoneStatusIdle())
             setIsOpen(false)
           }, 2000)
       })
@@ -74,30 +78,79 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                   as="h3"
                   className="text-white text-xl font-medium leading-6 mb-4 text-center"
                 >
-                  Delete goal
+                  Delete milestone
                 </Dialog.Title>
-                {deleteGoalError && (
+                {deleteMilestoneError && (
                   <p className="text-center text-red-800 bg-red-100 border border-red-200 rounded-sm py-2 mb-4">
-                    {deleteGoalError}
+                    {deleteMilestoneError}
                   </p>
                 )}
-                {deleteGoalStatus === "succeeded" && (
+                {deleteMilestoneStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
-                    Goal deleted!
+                    Milestone deleted!
                   </p>
                 )}
                 <div className="flex flex-col gap-2 mb-8">
                   <p>
-                    <span className="text-gray-200 font-medium">Goal:</span>{" "}
-                    <span className="text-white">{goal.goal}</span>
+                    <span className="text-gray-200 font-medium">
+                      Milestone:
+                    </span>{" "}
+                    <span className="text-white">{milestone.category}</span>
                   </p>
+                  <div className="flex flex-col gap-1">
+                    {milestone.paths.map((path, index) => (
+                      <li key={index} className="list-none text-gray-200">
+                        <p>{path.name}</p>
+                        {path.goals
+                          .slice()
+                          .sort(
+                            (a, b) =>
+                              b.createdAt.toDate().getTime() -
+                              a.createdAt.toDate().getTime()
+                          )
+                          .sort((a, b) => {
+                            // Sort by completedAt if both goals are complete
+                            if (a.isComplete && b.isComplete) {
+                              return (
+                                b.completedAt!.toDate().getTime() -
+                                a.completedAt!.toDate().getTime()
+                              )
+                            }
+                            // Move complete goals to the bottom
+                            else if (a.isComplete) return 1
+                            else if (b.isComplete) return -1
+                            // For incomplete goals, maintain existing order
+                            else return 0
+                          })
+                          .map((goal, index) => (
+                            <div key={index}>
+                              <p
+                                className={`${
+                                  goal.isComplete ? "opacity-50" : "opacity-100"
+                                } list-item list-disc ml-5`}
+                              >
+                                {goal.goal}
+                                {goal.completedAt && (
+                                  <span className="text-sm pl-3">
+                                    Completed at{" "}
+                                    {convertTimestamp(
+                                      goal.completedAt.toDate()
+                                    )}
+                                  </span>
+                                )}
+                              </p>
+                            </div>
+                          ))}
+                      </li>
+                    ))}
+                  </div>
                 </div>
 
-                {deleteGoalStatus === "loading" ? (
+                {deleteMilestoneStatus === "loading" ? (
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium">
                       <Spinner className="h-5 w-5 fill-f3eed9" />
-                      Deleting goal...
+                      Deleting milestone...
                     </div>
                   </div>
                 ) : (
@@ -109,9 +162,9 @@ const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           : "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                       } bg-824936-200 text-824936-800 hover:bg-824936-300 inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onDeleteRole}
+                      onClick={onDeleteMilestone}
                     >
-                      Delete goal
+                      Delete milestone
                     </button>
                     <button
                       type="button"

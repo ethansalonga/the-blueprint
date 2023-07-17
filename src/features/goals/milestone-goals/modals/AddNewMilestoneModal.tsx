@@ -105,7 +105,7 @@ const AddNewMilestoneModal: FC<PropTypes> = ({
                 )}
                 {addNewMilestoneStatus === "succeeded" && (
                   <p className="text-center text-green-800 bg-green-100 border border-green-200 rounded-sm py-2 mb-4">
-                    Goal added!
+                    Milestone added!
                   </p>
                 )}
                 <form className="flex flex-col gap-4 mb-8">

@@ -7,6 +7,7 @@ import {
   doc,
   addDoc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore"
 import { db } from "../../../firebase/init"
 import { Milestone, NewMilestone } from "../../../types/types"
@@ -19,6 +20,8 @@ type InitialStateType = {
   addNewMilestoneError: string | undefined
   updateMilestoneStatus: string
   updateMilestoneError: string | undefined
+  deleteMilestoneStatus: string
+  deleteMilestoneError: string | undefined
 }
 
 const initialState: InitialStateType = {
@@ -29,6 +32,8 @@ const initialState: InitialStateType = {
   addNewMilestoneError: "",
   updateMilestoneStatus: "idle",
   updateMilestoneError: "",
+  deleteMilestoneStatus: "idle",
+  deleteMilestoneError: "",
 }
 
 export const fetchMilestones = createAsyncThunk(
@@ -90,6 +95,14 @@ export const updateMilestone = createAsyncThunk(
   }
 )
 
+export const deleteMilestone = createAsyncThunk(
+  "goals/deleteMilestone",
+  async (id: string) => {
+    await deleteDoc(doc(db, "milestones", id))
+    return id
+  }
+)
+
 const milestonesSlice = createSlice({
   name: "milestones",
   initialState,
@@ -99,6 +112,9 @@ const milestonesSlice = createSlice({
     },
     setUpdateMilestoneStatusIdle(state) {
       state.updateMilestoneStatus = "idle"
+    },
+    setDeleteMilestoneStatusIdle(state) {
+      state.deleteMilestoneStatus = "idle"
     },
   },
   extraReducers(builder) {
@@ -145,10 +161,30 @@ const milestonesSlice = createSlice({
         state.updateMilestoneStatus = "failed"
         state.updateMilestoneError = action.error.message
       })
+
+      // Delete milestone
+      .addCase(deleteMilestone.pending, (state) => {
+        state.deleteMilestoneStatus = "loading"
+      })
+      .addCase(deleteMilestone.fulfilled, (state, action) => {
+        state.deleteMilestoneStatus = "succeeded"
+        const id = action.payload
+        const newMilestones = state.milestones.filter(
+          (milestone) => milestone.id !== id
+        )
+        state.milestones = newMilestones
+      })
+      .addCase(deleteMilestone.rejected, (state, action) => {
+        state.deleteMilestoneStatus = "failed"
+        state.deleteMilestoneError = action.error.message
+      })
   },
 })
 
-export const { setAddNewMilestoneStatusIdle, setUpdateMilestoneStatusIdle } =
-  milestonesSlice.actions
+export const {
+  setAddNewMilestoneStatusIdle,
+  setUpdateMilestoneStatusIdle,
+  setDeleteMilestoneStatusIdle,
+} = milestonesSlice.actions
 
 export default milestonesSlice.reducer

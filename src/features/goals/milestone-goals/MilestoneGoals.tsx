@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchMilestones } from "./milestonesSlice"
 import { Milestone } from "../../../types/types"
 import { Timestamp } from "firebase/firestore"
+import { convertTimestamp } from "../../../helpers/convertTimestamp"
 import AddNewMilestoneModal from "./modals/AddNewMilestoneModal"
 import UpdateMilestoneModal from "./modals/UpdateMilestoneModal"
-import Spinner from "../../../assets/Spinner"
+import DeleteMilestoneModal from "./modals/DeleteMilestoneModal"
 import { PlusIcon, MinusIcon, PencilIcon } from "@heroicons/react/24/solid"
 
 const MilestoneGoals = () => {
@@ -40,34 +41,6 @@ const MilestoneGoals = () => {
     ],
     userRef: "",
   })
-
-  const convertTimestamp = (timestamp: Date) => {
-    // Convert the timestamp to a JavaScript Date object
-    var dt = new Date(timestamp)
-
-    // Format the Date object to the desired format
-    var month = dt.getMonth() + 1
-    var date = dt.getDate()
-    var year = dt.getFullYear()
-    var formattedDateTime =
-      month + "/" + date + "/" + year + " " + formatTime(dt)
-
-    return formattedDateTime
-  }
-
-  const formatTime = (dt: Date) => {
-    var hours = dt.getHours()
-    var minutes = dt.getMinutes().toString()
-    var ampm = hours >= 12 ? "PM" : "AM"
-
-    hours = hours % 12
-    hours = hours ? hours : 12 // Handle midnight (0 hours)
-
-    // Add leading zeros to minutes if necessary
-    minutes = ("0" + minutes).slice(-2)
-
-    return hours + ":" + minutes + ampm
-  }
 
   const onUpdateMilestoneClick = (milestone: Milestone) => {
     setActiveMilestone(milestone)
@@ -192,6 +165,11 @@ const MilestoneGoals = () => {
       <UpdateMilestoneModal
         isOpen={isUpdateMilestoneModalOpen}
         setIsOpen={setIsUpdateMilestoneModalOpen}
+        milestone={activeMilestone}
+      />
+      <DeleteMilestoneModal
+        isOpen={isDeleteMilestoneModalOpen}
+        setIsOpen={setIsDeleteMilestoneModalOpen}
         milestone={activeMilestone}
       />
     </div>

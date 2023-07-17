@@ -1,11 +1,4 @@
-import {
-  FC,
-  Fragment,
-  useState,
-  ChangeEvent,
-  useEffect,
-  FormEvent,
-} from "react"
+import { FC, Fragment, useState, ChangeEvent, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import {
   updateMilestone,
