@@ -34,6 +34,7 @@ export type Milestone = {
 export type NewMilestone = {
   category: string
   pathName: string
+  goalName: string
   userRef: string
 }
 

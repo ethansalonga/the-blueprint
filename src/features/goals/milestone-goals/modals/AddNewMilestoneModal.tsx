@@ -27,23 +27,30 @@ const AddNewMilestoneModal: FC<PropTypes> = ({
 
   const [category, setCategory] = useState("")
   const [pathName, setPathName] = useState("")
+  const [goalName, setGoalName] = useState("")
 
   const onCategoryChange = (e: ChangeEvent<HTMLInputElement>) =>
     setCategory(e.currentTarget.value)
   const onPathNameChange = (e: ChangeEvent<HTMLInputElement>) =>
     setPathName(e.currentTarget.value)
+  const onGoalNameChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setGoalName(e.currentTarget.value)
 
   const canAdd =
-    [pathName, category].every(Boolean) && addNewMilestoneStatus === "idle"
+    [category, pathName, goalName].every(Boolean) &&
+    addNewMilestoneStatus === "idle"
 
   const onAddMilestone = async () => {
     if (canAdd) {
       try {
         if (userRef) {
-          await dispatch(addNewMilestone({ category, pathName, userRef }))
+          await dispatch(
+            addNewMilestone({ category, pathName, userRef, goalName })
+          )
 
           setCategory("")
           setPathName("")
+          setGoalName("")
         }
       } catch (err) {
         console.log(err)
@@ -130,13 +137,26 @@ const AddNewMilestoneModal: FC<PropTypes> = ({
                       htmlFor="pathName"
                       className="text-gray-200 block mb-2"
                     >
-                      First path:
+                      Path name:
                     </label>
                     <input
                       id="pathName"
                       name="pathName"
                       value={pathName}
                       onChange={onPathNameChange}
+                      className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
+                      disabled={addNewMilestoneStatus === "loading"}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="goal" className="text-gray-200 block mb-2">
+                      Goal:
+                    </label>
+                    <input
+                      id="goal"
+                      name="goal"
+                      value={goalName}
+                      onChange={onGoalNameChange}
                       className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
                       disabled={addNewMilestoneStatus === "loading"}
                     />

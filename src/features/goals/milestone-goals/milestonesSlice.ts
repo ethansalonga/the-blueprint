@@ -8,6 +8,7 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  Timestamp,
 } from "firebase/firestore"
 import { db } from "../../../firebase/init"
 import { Milestone, NewMilestone } from "../../../types/types"
@@ -65,10 +66,21 @@ export const fetchMilestones = createAsyncThunk(
 export const addNewMilestone = createAsyncThunk(
   "milestone/addNewMilestone",
   async (newMilestone: NewMilestone) => {
-    const { category, pathName, userRef } = newMilestone
+    const { category, pathName, goalName, userRef } = newMilestone
     const createdMilestone = {
       category,
-      paths: [{ goals: [], name: pathName }],
+      paths: [
+        {
+          goals: [
+            {
+              createdAt: Timestamp.fromDate(new Date()),
+              goal: goalName,
+              isComplete: false,
+            },
+          ],
+          name: pathName,
+        },
+      ],
       userRef,
     }
 
