@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore"
 import { db } from "../../../firebase/init"
 import { Milestone, NewMilestone } from "../../../types/types"
+import { generateRandomFirebaseId } from "../../../helpers/generateRandomFirebaseId"
 
 type InitialStateType = {
   milestones: Milestone[]
@@ -79,6 +80,7 @@ export const addNewMilestone = createAsyncThunk(
             },
           ],
           name: pathName,
+          id: generateRandomFirebaseId(),
         },
       ],
       userRef,
