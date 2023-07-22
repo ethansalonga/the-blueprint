@@ -75,10 +75,6 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     setPathsData(milestone.paths)
   }, [milestone, isOpen])
 
-  useEffect(() => {
-    console.log(milestone)
-  }, [milestone])
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
