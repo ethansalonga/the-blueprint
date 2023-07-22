@@ -4,8 +4,9 @@ import {
   updateMilestone,
   setUpdateMilestoneStatusIdle,
 } from "../milestonesSlice"
-import { Milestone } from "../../../../types/types"
+import { Milestone, Path } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
+import { convertTimestamp } from "../../../../helpers/convertTimestamp"
 import Spinner from "../../../../assets/Spinner"
 
 interface PropTypes {
@@ -27,21 +28,29 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
   )
 
   const [category, setCategory] = useState("")
+  const [pathsData, setPathsData] = useState<Path[]>([])
 
   const onCategoryChange = (e: ChangeEvent<HTMLInputElement>) =>
     setCategory(e.currentTarget.value)
+  const handlePathsNameChange = (id: string, newValue: string) => {
+    setPathsData((prevData) =>
+      prevData.map((item) =>
+        item.id === id ? { ...item, name: newValue } : item
+      )
+    )
+  }
 
   const canUpdate =
     [category].every(Boolean) && updateMilestoneStatus === "idle"
 
-  const onAddMilestone = async () => {
+  const onUpdateMilestone = async () => {
     if (canUpdate) {
       try {
         await dispatch(
           updateMilestone({
             id: milestone.id,
             category: category,
-            paths: milestone.paths,
+            paths: pathsData,
             userRef: milestone.userRef,
           })
         )
@@ -58,6 +67,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
 
   useEffect(() => {
     setCategory(milestone.category)
+    setPathsData(milestone.paths)
   }, [milestone, isOpen])
 
   useEffect(() => {
@@ -117,11 +127,8 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                     Milestone updated!
                   </p>
                 )}
-                <form className="flex flex-col gap-4 mb-8">
-                  <label
-                    htmlFor="category"
-                    className="text-gray-200 block mb-2"
-                  >
+                <form className="flex flex-col gap-2 mb-8">
+                  <label htmlFor="category" className="text-gray-200 block">
                     Category:
                   </label>
                   <input
@@ -132,6 +139,62 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                     className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
                     disabled={updateMilestoneStatus === "loading"}
                   />
+                  <div className="mt-4">
+                    {pathsData.map((path, index) => (
+                      <li key={index} className="list-none text-gray-200">
+                        <input
+                          id="pathName"
+                          name="pathName"
+                          value={path.name}
+                          onChange={(e) =>
+                            handlePathsNameChange(path.id!, e.target.value)
+                          }
+                          className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg py-1 px-2.5 shadow-sm w-full"
+                          disabled={updateMilestoneStatus === "loading"}
+                        />
+                        {path.goals
+                          .slice()
+                          .sort(
+                            (a, b) =>
+                              b.createdAt.toDate().getTime() -
+                              a.createdAt.toDate().getTime()
+                          )
+                          .sort((a, b) => {
+                            // Sort by completedAt if both goals are complete
+                            if (a.isComplete && b.isComplete) {
+                              return (
+                                b.completedAt!.toDate().getTime() -
+                                a.completedAt!.toDate().getTime()
+                              )
+                            }
+                            // Move complete goals to the bottom
+                            else if (a.isComplete) return 1
+                            else if (b.isComplete) return -1
+                            // For incomplete goals, maintain existing order
+                            else return 0
+                          })
+                          .map((goal, index) => (
+                            <div key={index}>
+                              <p
+                                className={`${
+                                  goal.isComplete ? "opacity-50" : "opacity-100"
+                                } list-item list-disc ml-5`}
+                              >
+                                {goal.goal}
+                                {goal.completedAt && (
+                                  <span className="text-sm pl-3">
+                                    Completed at{" "}
+                                    {convertTimestamp(
+                                      goal.completedAt.toDate()
+                                    )}
+                                  </span>
+                                )}
+                              </p>
+                            </div>
+                          ))}
+                      </li>
+                    ))}
+                  </div>
                 </form>
 
                 {updateMilestoneStatus === "loading" ? (
@@ -154,7 +217,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                           ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={onAddMilestone}
+                      onClick={onUpdateMilestone}
                     >
                       Update milestone
                     </button>

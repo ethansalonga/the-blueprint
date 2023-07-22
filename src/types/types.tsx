@@ -19,16 +19,19 @@ export type Goal = {
 export type Milestone = {
   id?: string
   category: string
-  paths: {
-    name: string
-    goals: {
-      goal: string
-      isComplete: boolean
-      createdAt: Timestamp
-      completedAt?: Timestamp
-    }[]
-  }[]
+  paths: Path[]
   userRef: string
+}
+
+export type Path = {
+  id?: string
+  name: string
+  goals: {
+    goal: string
+    isComplete: boolean
+    createdAt: Timestamp
+    completedAt?: Timestamp
+  }[]
 }
 
 export type NewMilestone = {
