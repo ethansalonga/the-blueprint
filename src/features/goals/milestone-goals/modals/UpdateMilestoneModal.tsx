@@ -60,6 +60,10 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     setCategory(milestone.category)
   }, [milestone, isOpen])
 
+  useEffect(() => {
+    console.log(milestone)
+  }, [milestone])
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -134,7 +138,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                   <div className="mt-4 flex justify-end gap-4">
                     <div className="flex items-center bg-gray-300 text-gray-800 cursor-auto  justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none">
                       <Spinner className="h-5 w-5 fill-f3eed9" />
-                      Updating goal...
+                      Updating milestone...
                     </div>
                   </div>
                 ) : (
@@ -152,7 +156,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
                       onClick={onAddMilestone}
                     >
-                      Update goal
+                      Update milestone
                     </button>
                     <button
                       type="button"
