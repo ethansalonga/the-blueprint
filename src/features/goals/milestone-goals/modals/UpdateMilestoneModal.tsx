@@ -8,6 +8,7 @@ import { Milestone, Path } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import { convertTimestamp } from "../../../../helpers/convertTimestamp"
 import Spinner from "../../../../assets/Spinner"
+import { TrashIcon } from "@heroicons/react/24/solid"
 
 interface PropTypes {
   isOpen: boolean
@@ -38,6 +39,10 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
         item.id === id ? { ...item, name: newValue } : item
       )
     )
+  }
+
+  const onDeletePath = (id: string) => {
+    setPathsData((prevData) => prevData.filter((item) => item.id !== id))
   }
 
   const canUpdate =
@@ -81,6 +86,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
         className="relative z-10"
         onClose={() => {
           setIsOpen(false)
+          setPathsData(milestone.paths)
         }}
       >
         <Transition.Child
@@ -141,17 +147,29 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                   />
                   <div className="mt-4">
                     {pathsData.map((path, index) => (
-                      <li key={index} className="list-none text-gray-200">
-                        <input
-                          id="pathName"
-                          name="pathName"
-                          value={path.name}
-                          onChange={(e) =>
-                            handlePathsNameChange(path.id!, e.target.value)
-                          }
-                          className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg py-1 px-2.5 shadow-sm w-full"
-                          disabled={updateMilestoneStatus === "loading"}
-                        />
+                      <li
+                        id={path.id}
+                        key={index}
+                        className="list-none text-gray-200"
+                      >
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => onDeletePath(path.id!)}
+                          >
+                            <TrashIcon className="w-6 h-6 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90" />
+                          </button>
+                          <input
+                            id="pathName"
+                            name="pathName"
+                            value={path.name}
+                            onChange={(e) =>
+                              handlePathsNameChange(path.id!, e.target.value)
+                            }
+                            className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg py-1 px-2.5 shadow-sm w-1/3"
+                            disabled={updateMilestoneStatus === "loading"}
+                          />
+                        </div>
                         {path.goals
                           .slice()
                           .sort(
@@ -228,7 +246,9 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           : "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => {
+                        setIsOpen(false)
+                      }}
                     >
                       Cancel
                     </button>
