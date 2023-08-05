@@ -8,7 +8,9 @@ import { Milestone, Path } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import { convertTimestamp } from "../../../../helpers/convertTimestamp"
 import Spinner from "../../../../assets/Spinner"
-import { TrashIcon } from "@heroicons/react/24/solid"
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid"
+import { generateRandomFirebaseId } from "../../../../helpers/generateRandomFirebaseId"
+import { Timestamp } from "firebase/firestore"
 
 interface PropTypes {
   isOpen: boolean
@@ -41,6 +43,23 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     )
   }
 
+  const onAddNewPath = () => {
+    const newPath = {
+      id: generateRandomFirebaseId(),
+      name: "",
+      goals: [
+        {
+          goal: "",
+          isComplete: false,
+          createdAt: Timestamp.fromDate(new Date()),
+        },
+      ],
+    }
+
+    const updatedPathsData = [newPath, ...pathsData]
+
+    setPathsData(updatedPathsData)
+  }
   const onDeletePath = (id: string) => {
     setPathsData((prevData) => prevData.filter((item) => item.id !== id))
   }
@@ -141,6 +160,12 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                     className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg block w-full p-2.5 shadow-sm"
                     disabled={updateMilestoneStatus === "loading"}
                   />
+                  <div className="flex justify-center items-center">
+                    <PlusIcon
+                      className="text-gray-200 w-7 h-7 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90 my-2"
+                      onClick={() => onAddNewPath()}
+                    />
+                  </div>
                   <div className="mt-4">
                     {pathsData.map((path, index) => (
                       <li
