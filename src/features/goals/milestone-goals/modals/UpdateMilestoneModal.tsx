@@ -166,12 +166,12 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                       onClick={() => onAddNewPath()}
                     />
                   </div>
-                  <div>
+                  <div className="flex flex-col gap-6">
                     {pathsData.map((path, index) => (
                       <li
                         id={path.id}
                         key={index}
-                        className="list-none text-gray-200"
+                        className="list-none text-gray-200 flex flex-col justify-center gap-2"
                       >
                         <div className="flex gap-2">
                           <button
@@ -213,22 +213,30 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                             else return 0
                           })
                           .map((goal, index) => (
-                            <div key={index}>
-                              <p
+                            <div key={index} className="flex items-center ml-3">
+                              <button
+                                type="button"
+                                //* Update to onDeleteGoal function
+                                onClick={() => onDeletePath(path.id!)}
+                              >
+                                <TrashIcon className="w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90 mr-1" />
+                              </button>
+                              <input
+                                id="goalName"
+                                name="goalName"
+                                value={goal.goal}
                                 className={`${
                                   goal.isComplete ? "opacity-50" : "opacity-100"
-                                } list-item list-disc ml-5`}
-                              >
-                                {goal.goal}
-                                {goal.completedAt && (
-                                  <span className="text-sm pl-3">
-                                    Completed at{" "}
-                                    {convertTimestamp(
-                                      goal.completedAt.toDate()
-                                    )}
-                                  </span>
-                                )}
-                              </p>
+                                } focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg px-2.5 shadow-sm w-full`}
+                                onChange={(e) =>
+                                  //* Update to handleGoalsNameChange function
+                                  handlePathsNameChange(
+                                    path.id!,
+                                    e.target.value
+                                  )
+                                }
+                                disabled={updateMilestoneStatus === "loading"}
+                              ></input>
                             </div>
                           ))}
                       </li>
