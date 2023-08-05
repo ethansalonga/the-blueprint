@@ -166,7 +166,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                       onClick={() => onAddNewPath()}
                     />
                   </div>
-                  <div className="mt-4">
+                  <div>
                     {pathsData.map((path, index) => (
                       <li
                         id={path.id}
