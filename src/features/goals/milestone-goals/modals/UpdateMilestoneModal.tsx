@@ -64,6 +64,19 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     setPathsData((prevData) => prevData.filter((item) => item.id !== id))
   }
 
+  const onDeleteGoal = (id: string) => {
+    setPathsData((prevData) => {
+      const updatedPathsData = prevData.map((path) => {
+        return {
+          ...path,
+          goals: path.goals.filter((goal) => goal.id !== id),
+        }
+      })
+
+      return updatedPathsData
+    })
+  }
+
   const canUpdate =
     [category].every(Boolean) && updateMilestoneStatus === "idle"
 
@@ -216,8 +229,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                             <div key={index} className="flex items-center ml-3">
                               <button
                                 type="button"
-                                //* Update to onDeleteGoal function
-                                onClick={() => onDeletePath(path.id!)}
+                                onClick={() => onDeleteGoal(goal.id!)}
                               >
                                 <TrashIcon className="w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90 mr-1" />
                               </button>
