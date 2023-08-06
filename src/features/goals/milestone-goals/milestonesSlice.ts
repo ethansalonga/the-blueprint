@@ -74,6 +74,7 @@ export const addNewMilestone = createAsyncThunk(
         {
           goals: [
             {
+              id: generateRandomFirebaseId(),
               createdAt: Timestamp.fromDate(new Date()),
               goal: goalName,
               isComplete: false,
