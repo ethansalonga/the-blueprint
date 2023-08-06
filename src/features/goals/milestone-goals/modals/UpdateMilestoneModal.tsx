@@ -61,7 +61,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     setPathsData(updatedPathsData)
   }
   const onDeletePath = (id: string) => {
-    setPathsData((prevData) => prevData.filter((item) => item.id !== id))
+    setPathsData((prevData) => prevData.filter((path) => path.id !== id))
   }
 
   const onDeleteGoal = (id: string) => {
