@@ -6,7 +6,6 @@ import {
 } from "../milestonesSlice"
 import { Milestone, Path } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
-import { convertTimestamp } from "../../../../helpers/convertTimestamp"
 import Spinner from "../../../../assets/Spinner"
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid"
 import { generateRandomFirebaseId } from "../../../../helpers/generateRandomFirebaseId"
