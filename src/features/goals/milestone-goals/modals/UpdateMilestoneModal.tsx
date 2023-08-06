@@ -41,6 +41,20 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
       )
     )
   }
+  const handleGoalsNameChange = (id: string, newValue: string) => {
+    setPathsData((prevData) => {
+      const updatedPathsData = prevData.map((path) => {
+        return {
+          ...path,
+          goals: path.goals.map((goal) =>
+            goal.id === id ? { ...goal, goal: newValue } : goal
+          ),
+        }
+      })
+
+      return updatedPathsData
+    })
+  }
 
   const onAddNewPath = () => {
     const newPath = {
@@ -240,9 +254,8 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                                   goal.isComplete ? "opacity-50" : "opacity-100"
                                 } focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg px-2.5 shadow-sm w-full`}
                                 onChange={(e) =>
-                                  //* Update to handleGoalsNameChange function
-                                  handlePathsNameChange(
-                                    path.id!,
+                                  handleGoalsNameChange(
+                                    goal.id!,
                                     e.target.value
                                   )
                                 }
