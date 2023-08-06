@@ -27,6 +27,7 @@ export type Path = {
   id?: string
   name: string
   goals: {
+    id?: string
     goal: string
     isComplete: boolean
     createdAt: Timestamp
