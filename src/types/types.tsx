@@ -9,13 +9,6 @@ export type Role = {
   userRef: string
 }
 
-export type Goal = {
-  id?: string
-  goal: string
-  rank: number
-  userRef: string
-}
-
 export type Milestone = {
   id?: string
   category: string
