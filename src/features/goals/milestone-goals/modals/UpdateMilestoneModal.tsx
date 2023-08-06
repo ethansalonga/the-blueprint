@@ -36,8 +36,8 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     setCategory(e.currentTarget.value)
   const handlePathsNameChange = (id: string, newValue: string) => {
     setPathsData((prevData) =>
-      prevData.map((item) =>
-        item.id === id ? { ...item, name: newValue } : item
+      prevData.map((path) =>
+        path.id === id ? { ...path, name: newValue } : path
       )
     )
   }
