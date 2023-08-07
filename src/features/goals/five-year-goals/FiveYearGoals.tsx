@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { fetchGoals } from "./goalsSlice"
-import { Goal } from "../../../types/types"
+import { FiveYearGoal } from "../../../types/types"
 import AddNewGoalModal from "./modals/AddNewGoalModal"
 import UpdateGoalModal from "./modals/UpdateGoalModal"
 import DeleteGoalModal from "./modals/DeleteGoalModal"
@@ -21,19 +21,19 @@ const FiveYearGoals = () => {
   const [isAddNewGoalModalOpen, setIsAddNewGoalModalOpen] = useState(false)
   const [isUpdateGoalModalOpen, setIsUpdateGoalModalOpen] = useState(false)
   const [isDeleteGoalModalOpen, setIsDeleteGoalModalOpen] = useState(false)
-  const [activeGoal, setActiveGoal] = useState<Goal>({
+  const [activeGoal, setActiveGoal] = useState<FiveYearGoal>({
     id: "",
     goal: "",
     rank: 0,
     userRef: "",
   })
 
-  const onUpdateGoalClick = (goal: Goal) => {
+  const onUpdateGoalClick = (goal: FiveYearGoal) => {
     setActiveGoal(goal)
     setIsUpdateGoalModalOpen(true)
   }
 
-  const onDeleteGoalClick = (goal: Goal) => {
+  const onDeleteGoalClick = (goal: FiveYearGoal) => {
     setActiveGoal(goal)
     setIsDeleteGoalModalOpen(true)
   }
