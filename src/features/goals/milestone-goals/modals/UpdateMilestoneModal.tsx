@@ -91,7 +91,12 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
   }
 
   const canUpdate =
-    [category].every(Boolean) && updateMilestoneStatus === "idle"
+    [
+      category,
+      pathsData.every(
+        (path) => path.name && path.goals.every((goal) => goal.goal)
+      ),
+    ].every(Boolean) && updateMilestoneStatus === "idle"
 
   const onUpdateMilestone = async () => {
     if (canUpdate) {
@@ -280,11 +285,11 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                     <button
                       type="button"
                       className={`${
-                        isDarkMode && category
+                        isDarkMode && canUpdate
                           ? "bg-gray-200 text-gray-900 hover:bg-gray-300"
                           : isDarkMode
                           ? "bg-gray-400 cursor-auto"
-                          : category
+                          : canUpdate
                           ? "bg-f3eed9 text-gray-900 hover:bg-f7f3e4"
                           : "bg-gray-200 text-gray-900 cursor-auto"
                       } inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium !outline-none`}
