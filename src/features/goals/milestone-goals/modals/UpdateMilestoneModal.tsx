@@ -7,7 +7,7 @@ import {
 import { Milestone, Path } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../../assets/Spinner"
-import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid"
+import { PlusIcon, TrashIcon, CheckCircleIcon } from "@heroicons/react/24/solid"
 import { generateRandomFirebaseId } from "../../../../helpers/generateRandomFirebaseId"
 import { Timestamp } from "firebase/firestore"
 
@@ -83,6 +83,21 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
         return {
           ...path,
           goals: path.goals.filter((goal) => goal.id !== id),
+        }
+      })
+
+      return updatedPathsData
+    })
+  }
+
+  const handleCheck = (id: string) => {
+    setPathsData((prevData) => {
+      const updatedPathsData = prevData.map((path) => {
+        return {
+          ...path,
+          goals: path.goals.map((goal) =>
+            goal.id === id ? { ...goal, isComplete: !goal.isComplete } : goal
+          ),
         }
       })
 
@@ -245,12 +260,24 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                           })
                           .map((goal, index) => (
                             <div key={index} className="flex items-center ml-3">
-                              <button
-                                type="button"
-                                onClick={() => onDeleteGoal(goal.id!)}
-                              >
-                                <TrashIcon className="w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90 mr-1" />
-                              </button>
+                              <div className="flex">
+                                <button
+                                  type="button"
+                                  onClick={() => onDeleteGoal(goal.id!)}
+                                >
+                                  <TrashIcon className="w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90 mr-1" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCheck(goal.id!)}
+                                >
+                                  <CheckCircleIcon
+                                    className={`${
+                                      goal.isComplete && "text-green-300"
+                                    } w-5 h-5 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90 mr-1`}
+                                  />
+                                </button>
+                              </div>
                               <input
                                 id="goalName"
                                 name="goalName"
