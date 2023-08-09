@@ -1,7 +1,12 @@
+import { useState } from "react"
 import { useAppSelector } from "../../app/hooks"
+import { PencilIcon } from "@heroicons/react/24/solid"
 
 const PersonalStatement = () => {
   const { isDarkMode } = useAppSelector((state) => state.global)
+
+  const [isUpdateStatementModalOpen, setIsUpdateStatementModalOpen] =
+    useState(false)
 
   return (
     <section
@@ -20,6 +25,18 @@ const PersonalStatement = () => {
             meaning? Without being genuine with yourself you are unable to be
             genuine with anyone else.
           </p>
+          <button
+            className={`${
+              isDarkMode ? "plus-icon--dark" : "plus-icon text-white"
+            } mb-6`}
+            onClick={() => setIsUpdateStatementModalOpen(true)}
+          >
+            <PencilIcon
+              data-aos="fade-down"
+              data-aos-delay="200"
+              data-aos-anchor="#personal-statement"
+            />
+          </button>
           <div className="flex flex-col gap-8 900:gap-12">
             <p
               className="text-left text-xl 900:text-2xl leading-10 900:leading-10"
