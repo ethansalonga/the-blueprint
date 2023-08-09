@@ -42,6 +42,11 @@ export type NewMilestone = {
   userRef: string
 }
 
+export type PersonalStatement = {
+  statement: string
+  userRef: string
+}
+
 export type AuthFormData = {
   email: string
   password: string
