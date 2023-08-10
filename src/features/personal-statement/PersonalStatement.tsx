@@ -70,7 +70,7 @@ const PersonalStatement = () => {
                   data-aos-delay="200"
                   data-aos-anchor="#personal-statement"
                 >
-                  {personalStatement}
+                  {personalStatement.statement}
                 </p>
               </>
             )}
@@ -78,10 +78,11 @@ const PersonalStatement = () => {
           </div>
         </div>
       </div>
-      {/* <UpdateStatementModal
+      <UpdateStatementModal
         isOpen={isUpdateStatementModalOpen}
         setIsOpen={setIsUpdateStatementModalOpen}
-      /> */}
+        personalStatement={personalStatement}
+      />
     </section>
   )
 }

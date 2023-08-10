@@ -43,6 +43,7 @@ export type NewMilestone = {
 }
 
 export type PersonalStatement = {
+  id?: string
   statement: string
   userRef: string
 }

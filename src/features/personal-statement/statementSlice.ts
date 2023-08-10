@@ -1,15 +1,18 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import {
   DocumentData,
   collection,
+  doc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore"
 import { db } from "../../firebase/init"
+import { PersonalStatement } from "../../types/types"
 
 interface InitialStateType {
-  personalStatement: string
+  personalStatement: PersonalStatement
   fetchStatementStatus: string
   fetchStatementError: string | undefined
   updateStatementStatus: string
@@ -17,7 +20,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-  personalStatement: "",
+  personalStatement: { id: "", statement: "", userRef: "" },
   fetchStatementStatus: "idle",
   fetchStatementError: "",
   updateStatementStatus: "idle",
@@ -29,19 +32,25 @@ export const fetchStatement = createAsyncThunk(
   async (uid: string) => {
     {
       try {
-        const statementRef = collection(db, "statement")
+        const statementRef = collection(db, "statements")
         const q = query(statementRef, where("userRef", "==", uid))
         const querySnap = await getDocs(q)
 
-        let statement: DocumentData = {
+        let statementCopy = {
+          id: "",
           statement: "",
           userRef: "",
         }
         querySnap.forEach((doc) => {
-          statement = doc.data()
+          const { id, statement, userRef } = doc.data()
+          statementCopy = {
+            id,
+            statement,
+            userRef,
+          }
         })
 
-        return statement.statement
+        return statementCopy
       } catch (err) {
         console.log(err)
       }
@@ -51,13 +60,13 @@ export const fetchStatement = createAsyncThunk(
 
 export const updateStatement = createAsyncThunk(
   "statement/updateStatement",
-  async (statement: string) => {
-    // const { id } = statement
-    // const docRef = doc(db, "milestones", id!)
-    // const newMilestoneCopy = { ...newMilestone }
-    // delete newMilestoneCopy.id
-    // await updateDoc(docRef, newMilestoneCopy)
-    // return newMilestone
+  async (newStatement: PersonalStatement) => {
+    const { id } = newStatement
+    const docRef = doc(db, "statement", id!)
+    const newStatementCopy = { ...newStatement }
+    delete newStatementCopy.id
+    await updateDoc(docRef, newStatementCopy)
+    return newStatement
   }
 )
 
@@ -71,16 +80,32 @@ const statementSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      // Fetch statement
       .addCase(fetchStatement.pending, (state) => {
         state.fetchStatementStatus = "loading"
       })
       .addCase(fetchStatement.fulfilled, (state, action) => {
         state.fetchStatementStatus = "succeeded"
-        state.personalStatement = action.payload
+        const { id, statement, userRef } = action.payload as PersonalStatement
+        state.personalStatement = { id, statement, userRef }
       })
       .addCase(fetchStatement.rejected, (state, action) => {
         state.fetchStatementStatus = "failed"
         state.fetchStatementError = action.error.message
+      })
+
+      // Update statement
+      .addCase(updateStatement.pending, (state) => {
+        state.updateStatementStatus = "loading"
+      })
+      .addCase(updateStatement.fulfilled, (state, action) => {
+        state.updateStatementStatus = "succeeded"
+        const { id, statement, userRef } = action.payload
+        state.personalStatement = { id, statement, userRef }
+      })
+      .addCase(updateStatement.rejected, (state, action) => {
+        state.updateStatementStatus = "failed"
+        state.updateStatementError = action.error.message
       })
   },
 })
