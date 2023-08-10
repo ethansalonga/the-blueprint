@@ -46,7 +46,7 @@ const PersonalStatement = () => {
             meaning? Without being genuine with yourself you are unable to be
             genuine with anyone else.
           </p>
-          <div className="flex flex-col items-center gap-8 900:gap-12">
+          <div className="flex flex-col items-center gap-8">
             {fetchStatementStatus === "loading" && (
               <Spinner className="mt-8 h-24 w-24 fill-f3eed9" />
             )}
