@@ -62,7 +62,7 @@ export const updateStatement = createAsyncThunk(
   "statement/updateStatement",
   async (newStatement: PersonalStatement) => {
     const { id } = newStatement
-    const docRef = doc(db, "statement", id!)
+    const docRef = doc(db, "statements", id!)
     const newStatementCopy = { ...newStatement }
     delete newStatementCopy.id
     await updateDoc(docRef, newStatementCopy)
