@@ -1,14 +1,14 @@
 import { FC, Fragment } from "react"
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks"
 import { deleteGoal, setDeleteGoalStatusIdle } from "../goalsSlice"
-import { Goal } from "../../../../types/types"
+import { FiveYearGoal } from "../../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
 import Spinner from "../../../../assets/Spinner"
 
 interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
-  goal: Goal
+  goal: FiveYearGoal
 }
 
 const DeleteGoalModal: FC<PropTypes> = ({ isOpen, setIsOpen, goal }) => {

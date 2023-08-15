@@ -11,10 +11,10 @@ import {
   deleteDoc,
 } from "firebase/firestore"
 import { db } from "../../../firebase/init"
-import { Goal } from "../../../types/types"
+import { FiveYearGoal } from "../../../types/types"
 
 interface InitialStateType {
-  goals: Goal[]
+  goals: FiveYearGoal[]
   fetchGoalsStatus: string
   fetchGoalsError: string | undefined
   addNewGoalStatus: string
@@ -49,7 +49,7 @@ export const fetchGoals = createAsyncThunk(
       )
       const querySnap = await getDocs(q)
 
-      let goals: Goal[] = []
+      let goals: FiveYearGoal[] = []
       querySnap.forEach((doc) => {
         const { goal, rank, userRef } = doc.data()
         goals.push({
@@ -69,7 +69,7 @@ export const fetchGoals = createAsyncThunk(
 
 export const addNewGoal = createAsyncThunk(
   "goals/addNewGoal",
-  async (newGoal: Goal) => {
+  async (newGoal: FiveYearGoal) => {
     const docRef = await addDoc(collection(db, "goals"), newGoal)
     const createdGoal = {
       ...newGoal,
@@ -81,7 +81,7 @@ export const addNewGoal = createAsyncThunk(
 
 export const updateGoal = createAsyncThunk(
   "goals/updateGoal",
-  async (newGoal: Goal) => {
+  async (newGoal: FiveYearGoal) => {
     const { id } = newGoal
     const docRef = doc(db, "goals", id!)
     const newGoalCopy = { ...newGoal }
@@ -121,7 +121,7 @@ const goalsSlice = createSlice({
       })
       .addCase(fetchGoals.fulfilled, (state, action) => {
         state.fetchGoalsStatus = "succeeded"
-        state.goals = action.payload as Goal[]
+        state.goals = action.payload as FiveYearGoal[]
       })
       .addCase(fetchGoals.rejected, (state, action) => {
         state.fetchGoalsStatus = "failed"
