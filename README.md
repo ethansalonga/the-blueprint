@@ -49,6 +49,7 @@ The Blueprint is a tool that allows you to organize your relationships, goals, a
 - Add extra validation for Roles and Five Year Goals ranks
 - Add date selection for Five Year Goals (instead of rank?)
 - Add About page
+- Setup ESLint
 
 <!-- CONTACT -->
 
