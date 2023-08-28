@@ -30,6 +30,7 @@ The Blueprint is a tool that allows you to organize your relationships, goals, a
 
 ### Bugs to be fixed
 
+- Add ability to add new milestone goals
 - Add completedAt and timestamp upon marking a milestone as complete
 
 ### Updates to be made
