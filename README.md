@@ -28,6 +28,10 @@ The Blueprint is a tool that allows you to organize your relationships, goals, a
 - Firebase
 - Vite
 
+### Bugs to be fixed
+
+- Add completedAt and timestamp upon marking a milestone as complete
+
 ### Updates to be made
 
 - Add new sections for list tracking
