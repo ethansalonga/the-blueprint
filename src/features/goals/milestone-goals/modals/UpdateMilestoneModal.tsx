@@ -65,6 +65,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
           goal: "",
           isComplete: false,
           createdAt: Timestamp.fromDate(new Date()),
+          id: generateRandomFirebaseId(),
         },
       ],
     }
@@ -77,6 +78,27 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
     setPathsData((prevData) => prevData.filter((path) => path.id !== id))
   }
 
+  const onAddNewGoal = (id: string) => {
+    const newGoal = {
+      id: generateRandomFirebaseId(),
+      goal: "",
+      isComplete: false,
+      createdAt: Timestamp.fromDate(new Date()),
+    }
+
+    const selectedPathIndex = pathsData.findIndex((path) => path.id === id)
+
+    const updatedPath = { ...pathsData[selectedPathIndex] }
+    updatedPath.goals = [newGoal, ...updatedPath.goals]
+
+    const updatedPathsData = [
+      ...pathsData.slice(0, selectedPathIndex),
+      updatedPath,
+      ...pathsData.slice(selectedPathIndex + 1),
+    ]
+
+    setPathsData(updatedPathsData as Path[])
+  }
   const onDeleteGoal = (id: string) => {
     setPathsData((prevData) => {
       const updatedPathsData = prevData.map((path) => {
@@ -219,7 +241,7 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                         key={index}
                         className="list-none text-gray-200 flex flex-col justify-center gap-2"
                       >
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 items-center">
                           <button
                             type="button"
                             onClick={() => onDeletePath(path.id!)}
@@ -235,6 +257,10 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
                             }
                             className="focus:outline-none bg-gray-50 border-1 border-gray-300 text-gray-800 rounded-lg py-1 px-2.5 shadow-sm w-1/3"
                             disabled={updateMilestoneStatus === "loading"}
+                          />
+                          <PlusIcon
+                            className="text-gray-200 w-6 h-6 cursor-pointer transition-all duration-200 ease-in-out hover:scale-110 active:scale-90"
+                            onClick={() => onAddNewGoal(path.id!)}
                           />
                         </div>
                         {path.goals
