@@ -31,7 +31,7 @@ export type Path = {
     goal: string
     isComplete: boolean
     createdAt: Timestamp
-    completedAt?: Timestamp
+    completedAt?: Timestamp | null
   }[]
 }
 

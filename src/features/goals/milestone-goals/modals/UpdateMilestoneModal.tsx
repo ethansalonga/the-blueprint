@@ -118,7 +118,15 @@ const UpdateMilestoneModal: FC<PropTypes> = ({
         return {
           ...path,
           goals: path.goals.map((goal) =>
-            goal.id === id ? { ...goal, isComplete: !goal.isComplete } : goal
+            goal.id === id
+              ? {
+                  ...goal,
+                  isComplete: !goal.isComplete,
+                  completedAt: !goal.completedAt
+                    ? Timestamp.fromDate(new Date())
+                    : null,
+                }
+              : goal
           ),
         }
       })
