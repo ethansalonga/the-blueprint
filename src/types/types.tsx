@@ -64,3 +64,8 @@ export type AuthUpdateData = {
   email: string
   password: string
 }
+
+export type AuthAvatarData = {
+  uid: string
+  url: string
+}

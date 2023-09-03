@@ -1,8 +1,16 @@
-import { useState, FormEvent, ChangeEvent } from "react"
+import { useState, FormEvent, ChangeEvent, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
 import { useAppSelector, useAppDispatch } from "../app/hooks.js"
-import { updateProfile, setError } from "../features/auth/authSlice.js"
+import {
+  updateProfile,
+  updateAvatar,
+  setMessage,
+  setError,
+} from "../features/auth/authSlice.js"
 import Spinner from "../assets/Spinner"
+import { db } from "../firebase/init.js"
+import { doc, getDoc, DocumentData } from "firebase/firestore"
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 const UpdateProfile = () => {
   const dispatch = useAppDispatch()
@@ -11,9 +19,14 @@ const UpdateProfile = () => {
     (state) => state.auth
   )
 
+  const [avatar, setAvatar] = useState(
+    "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png"
+  )
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [userProfile, setUserProfile] = useState<DocumentData>({})
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -36,10 +49,79 @@ const UpdateProfile = () => {
     setStateFunction(e.target.value)
   }
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleAvatarChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null
+    setSelectedFile(file)
+
+    if (file) {
+      try {
+        const storage = getStorage()
+        const storageRef = ref(storage, `${currentUser!.uid}/`)
+
+        await uploadBytes(storageRef, file)
+        const url = await getDownloadURL(storageRef)
+
+        // Update user profile in Firestore
+        if (currentUser) {
+          dispatch(updateAvatar({ uid: currentUser.uid, url: url }))
+        }
+
+        // Update avatar ui
+        setAvatar(url)
+        dispatch(setMessage("Avatar successfully updated!"))
+      } catch (err) {
+        dispatch(setError(err))
+      }
+    }
+  }
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      if (currentUser) {
+        const docRef = doc(db, "users", currentUser.uid)
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+          setUserProfile(docSnap.data())
+        } else {
+          dispatch(setError("Could not retrieve user information."))
+        }
+      }
+    }
+
+    getUserProfile()
+  }, [currentUser])
+
   return (
     <>
       <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            className="h-20 w-20 rounded-full mx-auto mb-2"
+            src={userProfile.image ? userProfile.image : avatar}
+            alt=""
+          />
+          <div>
+            <p
+              onClick={handleAvatarClick}
+              className="text-center text-sm cursor-pointer"
+            >
+              Change avatar
+            </p>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleAvatarChange}
+            />
+          </div>
           <h2 className="mt-10 text-center text-2xl font-medium leading-9 tracking-tight text-gray-900">
             Update profile
           </h2>
@@ -135,7 +217,7 @@ const UpdateProfile = () => {
                 {loading ? (
                   <Spinner className="h-6 w-6 fill-824936" />
                 ) : (
-                  "Update"
+                  "Update credentials"
                 )}
               </button>
             </div>

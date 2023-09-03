@@ -8,12 +8,19 @@ import {
   updatePassword,
   User,
 } from "firebase/auth"
-import { doc, setDoc, serverTimestamp } from "firebase/firestore"
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore"
 import { auth, db } from "../../firebase/init"
 import {
   AuthFormData,
   AuthFormDataCopy,
   AuthUpdateData,
+  AuthAvatarData,
 } from "../../types/types"
 
 interface initialStateType {
@@ -80,10 +87,31 @@ export const updateProfile = createAsyncThunk(
   }
 )
 
+export const updateAvatar = createAsyncThunk(
+  "auth/updateAvatar",
+  async (formData: AuthAvatarData) => {
+    const docRef = doc(db, "users", formData.uid!)
+    const docSnapshot = await getDoc(docRef)
+
+    if (docSnapshot.exists()) {
+      const currentData = docSnapshot.data()
+      const updatedData = {
+        ...currentData,
+        image: formData.url,
+      }
+
+      await updateDoc(docRef, updatedData)
+    }
+  }
+)
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setMessage(state, action) {
+      state.message = action.payload
+    },
     setError(state, action) {
       state.error = action.payload
     },
@@ -156,6 +184,6 @@ const authSlice = createSlice({
   },
 })
 
-export const { setError, setCurrentUser } = authSlice.actions
+export const { setMessage, setError, setCurrentUser } = authSlice.actions
 
 export default authSlice.reducer

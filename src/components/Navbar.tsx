@@ -1,13 +1,21 @@
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { useAppDispatch } from "../app/hooks"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { signUserOut } from "../features/auth/authSlice"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
+import { doc, getDoc } from "firebase/firestore"
+import { db } from "../firebase/init"
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
   const navigation = [{ name: "Home", href: "#", current: true }]
+
+  const { currentUser } = useAppSelector((state) => state.auth)
+
+  const [avatar, setAvatar] = useState(
+    "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png"
+  )
 
   const handleSignout = async () => {
     dispatch(signUserOut())
@@ -16,6 +24,21 @@ const Navbar = () => {
   const classNames = (...classes: string[]) => {
     return classes.filter(Boolean).join(" ")
   }
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      if (currentUser) {
+        const docRef = doc(db, "users", currentUser.uid)
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+          setAvatar(docSnap.data().image)
+        }
+      }
+    }
+
+    getUserProfile()
+  }, [currentUser])
 
   return (
     <Disclosure as="nav" className="bg-161616 fixed w-full z-10">
@@ -63,7 +86,7 @@ const Navbar = () => {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={avatar}
                         alt=""
                       />
                     </Menu.Button>
