@@ -10,6 +10,7 @@ import UpdateProfile from "./pages/UpdateProfile"
 import SignUp from "./pages/SignUp"
 import SignIn from "./pages/SignIn"
 import ForgotPassword from "./pages/ForgotPassword"
+import Lists from "./pages/Lists"
 import AOS from "aos"
 import "aos/dist/aos.css"
 
@@ -37,6 +38,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<Home />} />
           <Route path="/update-profile" element={<UpdateProfile />} />
+          <Route path="/lists" element={<Lists />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />

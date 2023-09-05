@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { signUserOut } from "../features/auth/authSlice"
+import { setCurrentTab } from "../features/global/globalSlice"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import { doc, getDoc } from "firebase/firestore"
@@ -9,9 +10,13 @@ import { db } from "../firebase/init"
 
 const Navbar = () => {
   const dispatch = useAppDispatch()
-  const navigation = [{ name: "Home", href: "#", current: true }]
-
   const { currentUser } = useAppSelector((state) => state.auth)
+  const { currentTab } = useAppSelector((state) => state.global)
+
+  const navigation = [
+    { name: "Home", href: "/", current: currentTab === "Home" },
+    { name: "Lists", href: "/lists", current: currentTab === "Lists" },
+  ]
 
   const [avatar, setAvatar] = useState(
     "https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png"
@@ -61,9 +66,9 @@ const Navbar = () => {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           item.current
                             ? "bg-gray-800 text-white"
@@ -71,9 +76,10 @@ const Navbar = () => {
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
+                        onClick={() => dispatch(setCurrentTab(item.name))}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -140,7 +146,6 @@ const Navbar = () => {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
                   className={classNames(
                     item.current
                       ? "bg-gray-800 text-white"
@@ -149,7 +154,12 @@ const Navbar = () => {
                   )}
                   aria-current={item.current ? "page" : undefined}
                 >
-                  {item.name}
+                  <Link
+                    to={item.href}
+                    onClick={() => dispatch(setCurrentTab(item.name))}
+                  >
+                    {item.name}
+                  </Link>
                 </Disclosure.Button>
               ))}
             </div>
