@@ -1,8 +1,43 @@
 import Navbar from "../components/Navbar"
-import { useAppSelector } from "../app/hooks"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
+import { useEffect, useRef } from "react"
+import { fetchAnime } from "../features/anime/animeSlice"
 
 const Lists = () => {
+  const dispatch = useAppDispatch()
+  const effectRan = useRef(false)
+
   const { isDarkMode } = useAppSelector((state) => state.global)
+  const { currentUser } = useAppSelector((state) => state.auth)
+  const { series, movies, fetchAnimeStatus, fetchAnimeError } = useAppSelector(
+    (state) => state.anime
+  )
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      if (currentUser) {
+        dispatch(fetchAnime(currentUser.uid))
+      }
+
+      return () => {
+        effectRan.current = true
+      }
+    }
+  }, [series, movies, dispatch, currentUser])
+
+  const setStatusColor = (status: string) => {
+    switch (status) {
+      case "complete":
+        return ""
+      case "watching":
+        return "text-green-700"
+      case "caught up":
+        return "text-indigo-700"
+      case "not caught up":
+        return "text-red-700"
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -20,41 +55,19 @@ const Lists = () => {
               Series
             </h2>
             <ol className="text-left px-9 list-decimal">
-              <li>Hunter x Hunter</li>
-              <li>Death Note</li>
-              <li>Code Geass: Lelouch of the Rebellion</li>
-              <li>Toradora</li>
-              <li className="text-indigo-700">One Punch Man</li>
-              <li className="text-indigo-700">
-                Don't Toy With Me, Miss Nagatoro
-              </li>
-              <li>Food Wars!: Shokugeki no Soma</li>
-              <li className="text-indigo-700">
-                Demon Slayer: Kimetsu no Yaiba
-              </li>
-              <li>Fullmetal Alchemist</li>
-              <li>Ping Pong the Animation</li>
-              <li>Fullmetal Alchemist: Brotherhood</li>
-              <li className="text-green-700">One Piece</li>
-              <li className="text-indigo-700">Attack on Titan</li>
-              <li className="text-red-700">Jujutsu Kaisen</li>
-              <li className="text-green-700">Dragon Ball Z</li>
-              <li>Dragon Ball</li>
-              <li className="text-indigo-700">BLUELOCK</li>
-              <li>Mob Psycho 100</li>
-              <li className="text-green-700">
-                Zom 100: Bucket List of the Dead
-              </li>
-              <li>Cowboy Bebop</li>
+              {series.map((show) => (
+                <li className={`${setStatusColor(show.status)}`} key={show.id}>
+                  {show.name}
+                </li>
+              ))}
             </ol>
             <h2 className="mt-4 text-left px-5 text-lg underline underline-offset-4 font-medium tracking-wider">
               Movies
             </h2>
             <ol className="text-left px-9 list-decimal">
-              <li>Your Name</li>
-              <li>Demon Slayer: Mugen Train</li>
-              <li>Jujutsu Kaisen 0</li>
-              <li>One Piece Film: RED</li>
+              {movies.map((movie) => (
+                <li key={movie.id}>{movie.name}</li>
+              ))}
             </ol>
           </div>
         </div>
