@@ -45,7 +45,6 @@ The Blueprint is a tool that allows you to organize your relationships, goals, a
 - Add to do list
 - Drag/drop for Roles and Five Year Goals rankings
 - Accordion for Roles section?
-- Set up avatar changing
 - UI redesign (something blue maybe)
 - Add explanations/tooltips for each section
 - Add extra validation for Roles and Five Year Goals ranks
