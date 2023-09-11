@@ -5,7 +5,6 @@ import rolesReducer from "../features/roles/rolesSlice"
 import goalsReducer from "../features/goals/five-year-goals/goalsSlice"
 import milestonesReducer from "../features/goals/milestone-goals/milestonesSlice"
 import statementReducer from "../features/personal-statement/statementSlice"
-import animeReducer from "../features/anime/animeSlice"
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +14,6 @@ export const store = configureStore({
     goals: goalsReducer,
     milestones: milestonesReducer,
     statement: statementReducer,
-    anime: animeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

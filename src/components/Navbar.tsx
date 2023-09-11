@@ -15,7 +15,6 @@ const Navbar = () => {
 
   const navigation = [
     { name: "Home", href: "/", current: currentTab === "Home" },
-    { name: "Lists", href: "/lists", current: currentTab === "Lists" },
   ]
 
   const [avatar, setAvatar] = useState(

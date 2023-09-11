@@ -69,12 +69,3 @@ export type AuthAvatarData = {
   uid: string
   url: string
 }
-
-export type Anime = {
-  id: string
-  name: string
-  type: string
-  status: string
-  userRef: string
-  createdAt: Timestamp
-}
