@@ -32,16 +32,6 @@ The Blueprint is a tool that allows you to organize your relationships, goals, a
 
 ### Updates to be made
 
-- Add new sections for list tracking
-  - Anime
-  - Books
-  - Concerts/Events
-  - Comedy Specials
-  - Documentaries
-  - Gaming
-  - Movies
-  - Places Visited
-  - TV Shows
 - Add to do list
 - Drag/drop for Roles and Five Year Goals rankings
 - Accordion for Roles section?
