@@ -82,6 +82,7 @@ const PersonalStatement = () => {
         isOpen={isUpdateStatementModalOpen}
         setIsOpen={setIsUpdateStatementModalOpen}
         personalStatement={personalStatement}
+        uid={currentUser?.uid}
       />
     </section>
   )

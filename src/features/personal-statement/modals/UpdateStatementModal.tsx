@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   updateStatement,
   setUpdateStatementStatusIdle,
+  addNewStatement,
 } from "../statementSlice"
 import { PersonalStatement } from "../../../types/types"
 import { Dialog, Transition } from "@headlessui/react"
@@ -12,12 +13,14 @@ interface PropTypes {
   isOpen: boolean
   setIsOpen: (args: boolean) => void
   personalStatement: PersonalStatement
+  uid: string | undefined
 }
 
 const UpdateStatementModal: FC<PropTypes> = ({
   isOpen,
   setIsOpen,
   personalStatement,
+  uid,
 }) => {
   const dispatch = useAppDispatch()
 
@@ -36,13 +39,22 @@ const UpdateStatementModal: FC<PropTypes> = ({
   const onUpdateStatement = async () => {
     if (canUpdate) {
       try {
-        await dispatch(
-          updateStatement({
-            id: personalStatement.id,
-            statement,
-            userRef: personalStatement.userRef,
-          })
-        )
+        if (personalStatement.id) {
+          await dispatch(
+            updateStatement({
+              id: personalStatement.id,
+              statement,
+              userRef: personalStatement.userRef,
+            })
+          )
+        } else {
+          await dispatch(
+            addNewStatement({
+              statement,
+              userRef: uid,
+            })
+          )
+        }
       } catch (err) {
         console.log(err)
       } finally {

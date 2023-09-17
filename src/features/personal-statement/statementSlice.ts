@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import {
-  DocumentData,
+  addDoc,
   collection,
   doc,
   getDocs,
@@ -58,6 +58,18 @@ export const fetchStatement = createAsyncThunk(
   }
 )
 
+export const addNewStatement = createAsyncThunk(
+  "statements/addNewStatement",
+  async (newStatement: PersonalStatement) => {
+    const docRef = await addDoc(collection(db, "statements"), newStatement)
+    const createdStatement = {
+      ...newStatement,
+      id: docRef.id,
+    }
+    return createdStatement
+  }
+)
+
 export const updateStatement = createAsyncThunk(
   "statement/updateStatement",
   async (newStatement: PersonalStatement) => {
@@ -92,6 +104,19 @@ const statementSlice = createSlice({
       .addCase(fetchStatement.rejected, (state, action) => {
         state.fetchStatementStatus = "failed"
         state.fetchStatementError = action.error.message
+      })
+
+      // Add new statement
+      .addCase(addNewStatement.pending, (state) => {
+        state.updateStatementStatus = "loading"
+      })
+      .addCase(addNewStatement.fulfilled, (state, action) => {
+        state.updateStatementStatus = "succeeded"
+        state.personalStatement = action.payload
+      })
+      .addCase(addNewStatement.rejected, (state, action) => {
+        state.updateStatementStatus = "failed"
+        state.updateStatementError = action.error.message
       })
 
       // Update statement
